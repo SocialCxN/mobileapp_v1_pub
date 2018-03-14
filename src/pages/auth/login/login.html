@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar>
+  </ion-navbar>
+</ion-header>
+  <ion-content padding class="page-login">
+      <div style="width: 170px; height: 25px; margin: auto;">
+          <img src="assets/img/logo.png" style="width: 100%; height: 100%;" />
+       </div>
+
+      <ion-slides #loginSlider >
+          <ion-slide>
+    <div class="auth-title">Login as <span>{{type}}</span></div>
+    <form [formGroup]="loginForm" #b="ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label color="primary" floating>Email</ion-label>
+        <ion-input  ngControl="email" (focus)="emailFocusIn()" (focusout)="emailFocusOut()" validate-event="blur" type="email" formControlName="email" [class.invalid]="!loginForm.controls.email.valid && (loginForm.controls.email.dirty || submitAttempt)" [(ngModel)]="user.loginEmail"></ion-input>
+          
+  </ion-item>
+  <!--<div class="input-error" *ngIf=" isEmailError && ( loginForm.controls.email.touched && (!loginForm.controls.email.valid  && (loginForm.controls.email.dirty || submitAttempt)) )" no-lines>
+      <p>Please enter a valid email.</p>
+  </div>-->
+  <div class="input-error" *ngIf="isEmailError && loginForm.controls.email.hasError('required')">
+       <p>Email is <strong>required</strong></p>
+  </div>
+  <div class="input-error" *ngIf="isEmailError && loginForm.controls.email.hasError('pattern')">
+       <p>Please enter a valid email</p>
+  </div>
+  <div class="input-error" *ngIf="isEmailError && loginForm.controls.email.hasError('maxlength')">
+       <p>Invalid Email (maximum 100 characters are allowed)</p>
+  </div>
+ 
+  <ion-item>
+    <ion-label color="primary" floating>Password</ion-label>
+    <ion-input type="password" formControlName="password" [class.invalid]="!loginForm.controls.password.valid && (loginForm.controls.password.dirty || submitAttempt)" [(ngModel)]="user.password" ></ion-input>
+  </ion-item>
+   <div class="input-error" *ngIf=" !loginForm.controls.password.valid  && (loginForm.controls.password.dirty || submitAttempt)" no-lines>
+       <p>Password is required.</p>
+   </div>
+    </ion-list>
+    <button ion-button full color="primary" (click)="onSubmit()" [disabled]="isSubmitStarted || !b.form.valid "> Login</button>
+    </form>
+    <div class="text-center forgot"><a (click) ="onForgetPassword()">Forgot Password?</a></div>
+    <div *ngIf="type != 'Brand'" class="text-center switch-opt"><a (click)="onRegistration()">Don't have an account? <span>Signup</span></a></div>
+    </ion-slide>
+    </ion-slides>
+  </ion-content>
+  

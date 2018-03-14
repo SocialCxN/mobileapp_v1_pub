@@ -1,0 +1,241 @@
+<!-- <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>SocialCxN Home</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+        <ion-toolbar color="primary">
+                <!-- <ion-buttons start>
+                        <button ion-button icon-only (click)="pop()">
+                                <ion-icon name="close"></ion-icon>
+                        </button>
+                </ion-buttons> -->
+                <ion-buttons left>
+                        <button ion-button icon-only (click)="pop()">
+                                <ion-icon name="arrow-back"></ion-icon>
+                        </button>
+                </ion-buttons>
+                <img class="logo-header" src="assets/img/svg/logo.svg">
+        </ion-toolbar>
+</ion-header>
+
+<!-- <ion-content class="page-home">
+  <ion-card>
+    <ion-card-content>
+        
+        <ion-list>
+            <ion-item>
+                    <ion-label color="primary" floating>ID</ion-label>
+                    <ion-input  readonly  [(ngModel)]="campaign.uniqueId"></ion-input>
+        
+            </ion-item>
+            <ion-item>
+                    <ion-label color="primary" floating>Campaign Name</ion-label>
+                    <ion-input  readonly  [(ngModel)]="campaign.name"></ion-input>
+        
+            </ion-item>
+            <ion-item>
+                    <ion-label color="primary" floating>Objective</ion-label>i
+                    <ion-input  readonly  *ngFor="let obj of campaign.campaignObjectives"  [(ngModel)]="obj.displayName"></ion-input>
+                    <ion-input readonly *ngIf="campaign.campaignObjectives.otherDescription" [(ngModel)]="campaign.campaignObjectives.otherDescription"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary" floating>Channel</ion-label>i
+                <ion-input  readonly *ngFor="let channel of campaign.socialMediaChannels"  [(ngModel)]="channel.displayName"></ion-input>
+        </ion-item>
+        <ion-item>
+                <ion-label color="primary" floating>Category</ion-label>i
+                <ion-input  readonly *ngFor="let category of campaign.campaignCategories"  [(ngModel)]="category.displayName"></ion-input>
+        </ion-item>
+        <ion-item>
+                <ion-label color="primary" floating>Est. Launch Date</ion-label>
+                <ion-input  readonly  [(ngModel)]="campaign.startDate"></ion-input>
+    
+        </ion-item>
+        <ion-item>
+                <ion-label color="primary" floating>Est. End Date</ion-label>
+                <ion-input  readonly  [(ngModel)]="campaign.endDate"></ion-input>
+    
+        </ion-item>
+        <ion-item>
+                <ion-label color="primary" floating>Description</ion-label>
+                <ion-input  readonly *ngIf="!isPartTwo"  [(ngModel)]="descriptionPartOne"></ion-input>
+                <ion-input  readonly *ngIf="isPartTwo"  [(ngModel)]="descriptionPartTwo"></ion-input>
+                
+        </ion-item>
+        <ion-item>
+                <ion-label color="primary" floating>Reference URL</ion-label>
+                <ion-input  readonly  *ngFor="let url of campaign.referenceUrls" [(ngModel)]="url.referenceUrl"></ion-input>
+    
+        </ion-item>
+        </ion-list>
+
+        <button ion-button color="danger"  *ngIf="campaign.status!=='active'" (click)="decline()">Decline</button>
+        
+        <button ion-button color="secondary" *ngIf="campaign.status!=='active'" (click)="negotiate()">Negotiate</button>
+        
+        <button ion-button color="primary" *ngIf="campaign.status!=='active'" (click)="accept()">Accept</button>
+        
+        <button ion-button color="primary" *ngIf="campaign.status==='active'" (click)="submitReport()">Submit Report</button>
+        
+    </ion-card-content>
+  </ion-card>
+  
+</ion-content> -->
+
+
+
+<ion-content class="page-influencer">
+        <div class="white-page-container">
+                <div class="title">Campaign Details</div>
+                <div class="top-staus-box">
+                        <ion-grid>
+                                <ion-row>
+                                        <ion-col col-8>Brand name</ion-col>
+                                        <ion-col col-4 class="gr-txt text-right"> {{campaign.owner?.name}} </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                        <ion-col col-8>Campaign status</ion-col>
+                                        <ion-col col-4 class="gr-txt text-right"> {{campaign?.status}}</ion-col>
+                                </ion-row>
+                                <ion-row>
+                                        <ion-col col-8>Gross offer</ion-col>
+                                        <ion-col col-4 class="gr-txt text-right" *ngIf="campaign.offeredInfluencers"> {{campaign.paymentDetails?.currency.symbol}} {{campaign.offeredInfluencers[0].paymentDetails?.finalOfferedAmount | number:'1.0-2'}}</ion-col>
+                                </ion-row>
+                                <ion-row>
+                                        <ion-col col-8>Service charges</ion-col>
+                                        <ion-col col-4 class="gr-txt text-right" *ngIf="campaign.offeredInfluencers"> {{campaign.offeredInfluencers[0].paymentDetails.serviceCharge?.serviceChargeValue}}
+                                                {{campaign.offeredInfluencers[0].paymentDetails.serviceCharge?.serviceChargeType}}
+                                        </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                        <ion-col col-8>Net offer</ion-col>
+                                        <ion-col col-4 class="gr-txt text-right" *ngIf="campaign.offeredInfluencers"> {{campaign.offeredInfluencers[0].paymentDetails.currency.symbol}} {{campaign.offeredInfluencers[0].paymentDetails?.earnAmount | number:'1.0-2'}}
+                                        </ion-col>
+                                </ion-row>
+                        </ion-grid>
+                </div>
+                <div>
+                        <div class="label-txt">ID</div>
+                        <div class="value-txt">{{campaign?.uniqueId}}</div>
+                </div>
+                <div>
+                        <div class="label-txt">Campaign name</div>
+                        <div class="value-txt">{{campaign?.name}}</div>
+                </div>
+                <div>
+                        <div class="label-txt">Objective</div>
+                        <div class="value-txt">
+                                <span class="label-dt" *ngFor="let obj of campaign.campaignObjectives">
+                                        {{obj?.displayName}}
+                                        <span class="comma">, </span>
+                                        <span *ngIf="campaign.campaignObjectives.otherDescription">{{campaign.campaignObjectives.otherDescription}}</span>
+                                </span>
+                        </div>
+                </div>
+                <div>
+                        <div class="label-txt">Channel</div>
+                        <div class="value-txt">
+                                <span class="label-dt" *ngFor="let channel of campaign.socialMediaChannels">
+                                        {{channel?.displayName}}
+                                        <span class="comma">, </span>
+                                </span>
+                        </div>
+                </div>
+                <div>
+                        <div class="label-txt">Category</div>
+                        <div class="value-txt">
+                                <span class="label-dt" *ngFor="let category of campaign.campaignCategories">
+                                        {{category?.displayName}}
+                                        <span class="comma">, </span>
+                                </span>
+                        </div>
+                </div>
+                <div>
+                        <div class="label-txt">Est. launch date</div>
+                        <div class="value-txt">{{campaign?.startDate}}</div>
+                </div>
+                <div>
+                        <div class="label-txt">Est. end date</div>
+                        <div class="value-txt">{{campaign?.endDate}}</div>
+                </div>
+                <div>
+                        <div class="label-txt">Description</div>
+                        <div class="value-txt">
+                                <p class="first-part" *ngIf="!isPartTwo">{{descriptionPartOne}}</p>
+                                <p class="second-part" *ngIf="isPartTwo">{{descriptionPartTwo}}</p>
+                                <button md-button *ngIf="readMore" (click)="onClickReadMore()"> Read More</button>
+                        </div>
+                </div>
+                <div>
+                        <div class="label-txt">Reference URL</div>
+                        <div class="value-txt">
+                                <a href="{{url.referenceUrl}}" target="_blank" *ngFor="let url of campaign.referenceUrls">{{url.referenceUrl}}</a>
+                        </div>
+                </div>
+                <div class="pbm">
+                        <div class="label-txt">Media</div>
+                        <div>
+                                <div class="csn-label">Photos/Documents</div>
+
+                                <span class="media-box" *ngFor="let image of _albums; let i=index" (click)="openPicture(image.thumb)">
+                                        <img [src]="image.thumb"  />
+                                </span>
+                                <span *ngFor="let doc of _documents;">
+                                        <span class="media-box xls" *ngIf="doc.extension == 'xls'">
+                                                <a href="{{doc.link}}" target="_blank">XLS </a>
+                                        </span>
+                                        <span class="media-box pdf" *ngIf="doc.extension == 'pdf'">
+                                                <a href="{{doc.link}}" target="_blank">PDF </a>
+                                        </span>
+                                        <span class="media-box doc" *ngIf="doc.extension == 'word' || doc.extension == 'doc' || doc.extension == 'docx'">
+                                                <a href="{{doc.link}}" target="_blank">DOC </a>
+                                        </span>
+                                </span>
+
+                        </div>
+
+                        <hr>
+                        <div class="csn-label">Video/Audio</div>
+                        <div class="clearfix">
+                                <div class="video-box" *ngFor="let v of videos">
+                                        <video class="video-media" controls>
+                                                <source src="{{v.link}}" type="video/mp4">
+                                        </video>
+                                </div>
+
+                                <div class="audio-box" *ngFor="let v of audios">
+                                        <div class="media-label">Audio</div>
+                                        <audio controls class="audio-media">
+                                                <source src="{{v.link}}" type="audio/ogg">
+                                        </audio>
+                                </div>
+                        </div>
+                </div>
+                <div>
+                        <div class="label-txt">Media Link</div>
+                        <div class="value-txt">
+                                <a href="{{link}}" target="_blank" *ngFor="let link of mediaLinksUrl ; let $index=index;">{{link}}</a>
+                        </div>
+                </div>
+                <div>
+                        <div class="label-txt">Payment plan</div>
+                        <div class="value-txt">
+                                <span *ngIf="campaign.offeredInfluencers">{{campaign.offeredInfluencers[0].paymentDetails.paymentPlan?.displayName}}</span>
+                        </div>
+                </div>
+                <div class="text-right">
+
+
+                        <button ion-button small color="danger" *ngIf="(campaign.status == 'active' || campaign.status == 'pending') &&  campaign.offeredInfluencers[0].offeredStatus =='pending'"
+                        (click)="decline()">Decline</button>
+
+                        <!-- <button ion-button small color="secondary" *ngIf="campaign.status!=='active'" (click)="negotiate()">Negotiate</button> -->
+
+                        <button ion-button small color="primary" *ngIf="(campaign.status == 'active' || campaign.status == 'pending') &&  campaign.offeredInfluencers[0].offeredStatus =='pending'" (click)="accept()">Accept</button>
+
+                        <button ion-button color="primary" *ngIf="(campaign.status == 'active') &&  campaign.offeredInfluencers[0].offeredStatus =='accepted'" (click)="submitReport()">Submit Report</button>
+                </div>
+        </div>
+</ion-content>

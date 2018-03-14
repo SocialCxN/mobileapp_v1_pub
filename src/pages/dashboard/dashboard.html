@@ -1,0 +1,83 @@
+<!-- <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>SocialCxN Home</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <img class="logo-header" src="assets/img/svg/logo.svg">
+    <ion-buttons end>
+      <button ion-button icon-only (click)="navigateToChat()">
+        <ion-icon name="chatboxes"></ion-icon>
+        <span [ngClass]="{'msg-notify': overAllUnreadStatus === true}"></span>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="page-home">
+  <ion-card>
+    <ion-card-content>
+      Welcome, you have logged in as {{role}} to SocialCxN successfully!
+      <br>
+      <br>
+      <!-- <button ion-button full color="primary" (click)="logout()"> Logout</button> -->
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header color="primary">
+      Current campaigns
+    </ion-card-header>
+    <ion-card-content>
+      <div class="goal-list gc-{{i+1}}" *ngFor="let campaign of dashboard.campaigns; let i = index;">
+        <a (click)="navigateTo(campaign.id)">{{campaign.name}}</a>
+      </div>
+      <!-- <div class="goal-list gc-2">
+        <a href="#">lorem ipsum dolar</a>
+      </div>
+      <div class="goal-list gc-3">
+        <a href="#">lorem ipsum dolar</a>
+      </div>
+      <div class="goal-list gc-4">
+        <a href="#">lorem ipsum dolar</a>
+      </div>
+      <div class="goal-list gc-5">
+        <a href="#">lorem ipsum dolar</a>
+      </div>
+      <div class="goal-list gc-6">
+        <a href="#">lorem ipsum dolar</a>
+      </div>
+      <div class="goal-list gc-7">
+        <a href="#">lorem ipsum dolar</a>
+      </div> -->
+      <div *ngIf="role == 'brand'">
+        <button ion-button full color="primary" (click)="createCampaign()">Create a campaign</button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header color="primary">
+      Statistics
+    </ion-card-header>
+    <ion-card-content>
+      <div class="stats-row">
+        <ion-row *ngFor="let stat of dashboard.statistics">
+          <ion-col col-7>
+            <div class="txt">{{stat?.displayName}}</div>
+          </ion-col>
+          <ion-col col-5>
+            <!-- <div class="value">{{stat?.count}}</div> -->
+
+            <div class="value" *ngIf="stat.codeName==='total_estimated_earnings'">{{stat?.currencyCode}} {{stat?.count | number:'1.0-2'}}</div>
+            <div class="value" *ngIf="stat.codeName !=='total_estimated_earnings' && stat.codeName !=='mark_as_favourite_by'">{{stat?.count | number:'1.0-2'}}</div>
+            <div class="value" *ngIf="stat.codeName ==='mark_as_favourite_by'">{{stat?.count}}</div>
+          </ion-col>
+        </ion-row>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

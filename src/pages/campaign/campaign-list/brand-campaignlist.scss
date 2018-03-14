@@ -1,0 +1,68 @@
+page-brand-campaignlist {
+    .list-card {
+        box-shadow: none;
+        border: 1px solid #ebebeb;
+        margin: 10px 0;
+        border-radius: 5px;
+        width: 100%;
+        color: #666;
+    }
+    .card-content-md, .card-content-ios {
+        padding: 0 0;
+    }
+    .campaign-title {
+        font-size: 15px;
+        font-weight: 500;
+        color: #333;
+    }
+    
+    .sub-lebel {
+        font-size: 13px;
+        line-height: 22px;
+    }
+    
+    .sub-value {
+        font-size: 13px;
+        line-height: 22px;
+        text-align: right;
+        color: #00796b;
+    }
+    
+    span.status {
+        border-radius: 4px;
+        font-size: 12px;
+        padding: 3px 12px;
+        float: right;
+        text-transform: capitalize;
+        color: #fff;
+        font-weight: 500;
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+    }
+
+ .active {background: #48BA84}
+.accepted {background: #48BA84}
+.completed{background: #38A4DC}
+.drafted{background: #FDC010}
+.cancelled{background: #AC66A9}
+.rejected{background: #F05754}
+.pending{background: #795548}
+
+    .top-staus-box {
+        background-color: rgba(0,121,107,0.05);
+        padding: 10px;
+        text-align: center;
+        margin: 10px 0;
+        border-radius: 5px;
+        font-size: 14px;
+        color: #666;
+    }
+    .top-staus-box .gr-txt {
+        color: #00796b;
+    }
+}
+
+.title {
+    font-size: 15px;
+    color: #666;
+}
+

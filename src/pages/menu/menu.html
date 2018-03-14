@@ -1,0 +1,74 @@
+<!-- <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>SocialCxN Home</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+    <ion-toolbar color="primary">
+        <img class="logo-header" src="assets/img/svg/logo.svg">
+        <ion-buttons end>
+          <button ion-button icon-only  (click)="navigateToChat()">
+              <ion-icon  name="chatboxes"></ion-icon><span  [ngClass]="{'msg-notify': overAllUnreadStatus === true}"></span>
+          </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+<ion-content>
+<ion-list>
+  <ion-item (click)="navigateToProfile()">
+    <ion-icon name="person" color="primary" item-start></ion-icon>
+      Profile Management 
+  </ion-item>
+  <!-- <div *ngIf="menuLoaded">
+    <ion-item *ngFor="let item of navigation.sidebar" (click)="navigate(item.relativePath)">
+      <ion-icon name="leaf" color="primary" item-start></ion-icon>
+      {{item?.displayName}}
+    </ion-item>
+  </div> -->
+
+  <ion-item (click)="navigateToCampaignList()">
+    <ion-icon name="list-box" color="primary" item-start></ion-icon>
+      Campaign List
+  </ion-item>
+
+  <ion-item *ngIf = "role == 'brand'"  (click)="navigateToCampaignCreation()">
+    <ion-icon name="add-circle" color="primary" item-start></ion-icon>
+    Campaign Creation
+  </ion-item>
+
+  <ion-item *ngIf = "role != 'brand'"  (click)="navigateToReferInfluencer()">
+      <ion-icon name="add-circle" color="primary" item-start></ion-icon>
+      Refer Influencer
+    </ion-item>
+
+  <ion-item (click)="logout()">
+    <ion-icon name="power" color="primary" item-start></ion-icon>
+      Logout
+  </ion-item>
+  <!-- <ion-item>
+    <ion-icon name="leaf" color="primary" item-start></ion-icon>
+      Inbox
+  </ion-item>
+  <ion-item>
+    <ion-icon name="leaf" color="primary" item-start></ion-icon>
+      Influencers
+  </ion-item>
+  <ion-item>
+    <ion-icon name="leaf" color="primary" item-start></ion-icon>
+      Transactions
+  </ion-item>
+  <ion-item>
+    <ion-icon name="leaf" color="primary" item-start></ion-icon>
+      Reports
+  </ion-item>
+  <ion-item>
+    <ion-icon name="leaf" color="primary" item-start></ion-icon>
+      Settings
+  </ion-item>
+  <ion-item>
+    <ion-icon name="leaf" color="primary" item-start></ion-icon>
+      Logout
+  </ion-item> -->
+</ion-list>
+</ion-content>

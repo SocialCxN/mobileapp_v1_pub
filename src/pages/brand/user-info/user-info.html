@@ -1,0 +1,162 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons start>
+            <button ion-button icon-only (click)="pop()">
+            <ion-icon name="close"></ion-icon>
+        </button>
+        </ion-buttons>
+        <img class="logo-header" src="assets/img/svg/logo.svg">
+    </ion-toolbar>
+</ion-header>
+<ion-content class="page-brand">
+    <!-- <ion-tabs  selectedIndex="1" tabsPlacement="top">
+      <ion-tab tabIcon="menu" [root]="tab1Root"></ion-tab>
+      <ion-tab tabIcon="home" [root]="tab2Root"></ion-tab>
+      <ion-tab tabIcon="logo-buffer" [root]="tab3Root"></ion-tab>
+      <ion-tab tabIcon="notifications" [root]="tab4Root" tabBadge="3" tabBadgeStyle="danger"></ion-tab>
+    </ion-tabs> -->
+    <!-- Profile-info -->
+    <ion-grid>
+        <ion-row>
+            <ion-col col-12>
+                <ion-card>
+                    <ion-card-header color="primary">
+                        User Information
+                    </ion-card-header>
+                    <ion-card-content>
+                        <form [formGroup]="userInfoForm" #b="ngForm">
+
+                            <ion-list>
+
+                                <ion-item>
+                                    <ion-label floating>{{uiService.captions['brand']}} name</ion-label>
+                                    <ion-input (focus)="onBrandNameFocusIn()" (focusout)="onBrandNameFocusOut()" type="text" formControlName="brandName" [(ngModel)]="brand.brandName"
+                                        [class.invalid]="!userInfoForm.controls.brandName.valid && (userInfoForm.controls.brandName.dirty || submitAttempt)"></ion-input>
+                                </ion-item>
+                                <div class="input-error" *ngIf="isBrandNameError && userInfoForm.controls.brandName.hasError('required')">
+                                    <p>{{uiService.captions['brand']}} is <strong>required</strong></p>
+                                </div>
+                                <div class="input-error" *ngIf="isBrandNameError && userInfoForm.controls.brandName.hasError('pattern')">
+                                    <p>Please enter a valid {{uiService.captions['brand']}}</p>
+                                </div>
+                                <div class="input-error" *ngIf="isBrandNameError && userInfoForm.controls.brandName.hasError('maxlength')">
+                                    <p>Invalid {{uiService.captions['brand']}} (maximum 100 characters are allowed)</p>
+                                </div>
+                                <div class="input-error" *ngIf="isBrandNameError && !isNameAvailable">
+                                    <p>{{uiService.captions['brand']}} is not <strong>available</strong></p>
+                                </div>
+
+                                <ion-item>
+                                    <ion-label>Industry</ion-label>
+                                    <ion-select formControlName="industry" [(ngModel)]="brand.industryId" interface="popover">
+                                        <ion-option *ngFor="let x of industries" [value]="x.id">{{x.name}}</ion-option>
+                                        <!-- <ion-option value="Auto">Auto</ion-option>
+                                    <ion-option value="Sports">Sports</ion-option>
+                                    <ion-option value="Health">Health</ion-option> -->
+                                    </ion-select>
+                                </ion-item>
+
+                                <ion-item>
+                                    <ion-label floating>About</ion-label>
+                                    <ion-input (focus)="onAboutFocusIn()" (focusout)="onAboutFocusOut()" type="text" formControlName="about" [(ngModel)]="brand.about"
+                                        [class.invalid]="!userInfoForm.controls.about.valid && (userInfoForm.controls.about.dirty || submitAttempt)"></ion-input>
+                                </ion-item>
+                                <div class="input-error" *ngIf="isAboutError && userInfoForm.controls.about.hasError('maxlength')">
+                                    <p>Characters exceed the limit (maximum 1000 numbers are allowed)</p>
+                                </div>
+
+                                <ion-item>
+                                    <ion-label floating>Web URL</ion-label>
+                                    <ion-input type="text" formControlName="webURL" (focus)="onUrlFocusIn()" (focusout)="onUrlFocusOut()" name="webUrl" [(ngModel)]="brand.webUrl"
+                                        [class.invalid]="!userInfoForm.controls.webURL.valid && (userInfoForm.controls.webURL.dirty || submitAttempt)"></ion-input>
+                                </ion-item>
+
+                                <div class="input-error" *ngIf="isUrlError && userInfoForm.controls.webURL.hasError('pattern')">
+                                    <p>Please enter a valid web url</p>
+                                </div>
+
+                                <ion-item>
+                                    <ion-label floating>Contact number</ion-label>
+                                    <ion-input (focus)="onContactFocusIn()" (focusout)="onContactFocusOut()" type="tel" formControlName="contactNumber" [(ngModel)]="brand.contactNumber"
+                                        [class.invalid]="!userInfoForm.controls.contactNumber.valid && (userInfoForm.controls.contactNumber.dirty || submitAttempt)"></ion-input>
+                                </ion-item>
+
+                                <div class="input-error" *ngIf="isContactError && userInfoForm.controls.contactNumber.hasError('pattern')">
+                                    <p>Invalid number </p>
+                                </div>
+                                <div class="input-error" *ngIf="isContactError && userInfoForm.controls.contactNumber.hasError('maxlength')">
+                                    <p> Contact Number should not be greater than 20 digits</p>
+                                </div>
+                                <div class="input-error" *ngIf="isContactError && userInfoForm.controls.contactNumber.hasError('minlength')">
+                                    <p>Invalid number </p>
+                                </div>
+
+                                <ion-card-header color="primary">
+                                    Address Information
+                                </ion-card-header>
+
+
+                                <ion-item>
+                                    <ion-label color="primary" floating>Country</ion-label>
+                                    <ion-input type="text" formControlName="country" (focus)="onCountryFocus()" (focusout)="onCountryFocusOut()" name="country"
+                                        [(ngModel)]="brand.country" [class.invalid]="!userInfoForm.controls.country.valid && (userInfoForm.controls.country.dirty || submitAttempt)"></ion-input>
+
+                                </ion-item>
+                                <ion-item *ngIf="brand.country === 'Canada'">
+                                        <ion-label color="primary" floating>Zip Code</ion-label>
+                                        <ion-input type="text" formControlName="zipCode" (focus)="onZipCodeFocus()" (focusout)="onZipCodeFocusOut()" name="zipCode"
+                                            [(ngModel)]="brand.zipCode" [class.invalid]="!userInfoForm.controls.zipCode.valid && (userInfoForm.controls.zipCode.dirty || submitAttempt)"></ion-input>
+    
+                                    </ion-item>
+    
+    
+                                    <ion-item *ngIf="brand.country === 'United States'">
+                                        <ion-label color="primary" floating>Zip Code</ion-label>
+                                        <ion-input type="text" formControlName="zipCode" (focus)="onZipCodeFocus()" (focusout)="onZipCodeFocusOut()" name="zipCode"
+                                            [(ngModel)]="brand.zipCode" [class.invalid]="!userInfoForm.controls.zipCode.valid && (userInfoForm.controls.zipCode.dirty || submitAttempt)"></ion-input>
+    
+                                    </ion-item>
+    
+                                    <ion-item *ngIf="brand.country !== 'United States' && brand.country !== 'Canada'">
+                                        <ion-label color="primary" floating>Zip/Postal Code</ion-label>
+                                        <ion-input type="text" formControlName="postalCode" name="postalCode" [(ngModel)]="brand.postalCode" [class.invalid]="!userInfoForm.controls.postalCode.valid && (userInfoForm.controls.postalCode.dirty || submitAttempt)"></ion-input>
+                                    </ion-item>
+                                <ion-item>
+                                    <ion-label color="primary" floating>States</ion-label>
+                                    <ion-input type="text" formControlName="state" (focus)="onStateFocus()" (focusout)="onStateFocusOut()" name="state" [(ngModel)]="brand.state"
+                                        [class.invalid]="!userInfoForm.controls.state.valid && (userInfoForm.controls.state.dirty || submitAttempt)"></ion-input>
+
+                                </ion-item>
+
+                                <ion-item>
+                                    <ion-label color="primary" floating>City</ion-label>
+                                    <ion-input type="text" formControlName="city" (focus)="onCityFocus()" name="city" [(ngModel)]="brand.city" [class.invalid]="!userInfoForm.controls.city.valid && (userInfoForm.controls.city.dirty || submitAttempt)"></ion-input>
+
+                                </ion-item>
+
+
+
+                                <ion-item>
+                                    <ion-label color="primary" floating>Street 1</ion-label>
+                                    <ion-input type="text" formControlName="streetOne" name="streetOne" [(ngModel)]="brand.streetOne" [class.invalid]="!userInfoForm.controls.streetOne.valid && (userInfoForm.controls.streetOne.dirty || submitAttempt)"></ion-input>
+                                </ion-item>
+
+                                <ion-item>
+                                    <ion-label color="primary" floating>Street 2</ion-label>
+                                    <ion-input type="text" formControlName="streetTwo" name="streetTwo" [(ngModel)]="brand.streetTwo" [class.invalid]="!userInfoForm.controls.streetTwo.valid && (userInfoForm.controls.streetTwo.dirty || submitAttempt)"></ion-input>
+                                </ion-item>
+
+                                <div class="text-right">
+                                    <button ion-button color="primary" [disabled]="!b.valid || !isCountryValid || isSubmitStarted" (click)='onSubmit()'>SAVE</button>
+                                </div>
+                            </ion-list>
+                        </form>
+
+
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <!-- Profile-info -->
+</ion-content>

@@ -1,0 +1,46 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <button ion-button icon-only  (click)="closeModal()">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <ion-title>
+     Select Country
+    </ion-title>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons start>
+      <button ion-button icon-only  (click)="closeModal()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Terms and Condition</ion-title>
+    <!-- <ion-buttons end>
+      <button ion-button icon-only color="royal">
+        <ion-icon name="person-add"></ion-icon>
+      </button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="auto-complete">
+   <form [formGroup]="termsServicForm">
+       <ion-list>
+           <ion-item>
+                <div>
+                  These are the terms of service agreement.
+                </div>
+           </ion-item>
+
+           <ion-item>
+                <ion-label>I agree</ion-label>
+
+                <ion-checkbox formControlName="isAgreed" [(ngModel)]="isAgreed"></ion-checkbox>
+            </ion-item>
+       </ion-list>
+        <button ion-button full color="primary" (click)="closeModal()" > Submit</button>
+   </form>
+
+</ion-content>

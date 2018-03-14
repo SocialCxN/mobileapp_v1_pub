@@ -1,0 +1,14 @@
+<!-- <ion-header>
+  <ion-toolbar color="primary">
+    <ion-searchbar></ion-searchbar>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="page-home">
+<ion-tabs  selectedIndex="1" tabsPlacement="top">
+  <ion-tab tabIcon="menu" [root]="tab1Root"></ion-tab>
+  <ion-tab tabIcon="home" [root]="tab2Root"></ion-tab>
+  <ion-tab tabIcon="logo-buffer" [root]="tab3Root"></ion-tab>
+  <ion-tab tabIcon="notifications" [root]="tab4Root" [tabBadge]="countNotif" tabBadgeStyle="danger"></ion-tab>
+</ion-tabs>
+</ion-content>

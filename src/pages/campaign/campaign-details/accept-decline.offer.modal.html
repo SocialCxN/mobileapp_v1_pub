@@ -1,0 +1,58 @@
+<ion-header>
+        <ion-toolbar color="primary">
+                <ion-buttons start>
+                        <button ion-button icon-only (click)="closeModal()">
+                                <ion-icon name="close"></ion-icon>
+                        </button>
+                </ion-buttons>
+                <ion-title *ngIf="action === 'accept'">Accept Campaign Offer</ion-title>
+                <ion-title *ngIf="action === 'decline'">Decline Campaign Offer</ion-title>
+                <ion-title *ngIf="action === 'negotiate'">Negotiation Campaign Offer</ion-title>
+        </ion-toolbar>
+</ion-header>
+
+<ion-content class="page-accept-decline">
+        <div class="pal" *ngIf="action === 'accept'">
+                <div class="content pbl">Are you sure you want to accept this offer?</div>
+                <h1> Offer details</h1>
+                <div>
+                <div class="label">Gross offer</div>
+                <div class="value">{{acceptOfferDetails?.gCurrency}} {{acceptOfferDetails?.grossOffer}}</div>
+                <div class="label">Service Charges</div>
+                <div class="value">{{acceptOfferDetails?.serviceCharges}} {{acceptOfferDetails?.serviceSymbol}}</div>
+                <div class="label">Net offer</div>
+                <div class="value">{{acceptOfferDetails?.nCurrency}} {{acceptOfferDetails?.netOffer}}</div>
+                </div>
+                <div class="bbtn">
+                        <button ion-button color="danger" (click)="closeModal()">No</button>
+                        <button ion-button color="primary" (click)="acceptOffer()">Yes</button>
+                </div>
+        </div>
+        <div class="pal" *ngIf="action === 'decline'">
+                <div class="content pbl">Are you sure, you want to decline this offer from {{brandName}}?</div>
+                <ion-list>
+                        <ion-item>
+                                <ion-label color="primary" floating>Please specify your reason</ion-label>
+                                <ion-input [(ngModel)]="rejectReason"></ion-input>
+
+                        </ion-item>
+                </ion-list>
+                <div class="bbtn">
+                        <button ion-button color="danger" (click)="closeModal()">No</button>
+                        <button ion-button color="primary" (click)="declineOffer()">Yes</button>
+                </div>
+        </div>
+        <div class="pal" *ngIf="action === 'negotiate'">
+                <div class="content pbl">Are you sure, you want to negotiate this offer from {{brandName}}?</div>
+                <ion-list>
+                        <ion-item>
+                                <ion-label color="primary" floating>Please specify your reason</ion-label>
+                                <ion-input [(ngModel)]="rejectReason"></ion-input>
+                        </ion-item>
+                </ion-list>
+                <div class="bbtn">
+                        <button ion-button color="danger" (click)="closeModal()">No</button>
+                        <button ion-button color="primary" (click)="negotiateOffer()">Yes</button>
+                </div>
+        </div>
+</ion-content>

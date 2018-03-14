@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons start *ngIf="isIos">
+      <button ion-button icon-only (click)="pop()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <img class="logo-header" src="assets/img/svg/logo.svg">
+  </ion-toolbar>
+</ion-header>
+<ion-content class="page-report">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6 *ngIf="fb?.campaign">
+        <ion-card class="selection-card" (click)="navigateToFbReport()">
+          <ion-card-content>
+            <span class="fb-rep">
+              <i class="fa fa-facebook"></i>
+            </span>
+            <div class="card-label">Facebook</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6 *ngIf="twitter?.campaign">
+        <ion-card class="selection-card" (click)="navigateToTwitterReport()">
+          <ion-card-content>
+            <span class="tw-rep">
+              <i class="fa fa-twitter"></i>
+            </span>
+            <div class="card-label">Twitter</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6 *ngIf="insta?.campaign">
+        <ion-card class="selection-card" (click)="navigateToInstagramReport()">
+          <ion-card-content>
+            <span class="ig-rep">
+              <i class="fa fa-instagram"></i>
+            </span>
+            <div class="card-label">Instagram</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6 *ngIf="utube?.campaign">
+        <ion-card class="selection-card" (click)="navigateToYoutubeReport()">
+          <ion-card-content>
+            <span class="yt-rep">
+              <i class="fa fa-youtube-play"></i>
+            </span>
+            <div class="card-label">Youtube</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6 *ngIf="linkedin?.campaign">
+        <ion-card class="selection-card" (click)="navigateToLinkedInReport()">
+          <ion-card-content>
+            <span class="ln-rep">
+              <i class="fa fa-linkedin"></i>
+            </span>
+            <div class="card-label">Linkedin</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6 *ngIf="pinterest?.campaign">
+        <ion-card class="selection-card" (click)="navigateToPinterestReport()">
+          <ion-card-content>
+            <span class="pi-rep">
+              <i class="fa fa-pinterest"></i>
+            </span>
+            <div class="card-label">Pinterest</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6 *ngIf="tumblr?.campaign">
+        <ion-card class="selection-card" (click)="navigateToTumblrReport()">
+          <ion-card-content>
+            <span class="tl-rep">
+              <i class="fa fa-tumblr"></i>
+            </span>
+            <div class="card-label">Tumblr</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6 *ngIf="snapchat?.campaign">
+        <ion-card class="selection-card" (click)="navigateToSnapchatReport()">
+          <ion-card-content>
+            <span class="sc-rep">
+              <i class="fa fa-snapchat-ghost"></i>
+            </span>
+            <div class="card-label">Snapchat</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card class="selection-card" (click)="navigateToConsolidated()">
+          <ion-card-content>
+            <span class="pi-rep">
+              <i class="fa fa-file-text-o"></i>
+            </span>
+            <div class="card-label">Consolidated</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

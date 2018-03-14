@@ -1,0 +1,111 @@
+<!-- <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>SocialCxN Home</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+        <ion-toolbar color="primary">
+            <ion-buttons start>
+                <button ion-button icon-only (click)="pop()">
+                    <ion-icon name="close"></ion-icon>
+                </button>
+            </ion-buttons>
+            <img class="logo-header" src="assets/img/svg/logo.svg">
+        </ion-toolbar>
+    </ion-header>
+    
+    <ion-content class="campaign-add-influencer">
+        <div class="white-page-container" *ngIf="!isShow">
+
+                <ion-searchbar
+                [(ngModel)]="searchObj.searchKeyword"
+                [showCancelButton]="shouldShowCancel"
+                (keyup.enter)="onSearch()"
+                (ionInput)="onInput($event)">
+                </ion-searchbar>
+                <h1>Select Influencer</h1>
+
+                <ion-spinner name="bubbles" *ngIf="isLoading"></ion-spinner>
+                <ion-card *ngFor="let influencer of influencers">
+                        <ion-item>
+                            <ion-checkbox  [(ngModel)]="influencer.selected" (ionChange)='onChangeInfluencer(influencer)'></ion-checkbox>
+                        </ion-item>
+                        <div>
+                                <img src="{{influencer.profile.profilePic.thumbnails.small?.url}}" style="width: 40px; height: 40px;"/>
+                                <h2>{{influencer.profile.name}}</h2>
+                                <span *ngFor="let interest of influencer.interestDetails, let $i = index">
+                                        <span >{{interest.name}}</span>
+                                </span>
+                        </div>
+                        <div>
+                            <span>Social Rank</span>    <span class="rating rat-{{influencer.profile.rating.displayValue}}"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"></i></span>
+                        </div>
+                        <div class="social-box">
+                            <span *ngFor="let stats of influencer.socialStats ">
+                            <span class="social-chnl" *ngIf="stats.socialMediaChannel.codeName && stats.socialMediaChannel.totalCount">
+                                <span >
+                                    <i class="fa fa-{{stats.socialMediaChannel.codeName}}" aria-hidden="true"></i>
+                                    <label>{{stats.socialMediaChannel.totalCount}}</label>
+                                </span>
+                            </span>
+                            </span>
+                        </div>
+                
+                        <div>
+                                <span class="tag" *ngIf="influencer.socialStats.length>0">{{influencer.socialStats[0].engagementLevel.displayValue}}</span>
+                                <span class="tag" *ngIf="influencer.socialStats.length<1">--</span>
+                        </div>
+
+
+
+
+                </ion-card>
+         
+                <div class="text-right">
+            
+                        <button ion-button color="primary"    (click)="makeOffer()">Make offer</button>
+                        
+                    </div>
+    
+        </div>
+
+        <ion-card *ngIf="isShow">
+                <ion-card-content>
+                        <h1>Make offer to the influencer(s)</h1>
+                        <div class="top-staus-box">Total budget - <span class="gr-txt">{{currencySymbol}} {{totalBudget}}</span></div>
+                        <ion-card  *ngFor="let fi of offeredInfluencers ;  let $index=index;">
+                                <ion-checkbox [(ngModel)]="fi.selected" (change)='onSelectedInfluencer(fi)'></ion-checkbox>
+                            <div>
+                                <img src="{{fi.profile.profilePic.thumbnails.small?.url}}" style="width: 40px; height: 40px;"/>
+                                <h2>{{fi.profile.name}}</h2>
+                        </div>
+                        <div>
+                            <span>Social Rank</span>    <span class="rating rat-{{fi.profile.rating.displayValue}}"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"></i></span>
+                        </div>
+                
+                        <ion-item>
+                                    
+                            <ion-label>Payment plan</ion-label>
+                            <ion-select [(ngModel)]="fi.paymentPlan" (ionChange)="onPaymentSelected($event)">
+                                    <ion-option *ngFor="let p of paymentPlans" [value]="p.id">{{p.displayName}}</ion-option>
+                                </ion-select>
+                        </ion-item>
+                
+                        <ion-item>
+                            <ion-label>Offer</ion-label>
+                            <ion-input type="number" min="0" [disabled]="!fi.selected && !fi.initialOfferAmount"
+                            [(ngModel)]="fi.initialOfferAmount" (focusout)="onTotalAmount(fi.initialOfferAmount ,minCampaignPaymentOffer )"
+                            ></ion-input>
+                        </ion-item>
+                
+                        </ion-card>
+
+                        <div class="text-right">
+            
+                                <button ion-button color="primary"    (click)="onClickAdd()">Add Influencer</button>
+                                
+                            </div>
+                    </ion-card-content>
+        </ion-card>
+    </ion-content>

@@ -1,0 +1,78 @@
+<!-- <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>SocialCxN Home</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+    <ion-toolbar color="primary">
+        <img class="logo-header" src="assets/img/svg/logo.svg">
+        <ion-buttons end>
+            <button ion-button icon-only  (click)="navigateToChat()">
+                <ion-icon  name="chatboxes"></ion-icon><span  [ngClass]="{'msg-notify': overAllUnreadStatus === true}"></span>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="page-influencer">
+    <div class="white-page-container">
+        <ion-refresher (ionRefresh)="doRefresh($event)">
+            <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+            </ion-refresher-content>
+        </ion-refresher>
+        <div class="title">All campaigns</div>
+        <div class="top-staus-box">Total Spendings -
+            <span class="gr-txt">{{user?.currency?.displayName}} {{totalBudgetSpent | number:'1.0-2'}}</span>
+        </div>
+        <ion-spinner name="bubbles" *ngIf="isLoading"></ion-spinner>
+        <div *ngIf="isLoading == false">
+            <ion-card class="list-card" (click)="navigateToDetail(infl.id, infl.status)" *ngFor="let infl of brandCampignsList; let $index=index;">
+                <ion-card-content>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col col-12>
+                                <div class="campaign-title">{{infl.name}}</div>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-5>
+                                <div class="sub-lebel">Budget</div>
+                            </ion-col>
+                            <ion-col col-7>
+                                <div class="sub-value">{{infl.paymentDetails.totalBudget}}</div>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-5>
+                                <div class="sub-lebel">No of influencers</div>
+                            </ion-col>
+                            <ion-col col-7>
+                                <div class="sub-value">{{infl.noOfInfluencers}}</div>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-5>
+                                <div class="sub-lebel">Est. Launch Date</div>
+                            </ion-col>
+                            <ion-col col-3>
+                                <div class="sub-value">{{infl.startDate}}</div>
+                            </ion-col>
+                            <ion-col col-4>
+                                <span class="status {{infl.status}}">{{infl.status}}</span>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-card-content>
+            </ion-card>
+        </div>
+
+
+
+        <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="brandCampignsList.length <= length">
+            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+
+
+    </div>
+</ion-content>

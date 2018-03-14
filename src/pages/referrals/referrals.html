@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons start>
+        <button ion-button icon-only (click)="pop()">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-buttons>
+      <img class="logo-header" src="assets/img/svg/logo.svg">
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="page-referrals">
+    <div class="fxbb white-bg">
+      <ion-card-header>
+        Refer Friend(s)
+      </ion-card-header>
+      <ion-card-content>
+          <form #form="ngForm" (ngSubmit)="add(form.value)">
+              <ion-item>
+                <ion-label floating>Email address</ion-label>
+                <ion-input [(ngModel)]="inputReferal" name="emailAdd"></ion-input>
+                <button ion-button item-right type="submit" icon-only>
+                <ion-icon name="checkmark"></ion-icon>
+              </button>
+              </ion-item>
+            </form>
+        <!-- <ion-chip *ngFor="let email of emails" >
+          <ion-label>{{email}}</ion-label>
+        </ion-chip> -->
+
+        <ion-chip *ngFor="let email of emails">
+            <ion-label>{{email}}</ion-label>
+            <button ion-button clear color="light" (click)="remove(email)">
+              <ion-icon name="close-circle"></ion-icon>
+            </button>
+          </ion-chip>
+
+        <div class="col-lg-12 col-md-12 ptl">
+            <button ion-button color="primary" [disabled]="(emails && emails.length<1) || isSubmitStarted" (click)="onSubmit()">Send Email</button>
+        </div>
+      </ion-card-content>
+    </div>
+  </ion-content>

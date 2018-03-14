@@ -1,0 +1,93 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons start>
+            <button ion-button icon-only (click)="pop()">
+                        <ion-icon name="close"></ion-icon>
+                    </button>
+        </ion-buttons>
+        <img class="logo-header" src="assets/img/svg/logo.svg">
+    </ion-toolbar>
+</ion-header>
+<ion-content class="page-brand">
+    <!-- <ion-tabs  selectedIndex="1" tabsPlacement="top">
+      <ion-tab tabIcon="menu" [root]="tab1Root"></ion-tab>
+      <ion-tab tabIcon="home" [root]="tab2Root"></ion-tab>
+      <ion-tab tabIcon="logo-buffer" [root]="tab3Root"></ion-tab>
+      <ion-tab tabIcon="notifications" [root]="tab4Root" tabBadge="3" tabBadgeStyle="danger"></ion-tab>
+    </ion-tabs> -->
+    <!-- Profile-info -->
+    <ion-grid>
+        <ion-row>
+            <ion-col col-12>
+                <ion-card>
+                    <ion-card-header color="primary">
+                        Brand Information
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ion-list>
+                            <form [formGroup]="userInfoForm" #b="ngForm">
+
+                                <ion-item>
+                                    <ion-label color="primary" floating>First Name</ion-label>
+                                    <ion-input (focus)="onFirstNameFocusIn()" (focusout)="onFirstNameFocusOut()" type="text" formControlName="firstName" [(ngModel)]="user.firstName"
+                                        [class.invalid]="!userInfoForm.controls.firstName.valid && (userInfoForm.controls.firstName.dirty || submitAttempt)"></ion-input>
+
+                                </ion-item>
+                                <div class="input-error" *ngIf="isFirstNameError && userInfoForm.controls.firstName.hasError('required')">
+                                    <p>First Name is <strong>required</strong></p>
+                                </div>
+                                <div class="input-error" *ngIf="isFirstNameError && userInfoForm.controls.firstName.hasError('pattern')">
+                                    <p>Please enter a valid First Name</p>
+                                </div>
+                                <div class="input-error" *ngIf="isFirstNameError && userInfoForm.controls.firstName.hasError('maxlength')">
+                                    <p>Invalid First Name (maximum 100 characters are allowed)</p>
+                                </div>
+
+                                <ion-item>
+                                    <ion-label color="primary" floating>Last Name</ion-label>
+                                    <ion-input (focus)="onLastNameFocusIn()" (focusout)="onLastNameFocusOut()" type="text" formControlName="lastName" [(ngModel)]="user.lastName"
+                                        [class.invalid]="!userInfoForm.controls.lastName.valid && (userInfoForm.controls.lastName.dirty || submitAttempt)"></ion-input>
+                                </ion-item>
+                                <div class="input-error" *ngIf="isLastNameError && userInfoForm.controls.lastName.hasError('required')">
+                                    <p>Last Name is <strong>required</strong></p>
+                                </div>
+                                <div class="input-error" *ngIf="isLastNameError && userInfoForm.controls.lastName.hasError('pattern')">
+                                    <p>Please enter a valid Last Name</p>
+                                </div>
+                                <div class="input-error" *ngIf="isLastNameError && userInfoForm.controls.lastName.hasError('maxlength')">
+                                    <p>Invalid Last Name (maximum 100 characters are allowed)</p>
+                                </div>
+
+                                <ion-item>
+                                    <ion-label color="primary" floating>Email</ion-label>
+                                    <ion-input (focus)="onEmailFocus()" readonly (focusout)="onEmailFocusOut()" type="email" formControlName="email" [class.invalid]="!userInfoForm.controls.email.valid && (userInfoForm.controls.email.dirty || submitAttempt)"
+                                        [(ngModel)]="user.loginEmail"></ion-input>
+
+                                </ion-item>
+                                <div class="input-error" *ngIf="isEmailError && userInfoForm.controls.email.hasError('required')">
+                                    <p>Email is <strong>required</strong></p>
+                                </div>
+                                <div class="input-error" *ngIf="isEmailError && userInfoForm.controls.email.hasError('pattern')">
+                                    <p>Please enter a valid Email</p>
+                                </div>
+                                <div class="input-error" *ngIf="isEmailError && userInfoForm.controls.email.hasError('maxlength')">
+                                    <p>Invalid Email (maximum 100 characters are allowed)</p>
+                                </div>
+                                <div class="input-error" *ngIf="isEmailError && !isEmailAvailable">
+                                    <p>Email is not <strong>available</strong></p>
+                                </div>
+
+
+                                <div class="text-right">
+                                    <button ion-button color="primary" [disabled]="!b.valid || isSubmitStarted" (click)='onSubmit()'>SAVE</button>
+                                </div>
+                            </form>
+
+                        </ion-list>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <!-- Profile-info -->
+</ion-content>

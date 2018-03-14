@@ -1,0 +1,192 @@
+<ion-header>
+  <ion-navbar>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="page-registration">
+    <div style="width: 170px; height: 25px; margin: auto;">
+        <img src="assets/img/logo.png" style="width: 100%; height: 100%;" />
+     </div>
+     
+  <ion-slides #signupSlider>
+    <ion-slide>
+      <div class="auth-title">Signup as <span>{{type}}</span></div>
+      <form [formGroup]="registrationForm" #b="ngForm" [ngStyle]="{'margin-top': '100px !important'}">
+        <ion-list >
+          <div *ngIf="role ==='influencer'">
+            <ion-item>
+              <ion-label color="primary" floating>First Name</ion-label>
+              <ion-input (focus)="onFirstNameFocusIn()" (focusout)="onFirstNameFocusOut()" type="text" formControlName="firstName" [(ngModel)]="user.firstName" [class.invalid]="!registrationForm.controls.firstName.valid && (registrationForm.controls.firstName.dirty || submitAttempt)"></ion-input>
+
+            </ion-item>
+            <div class="input-error" *ngIf="isFirstNameError && registrationForm.controls.firstName.hasError('required')">
+                <p>First Name is <strong>required</strong></p>
+            </div>
+            <div class="input-error" *ngIf="isFirstNameError && registrationForm.controls.firstName.hasError('pattern')">
+                <p>Please enter a valid First Name</p>
+            </div>
+            <div class="input-error" *ngIf="isFirstNameError && registrationForm.controls.firstName.hasError('maxlength')">
+                <p>Invalid First Name (maximum 100 characters are allowed)</p> 
+            </div>
+          </div>
+
+          <div *ngIf="role ==='influencer'">
+            <ion-item>
+              <ion-label color="primary" floating>Last Name</ion-label>
+              <ion-input (focus)="onLastNameFocusIn()" (focusout)="onLastNameFocusOut()" type="text" formControlName="lastName" [(ngModel)]="user.lastName" [class.invalid]="!registrationForm.controls.lastName.valid && (registrationForm.controls.lastName.dirty || submitAttempt)"></ion-input>
+            </ion-item>
+             <div class="input-error" *ngIf="isLastNameError && registrationForm.controls.lastName.hasError('required')">
+                <p>Last Name is <strong>required</strong></p>
+            </div>
+            <div class="input-error" *ngIf="isLastNameError && registrationForm.controls.lastName.hasError('pattern')">
+                <p>Please enter a valid Last Name</p>
+            </div>
+            <div class="input-error" *ngIf="isLastNameError && registrationForm.controls.lastName.hasError('maxlength')">
+                <p>Invalid Last Name (maximum 100 characters are allowed)</p> 
+            </div>
+          </div>
+
+          <div *ngIf="role ==='influencer'">
+            <ion-item>
+              <ion-label color="primary" floating>Social Media Name</ion-label>
+              <ion-input (focus)="onSocialNameFocusIn()" (focusout)="onSocialNameFocusOut()" type="text" formControlName="fullName" [(ngModel)]="user.fullName" [class.invalid]="!registrationForm.controls.fullName.valid && (registrationForm.controls.fullName.dirty || submitAttempt)"></ion-input>
+
+            </ion-item>
+             <div class="input-error" *ngIf="isSocialNameError && registrationForm.controls.fullName.hasError('required')">
+                <p>Social Media Name is <strong>required</strong></p>
+            </div>
+            <div class="input-error" *ngIf="isSocialNameError && registrationForm.controls.fullName.hasError('pattern')">
+                <p>Please enter a valid Social Media Name</p>
+            </div>
+            <div class="input-error" *ngIf="isSocialNameError && registrationForm.controls.fullName.hasError('maxlength')">
+                <p>Invalid Social Media Name (maximum 100 characters are allowed)</p> 
+            </div>
+          </div>
+
+          <div *ngIf="role !=='influencer'">
+            <ion-item>
+              <ion-label color="primary" floating>{{getEntityNamePlaceHolder()}}</ion-label>
+              <ion-input type="text" (focus)="onNameFocus()" (focusout)="onNameFocusOut()" formControlName="fullName" [(ngModel)]="user.fullName"
+                [class.invalid]="!registrationForm.controls.fullName.valid && (registrationForm.controls.fullName.dirty || submitAttempt)"></ion-input>
+
+            </ion-item>
+             <div class="input-error" *ngIf="isFullNameError && registrationForm.controls.fullName.hasError('required')">
+                <p>{{getEntityNamePlaceHolder()}} is <strong>required</strong></p>
+            </div>
+            <div class="input-error" *ngIf="isFullNameError && registrationForm.controls.fullName.hasError('pattern')">
+                <p>Please enter a valid {{getEntityNamePlaceHolder()}}</p>
+            </div>
+            <div class="input-error" *ngIf="isFullNameError && registrationForm.controls.fullName.hasError('maxlength')">
+                <p>Invalid {{getEntityNamePlaceHolder()}} (maximum 100 characters are allowed)</p> 
+            </div>
+            <div class="input-error" *ngIf="isFullNameError && !isNameAvailable">
+                <p>{{getEntityNamePlaceHolder()}} is not <strong>available</strong></p> 
+            </div>
+          </div>
+
+          <div *ngIf="role !=='influencer'">
+            <ion-item>
+              <ion-label color="primary" floating>Web URL {{isUrlNameError}}</ion-label>
+              <ion-input type="text" formControlName="webURL" (focus)="onUrlFocusIn()"  (focusout)="onUrlFocusOut()" name="webUrl" [(ngModel)]="user.webUrl" [class.invalid]="!registrationForm.controls.webURL.valid && (registrationForm.controls.webURL.dirty || submitAttempt)"></ion-input>
+
+            </ion-item>
+            <div class="input-error" *ngIf="isUrlError && registrationForm.controls.webURL.hasError('pattern')">
+                <p>Please enter a valid web url</p> 
+            </div>
+          </div>
+
+          <div>
+            <ion-item>
+              <ion-label color="primary" floating>Country</ion-label>
+              <ion-input type="text" formControlName="country" (focus)="onCountryFocus()" name="country" [(ngModel)]="user.country"
+                [class.invalid]="!registrationForm.controls.country.valid && (registrationForm.controls.country.dirty || submitAttempt)"></ion-input>
+
+            </ion-item>
+            <ion-item *ngIf="!registrationForm.controls.country.valid  && (registrationForm.controls.country.dirty || submitAttempt)"
+              no-lines>
+              <p>Please enter a country</p>
+            </ion-item>
+          </div>
+
+
+
+
+          <!--<ion-item *ngIf="!registrationForm.controls.country.valid  && (registrationForm.controls.country.dirty || submitAttempt)" no-lines>
+                    <p>Please enter a country</p>
+        </ion-item>-->
+
+        </ion-list>
+        <button ion-button full color="primary" (click)="next()" [disabled]="isSubmitStarted || !b.form.valid || !isNameAvailable"> Next</button>
+        <!-- <button ion-button clear (click)="navToVerification()" >Already received a verification code?</button> -->
+      </form>
+      <div class="text-center switch-opt"><a (click)="onLogin()">Already have an account? <span>Login</span></a></div>
+    </ion-slide>
+    <ion-slide>
+      <div class="auth-title">Signup as <span>{{type}}</span></div>
+      <form [formGroup]="registrationFormSecond" #c="ngForm">
+        <ion-list>
+          <ion-item>
+            <ion-label color="primary" floating>Email</ion-label>
+            <ion-input (focus)="onEmailFocus()" (focusout)="onEmailFocusOut()" type="email" formControlName="email" [class.invalid]="!registrationFormSecond.controls.email.valid && (registrationFormSecond.controls.email.dirty || submitAttempt)"
+              [(ngModel)]="user.loginEmail"></ion-input>
+
+          </ion-item>
+             <div class="input-error" *ngIf="isEmailError && registrationFormSecond.controls.email.hasError('required')">
+                <p>Email is <strong>required</strong></p>
+            </div>
+            <div class="input-error" *ngIf="isEmailError && registrationFormSecond.controls.email.hasError('pattern')">
+                <p>Please enter a valid Email</p>
+            </div>
+            <div class="input-error" *ngIf="isEmailError && registrationFormSecond.controls.email.hasError('maxlength')">
+                <p>Invalid Email (maximum 100 characters are allowed)</p> 
+            </div>
+            <div class="input-error" *ngIf="isEmailError && !isEmailAvailable">
+                <p>Email is not <strong>available</strong></p> 
+            </div>
+
+          <ion-item>
+            <ion-label color="primary" floating>Password</ion-label>
+            <ion-input (focus)="onPasswordFocusIn()" (focusout)="onPasswordFocusOut()"  validateEqual="confirmPassword" reverse="true" type="password" formControlName="password" [class.invalid]="!registrationFormSecond.controls.password.valid && (registrationFormSecond.controls.password.dirty || submitAttempt)"
+              [(ngModel)]="user.password"></ion-input>
+          </ion-item>
+             <div class="input-error" *ngIf="isPasswordError && registrationFormSecond.controls.password.hasError('required')">
+                <p>Password is <strong>required</strong></p>
+            </div>
+            <!--<div class="input-error" *ngIf="isPasswordError && registrationFormSecond.controls.password.hasError('minlength')">
+                <p>Invalid password (minimum 8 characters are allowed)</p>
+            </div>-->
+
+            <div class="input-error" *ngIf="isPasswordError && registrationFormSecond.controls.password.hasError('pattern')">
+                <p>password must be 8 to 20 characters long with at least one character, one number and one special character</p>
+            </div>
+
+
+
+          <ion-item>
+            <ion-label color="primary" floating>Confirm Password</ion-label>
+            <ion-input (focus)="onConfirmPasswordFocusIn()" (focusout)="onConfirmPasswordFocusOut()"  validateEqual="password" type="password" formControlName="confirmPassword" [class.invalid]="!registrationFormSecond.controls.confirmPassword.valid && (registrationFormSecond.controls.confirmPassword.dirty || submitAttempt)"
+              [(ngModel)]="user.confirmPassword"></ion-input>
+          </ion-item>
+
+            <div class="input-error" *ngIf="isConfirmPasswordError && registrationFormSecond.controls.confirmPassword.hasError('required')">
+                <p>Confirm Password is <strong>required</strong></p>
+            </div>
+
+
+          <div class="input-error" *ngIf="isEqualPasswordError"
+            no-lines>
+            <p>These passwords do not match.</p>
+          </div>
+
+          <ion-item>
+            <ion-label>I agree to <a (click)="openTermsService()">terms</a> of service agreement.</ion-label>
+
+            <ion-checkbox formControlName="isAgreed" [(ngModel)]="isAgreed"></ion-checkbox>
+          </ion-item>
+        </ion-list>
+        <button ion-button full color="primary" (click)="onSubmit()" [disabled]="isSubmitStarted || !c.form.valid || !isAgreed || !isEmailAvailable || isEqualPasswordError">Submit</button>
+        <!-- <button ion-button clear (click)="navToVerification()" > Already received a verification code?</button> -->
+      </form>
+      <div class="text-center switch-opt"><a (click)="onLogin()">Already have an account? <span>Login</span></a></div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

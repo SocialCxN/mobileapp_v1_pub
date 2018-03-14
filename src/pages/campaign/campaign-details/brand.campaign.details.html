@@ -1,0 +1,238 @@
+<!-- <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>SocialCxN Home</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+        <ion-toolbar color="primary">
+                <!-- <ion-buttons start>
+                    <button ion-button icon-only (click)="pop()">
+                            <ion-icon name="close"></ion-icon>
+                    </button>
+            </ion-buttons> -->
+                <ion-buttons left>
+                        <button ion-button icon-only (click)="pop()">
+                                <ion-icon name="arrow-back"></ion-icon>
+                        </button>
+                </ion-buttons>
+                <img class="logo-header" src="assets/img/svg/logo.svg">
+        </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="page-influencer">
+        <div class="white-page-container">
+                <div class="title">Campaign Details</div>
+                <div class="top-staus-box">
+                        <ion-grid>
+                                <ion-row>
+                                        <ion-col col-8 class="text-left">Total number of influencers</ion-col>
+                                        <ion-col col-4 class="gr-txt text-right"> {{brandDetails.noOfInfluencers}} </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                        <ion-col col-8 class="text-left">Accepted</ion-col>
+                                        <ion-col col-4 class="gr-txt text-right"> {{brandDetails.overAllInfluencerStatuses?.accepted}}</ion-col>
+                                </ion-row>
+                                <ion-row>
+                                        <ion-col col-8 class="text-left">Pending</ion-col>
+                                        <ion-col col-4 class="gr-txt text-right"> {{brandDetails.overAllInfluencerStatuses.pending}}</ion-col>
+                                </ion-row>
+                                <ion-row>
+                                        <ion-col col-8 class="text-left">Rejected</ion-col>
+                                        <ion-col col-4 class="gr-txt text-right">
+                                                {{brandDetails.overAllInfluencerStatuses.rejected}}
+                                        </ion-col>
+                                </ion-row>
+                                <ion-row *ngIf="brandDetails.negotiationRequestCounter>0">
+                                        <ion-col col-8 class="text-left">Negotiating</ion-col>
+                                        <ion-col col-4 class="gr-txt text-right"> {{brandDetails?.negotiationRequestCounter}}
+                                        </ion-col>
+                                </ion-row>
+
+                                <ion-row>
+                                        <ion-col col-8 class="text-left">Gross offer</ion-col>
+                                        <ion-col col-4 class="gr-txt text-right">
+                                                <span *ngIf="brandDetails.campaignObjectives && brandDetails.campaignObjectives[0].codeName!=='bounty_program'">{{currencySymbol}}</span>
+                                                {{brandDetails.paymentDetails.totalBudget | number:'1.0-2'}}
+                                                <span *ngIf="brandDetails.campaignObjectives && brandDetails.campaignObjectives[0].codeName==='bounty_program'"> Token(s)</span>
+                                        </ion-col>
+                                </ion-row>
+                        </ion-grid>
+                </div>
+                <div>
+                        <div class="label-txt">ID</div>
+                        <div class="value-txt">{{brandDetails?.uniqueId}} </div>
+                </div>
+                <div>
+                        <div class="label-txt">Campaign name</div>
+                        <div class="value-txt">{{brandDetails?.name}}</div>
+                </div>
+
+                <div>
+                        <div class="label-txt">Campaign Status</div>
+                        <div class="value-txt">{{brandDetails?.status}}</div>
+                </div>
+                <div *ngIf="associated">
+                        <div class="label-txt">Campaign for</div>
+                        <div class="value-txt">{{brandDetails?.associated?.name}}</div>
+                </div>
+                <div>
+                        <div class="label-txt">Objective</div>
+                        <div class="value-txt">
+                                <span class="label-dt" *ngFor="let obj of brandDetails.campaignObjectives">
+                                        {{obj?.displayName}}
+                                        <span class="comma">, </span>
+                                        <span *ngIf="brandDetails.campaignObjectives.otherDescription">{{brandDetails.campaignObjectives.otherDescription}}</span>
+                                </span>
+                        </div>
+                </div>
+                <div>
+                        <div class="label-txt">Channel</div>
+                        <div class="value-txt">
+                                <span class="label-dt" *ngFor="let channel of brandDetails.socialMediaChannels">
+                                        {{channel?.displayName}}
+                                        <span class="comma">, </span>
+                                </span>
+                        </div>
+                </div>
+                <div>
+                        <div class="label-txt">Category</div>
+                        <div class="value-txt">
+                                <span class="label-dt" *ngFor="let category of brandDetails.campaignCategories">
+                                        {{category?.displayName}}
+                                        <span class="comma">, </span>
+                                </span>
+                        </div>
+                </div>
+                <div>
+                        <div class="label-txt">Est. launch date</div>
+                        <div class="value-txt">{{brandDetails?.startDate}}</div>
+                </div>
+                <div>
+                        <div class="label-txt">Est. end date</div>
+                        <div class="value-txt">{{brandDetails?.endDate}}</div>
+                </div>
+                <div>
+                        <div class="label-txt">Description</div>
+                        <div class="value-txt">
+                                <p class="first-part" *ngIf="!isPartTwo">{{descriptionPartOne}}</p>
+                                <p class="second-part" *ngIf="isPartTwo">{{descriptionPartTwo}}</p>
+                                <button md-button *ngIf="readMore" (click)="onClickReadMore()"> Read More</button>
+                        </div>
+                </div>
+                <div>
+                        <div class="label-txt">Reference URL</div>
+                        <div class="value-txt">
+                                <a href="{{url.referenceUrl}}" target="_blank" *ngFor="let url of brandDetails.referenceUrls">{{url.referenceUrl}}</a>
+                        </div>
+                </div>
+                <div class="pbm">
+                        <div class="label-txt">Media</div>
+                        <div>
+                                <div class="csn-label">Photos/Documents</div>
+
+                                <span class="media-box" *ngFor="let image of _albums; let i=index">
+                                        <img [src]="image.thumb" />
+                                </span>
+                                <span *ngFor="let doc of _documents;">
+                                        <span class="media-box xls" *ngIf="doc.extension == 'xls'">
+                                                <a href="{{doc.link}}" target="_blank">XLS </a>
+                                        </span>
+                                        <span class="media-box pdf" *ngIf="doc.extension == 'pdf'">
+                                                <a href="{{doc.link}}" target="_blank">PDF </a>
+                                        </span>
+                                        <span class="media-box doc" *ngIf="doc.extension == 'word' || doc.extension == 'doc' || doc.extension == 'docx'">
+                                                <a href="{{doc.link}}" target="_blank">DOC </a>
+                                        </span>
+                                        <span class="media-box doc" *ngIf="doc.extension == 'pptx' || doc.extension == 'ppt'">
+                                                <a href="{{doc.link}}" target="_blank">PPT </a>
+                                        </span>
+                                </span>
+
+                        </div>
+
+                        <hr>
+                        <div class="csn-label">Video/Audio</div>
+                        <div class="clearfix">
+                                <div class="video-box" *ngFor="let v of videos">
+                                        <video class="video-media" controls>
+                                                <source src="{{v.link}}" type="video/mp4">
+                                        </video>
+                                </div>
+
+                                <div class="audio-box" *ngFor="let v of audios">
+                                        <div class="media-label">Audio</div>
+                                        <audio controls class="audio-media">
+                                                <source src="{{v.link}}" type="audio/ogg">
+                                        </audio>
+                                </div>
+                        </div>
+                </div>
+                <div>
+                        <div class="label-txt">Media Link</div>
+                        <div class="value-txt">
+                                <a href="{{link}}" target="_blank" *ngFor="let link of mediaLinksUrl ; let $index=index;">{{link}}</a>
+                        </div>
+                </div>
+
+
+
+
+                <!-- <div class="text-right">
+
+                        <button ion-button color="primary" [disabled]="brandDetails?.status != 'pending'" (click)="submitReport()">Edit</button>
+
+                        <div *ngIf="brandDetails.negotiationRequestCounter>0">
+                                <button ion-button color="primary">NEGOTIATION REQUEST</button>
+                                <span class="notificaiton">{{brandDetails?.negotiationRequestCounter}}</span>
+                        </div>
+                </div> -->
+
+
+                <div class="title">Selected Influencers</div>
+                <ion-card class="list-card" *ngFor="let inf of brandDetails.offeredInfluencers;let $index=index;">
+                        <div class="first-row-box">
+                                <img src="assets/img/social-cxn-profile.jpg" />
+                                <div class="rpo-col">
+                                        <h2>{{inf.socialName}}</h2>
+                                        <span *ngFor="let interest of inf.interestDetails, let $i = index">
+                                                <span>{{interest.name}}</span>
+                                        </span>
+                                </div>
+                        </div>
+                        <div class="details-selected-inf">
+                                <div class="clearfix">
+                                        <span class="label">Influencer status</span>
+                                        <span class="value">{{inf.offeredStatus}}</span>
+
+                                </div>
+                                <div class="clearfix">
+                                        <span class="label">Payment plan</span>
+                                        <span class="value">{{inf.paymentDetails.paymentPlan?.displayName}}</span>
+
+                                </div>
+                                <div class="clearfix">
+                                        <span class="label">Gross offer</span>
+                                        <span class="value">{{inf.paymentDetails.currency.symbol}} {{inf.paymentDetails.finalOfferedAmount |
+                                                number:'1.0-2'}}
+                                        </span>
+                                </div>
+                        </div>
+
+                        <div>
+                                <button ion-button color="primary" small outline (click)="dropInfluencer(inf.socialName, $index)"> Drop</button>
+                        </div>
+
+
+                </ion-card>
+
+                <!-- <div class="text-right">
+
+                        <button ion-button color="primary" [disabled]="addInfluencerStatus == true ?'': 'module-disable'" (click)="addMoreInfluencers()">ADD MORE INFLUENCER(S)</button>
+
+                </div> -->
+        </div>
+
+
+</ion-content>

@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-navbar>
+      <!-- <ion-title>
+        Verification
+      </ion-title> -->
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding class="page-verification">
+      <div class="auth-title">Verification</div>
+      <p> To verify your email address, follow the link sent to you on email or enter the given key below.</p>
+    <form [formGroup]="verificationForm" #b="ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label color="primary" floating>Enter your key</ion-label>
+        <ion-input type="text" formControlName="key" [class.invalid]="!verificationForm.controls.key.valid && (verificationForm.controls.key.dirty || submitAttempt)" [(ngModel)]="key"></ion-input>
+      </ion-item>
+  <div class="input-error" *ngIf="!verificationForm.controls.key.valid  && (verificationForm.controls.key.dirty || submitAttempt)" no-lines>
+      <p> Key is <strong>required</strong></p>
+  </div>
+
+    </ion-list>
+    <button ion-button full color="primary" (click)="verifyKey()" [disabled]="isSubmitStarted || !b.form.valid "> Verify</button>
+    </form>
+
+        <a  (click) ="onClickResend()">Resend Email</a>
+    <!--<div>
+      <a (click)="onClickLogin()">Dont have an account? Signup</a>
+      </div>-->
+  </ion-content>
+  

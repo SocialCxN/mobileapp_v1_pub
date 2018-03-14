@@ -1,0 +1,459 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons start>
+            <button ion-button icon-only (click)="pop()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+        <img class="logo-header" src="assets/img/svg/logo.svg">
+    </ion-toolbar>
+</ion-header>
+<!-- <ion-content>
+    <ion-card>
+        <div *ngIf="model.socialMediaChannel.codeName == 'facebook'">
+            <button ion-button full color="primary"> Connect facebook</button>
+        </div>
+        <ion-list>
+            <ion-item>
+                <ion-label color="primary" floating>Campaign Name</ion-label>
+                <ion-input readonly [(ngModel)]="model.campaign.name"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary" floating>Report status</ion-label>
+                <ion-input readonly [(ngModel)]="reportStatus"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary" floating>Est. launch date</ion-label>
+                <ion-input readonly [(ngModel)]="model.campaign.startDate"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary" floating>Est. end date</ion-label>
+                <ion-input readonly [(ngModel)]="model.campaign.endDate"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="primary" floating>Upload media</ion-label>
+
+            </ion-item>
+            <button ion-button full color="primary">upload</button>
+
+            <ion-item *ngIf="model.socialMediaChannel?.codeName == 'facebook'">
+                <ion-label color="primary" floating>Add post url</ion-label>
+                <ion-input [(ngModel)]="postUrl" (keyup.enter)="getPost()"></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="model.socialMediaChannel?.codeName != 'facebook'">
+                <ion-label color="primary" floating>Add post url</ion-label>
+                <ion-input [(ngModel)]="postUrl" (keyup.enter)="getPost()"></ion-input>
+            </ion-item>
+
+            <div class="anchore-tag-line mbxs" *ngFor="let link of postLinks ; let $index=index;">
+                <a href="#">{{link.urlLink}}</a>
+                <span class="anchore-tag-line-icn">
+                    <i class="material-icons" (click)="removeLink($index)">cancel</i>
+                </span>
+            </div>
+        </ion-list>
+
+
+    </ion-card>
+    <ion-card>
+        <ion-row>
+            <ion-col col-12>
+                <ion-col col-6>
+                    <span>Reach</span>
+                    <span>{{model?.totalReach}}</span>
+                </ion-col>
+                <ion-col col-6>
+                    <span>Engagement rate</span>
+                    <span>{{model?.totalEngagementRate}}</span>
+                    <span *ngIf="model.totalEngagementRate">%</span>
+                </ion-col>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-6 *ngFor="let attr of model.attributes, let i = index">
+                <ion-item>
+                    <ion-label color="primary" floating>{{attr.displayName}}</ion-label>
+                    <ion-input readonly [(ngModel)]="attr.value"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="model.socialMediaChannel?.codeName === 'facebook' && !fbPullData">
+            <ion-col col-12>
+                <span class="simple-txt">Unfortunately the system is unable to pull off your data, please fill in the information manually.</span>
+                <button md-raised-button class="gry-btn" (click)='showManual = !showManual'>{{ showManual ? 'Hide' : 'Enter manually'}} </button>
+            </ion-col>
+            <ion-col col-12 *ngIf="showManual">
+                <ion-col col-6 *ngFor="let attr of model.attributes, let i = index">
+                    <ion-item>
+                        <ion-label color="primary" floating>{{attr.displayName}}</ion-label>
+                        <ion-input [(ngModel)]="attr.value"></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-col>
+            <ion-col col-12>
+                <ion-label color="primary" floating>Total Reach</ion-label>
+                <ion-input [(ngModel)]="model.totalReach" (focusout)="calculateEngRate()"></ion-input>
+            </ion-col>
+            <ion-col col-12 *ngIf="totalReachError">
+                Incorrect input
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="model.socialMediaChannel?.codeName !== 'facebook'">
+            <ion-col col-12>
+                <span class="simple-txt">Unfortunately the system is unable to pull off your data, please fill in the information manually.</span>
+                <button md-raised-button class="gry-btn" (click)='showManual = !showManual'>{{ showManual ? 'Hide' : 'Enter manually'}} </button>
+            </ion-col>
+            <ion-col col-12 *ngIf="showManual">
+                <ion-col col-6 *ngFor="let attr of model.attributes, let i = index">
+                    <ion-item>
+                        <ion-label color="primary" floating>{{attr.displayName}}</ion-label>
+                        <ion-input [(ngModel)]="attr.value"></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-col>
+            <ion-col col-12 *ngIf="showManual">
+                <ion-item>
+                    <ion-label color="primary" floating>Total Reach</ion-label>
+                    <ion-input [(ngModel)]="model.totalReach" (focusout)="calculateEngRate()"></ion-input>
+                </ion-item>
+                <ion-col col-12 *ngIf="totalReachError">
+                    Incorrect input
+                </ion-col>
+            </ion-col>
+
+        </ion-row>
+
+        <button ion-button full color="primary" *ngIf="model.socialMediaChannel.codeName === 'facebook'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'facebook'"
+            (click)="presentConfirm()">Submit facebook report</button>
+        <button ion-button full color="primary" *ngIf="model.socialMediaChannel.codeName === 'twitter'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'twitter'"
+            (click)="presentConfirm()">Submit twitter report</button>
+
+        <button ion-button full color="primary" *ngIf="model.socialMediaChannel.codeName === 'instagram'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'instagram'"
+            (click)="presentConfirm()">Submit instagram report</button>
+        <button ion-button full color="primary" *ngIf="model.socialMediaChannel.codeName === 'youtube'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'youtube'"
+            (click)="presentConfirm()">Submit youtube report</button>
+        <button ion-button full color="primary" *ngIf="model.socialMediaChannel.codeName === 'linkedin'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'linkedin'"
+            (click)="presentConfirm()">Submit linkedin report</button>
+
+        <button ion-button full color="primary" *ngIf="model.socialMediaChannel.codeName === 'tumblr'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'tumblr'"
+            (click)="presentConfirm()">Submit tumblr report</button>
+        <button ion-button full color="primary" *ngIf="model.socialMediaChannel.codeName === 'pinterest'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'pinterest'"
+            (click)="presentConfirm()">Submit pinterest report</button>
+        <button ion-button full color="primary" *ngIf="model.socialMediaChannel.codeName === 'snapchat'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'snapchat'"
+            (click)="presentConfirm()">Submit snapchat report</button>
+    </ion-card>
+
+</ion-content> -->
+
+
+
+<ion-content class="page-report">
+    <div class="white-page-container">
+        <div class="title">Campaign Report</div>
+        <div class="pvm" *ngIf="model.socialMediaChannel.codeName == 'facebook'">
+            <span class="sc-ico fb">
+                <i class="fa fa-facebook"></i>
+            </span>
+            <button ion-button (click)="callFacebook()" color="light" class="vm-align" outline small style="background-color: #3b5998;
+            color: #fff;">Facebook Connect</button>
+        </div>
+        <div>
+            <div class="label-txt">Campaign name</div>
+            <div class="value-txt">
+                <b>{{model.campaign?.name}}</b>
+            </div>
+        </div>
+        <div>
+            <div class="label-txt">Report status</div>
+            <div class="value-txt">{{reportStatus}}</div>
+        </div>
+        <div>
+            <div class="label-txt">Est. launch date</div>
+            <div class="value-txt">{{model.campaign?.startDate}}</div>
+        </div>
+        <div>
+            <div class="label-txt">Est. end date</div>
+            <div class="value-txt">{{model.campaign?.endDate}}</div>
+        </div>
+        <hr>
+        <!-- <div>
+            <div class="label-txt">Media {{model.reportStatus}}</div>
+            <div class="value-txt">{{campaign?.name}}</div>
+        </div> -->
+
+        <div class="hint-box"> *Maximum file size is 10MB. JPG, PNG, GIF, PDF, DOC, PPT, XLS, MP4, MP3, WMA file formats are allowed.</div>
+        
+        <button *ngIf="model.reportStatus !== 'report_on_review'" ion-button full color="primary" (click)="openActionSheet();">Attach file</button>
+       
+        <!--File Preview  After submit report -->
+        <div *ngIf="model.reportStatus === 'report_on_review'">
+                <div class="label-txt">Media </div>
+            <div class="media-item" *ngFor="let attach of _attachments; let i=index">
+                <span class="media-box" *ngIf="attach.meta.type == 'image'">
+                    <img src="{{attach.thumbnails.small.url}}"  class="media-object" />
+                </span>
+                <span class="media-box pdf" *ngIf="attach.meta.type == 'document' && attach.original.extension =='pdf'"> <a href="{{attach.original.url}}" target="_blank">PDF</a></span>
+                <span class="media-box pdf" *ngIf="attach.meta.type == 'document' && attach.original.extension =='xls'"><a href="{{attach.original.url}}" target="_blank">XLS</a></span>
+                <span class="media-box pdf" *ngIf="attach.meta.type == 'document' && (attach.original.extension =='docx' || attach.original.extension =='doc')"><a href="{{attach.original.url}}" target="_blank">DOC</a></span>
+                
+                <video width="320" height="240" controls *ngIf="attach.meta.type == 'video' || attach.meta.type == 'mp4' ">
+                    <source src="{{attach.encodings.hd.url}}" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+
+        <!--File Preview -->
+        <div *ngIf="model.reportStatus !== 'report_on_review'">
+            <div class="media-item" *ngFor="let item of displayFiles">
+                <span class="media-box" *ngIf="item.type == 'image'">
+                    <img src="{{item.data}}"  class="media-object" />
+                </span>
+                <span class="media-box pdf" *ngIf="item.type == 'pdf'">PDF</span>
+                <span class="media-box pdf" *ngIf="item.type == 'xls'">XLS</span>
+                <span class="media-box pdf" *ngIf="item.type == 'doc'">DOC</span>
+                
+                <video width="320" height="240" controls *ngIf="item.type == 'video'">
+                    <source src="{{item.data}}" type="video/mp4">
+                </video>
+                <!-- <span class="media-box pdf" *ngIf="item?._file.type == 'application/pdf'">PDF</span>
+                <span class="media-box xls" *ngIf="item?._file.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'">XLS</span>
+                <span class="media-box doc" *ngIf="item?._file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'">DOC</span>
+                <md-icon (click)="item.remove()" mdTooltip="Delete">delete</md-icon> -->
+            </div>
+        </div>
+        <!--File Preview -->
+        <div *ngIf="model.reportStatus !== 'report_on_review'">
+            <div class="media-item" *ngFor="let item of files">
+                <span class="media-box" *ngIf="item.type == 'image'">
+                    <img src="{{item.data}}"  class="media-object" />
+                </span>
+                <span class="media-box pdf" *ngIf="item.type == 'pdf'">PDF</span>
+                <span class="media-box pdf" *ngIf="item.type == 'xls'">XLS</span>
+                <span class="media-box pdf" *ngIf="item.type == 'doc'">DOC</span>
+
+                <video width="320" height="240" controls *ngIf="item.type == 'video'">
+                    <source src="{{item.data}}" type="video/mp4">
+                </video>
+                <!-- <span class="media-box pdf" *ngIf="item?._file.type == 'application/pdf'">PDF</span>
+                <span class="media-box xls" *ngIf="item?._file.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'">XLS</span>
+                <span class="media-box doc" *ngIf="item?._file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'">DOC</span>
+                <md-icon (click)="item.remove()" mdTooltip="Delete">delete</md-icon> -->
+            </div>
+
+        </div>
+        <button *ngIf="model.reportStatus !== 'report_on_review'" ion-button  color="primary" [disabled]="files.length == 0" (click)="uploadFiles()">
+            Upload
+        </button>
+<!-- <button type="button" md-raised-button class="gry-btn" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+            Cancel
+        </button> -->
+<!-- <button ion-button   color="warn">
+            Remove
+        </button> -->
+        
+        <!-- <ion-item *ngIf="model.socialMediaChannel?.codeName === 'FACEBOOK' && model.reportStatus !== 'report_on_review'">
+                <div class="label-txt">Add post url</div>
+                <div class="value-txt" style="border-bottom: solid;" (press)="onhold()">
+                        <ion-input [(ngModel)]="postUrl" (focusout)="getPost()" (keyup.enter)="getPost()"></ion-input>
+                </div>
+        </ion-item> -->
+
+        <ion-item *ngIf="model.reportStatus !== 'report_on_review'" (press)="onhold()">
+            <ion-label color="primary" floating>Add post url</ion-label>
+            <ion-input myTabindex="1" [(ngModel)]="postUrl" (focusout)="getPost()" (keyup.enter)="getPost()"></ion-input>
+        </ion-item> 
+        
+        <div>
+            <div class="label-txt" *ngIf="model.reportStatus === 'report_on_review'">Reference URL</div>
+            <div class="value-txt" *ngFor="let link of postLinks ; let $index=index;">
+                <a href="{{link.urlLink}}" target="_blank"  >{{link.urlLink}}</a> <span (click)="removeLink($index)" *ngIf="model.reportStatus !== 'report_on_review'">x</span>
+            </div>
+        </div>
+
+
+        <hr>
+        <div>
+            <div class="bg-pri">
+                <ion-row>
+                    <ion-col col-6>
+                        <div class="lb-pri">Reach</div>
+                        <div class="vl-pri">{{model?.totalReach}}</div>
+                    </ion-col>
+                    <ion-col col-6>
+                        <div class="lb-pri">Engagement rate</div>
+                        <div class="vl-pri">{{model?.totalEngagementRate}}
+                            <span *ngIf="model.totalEngagementRate">%</span>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </div>
+            <ion-row>
+                    <ion-col col-6 *ngFor="let attr of model.attributes, let i = index">
+                            <div class="clearfix pvm">
+                                <div class="rep-content-box">
+                                    <span class="icon-area">
+                                        <i class="material-icons">{{attr.icon}}</i>
+                                    </span>
+                                    <div class="label-type gr-txt">{{attr.displayName}}</div>
+                                    <div class="label-value">{{attr.value}}</div>
+                                </div>
+                            </div>
+                        </ion-col>
+                <!-- <ion-col col-6>
+                    <div class="clearfix pvm">
+                        <div class="rep-content-box">
+                            <span class="icon-area">
+                                <i class="material-icons">visibility</i>
+                            </span>
+                            <div class="label-type gr-txt">Post Clicks</div>
+                            <div class="label-value">10K</div>
+                        </div>
+                    </div>
+                </ion-col>
+                <ion-col col-6>
+                    <div class="clearfix pvm">
+                        <div class="rep-content-box">
+                            <span class="icon-area">
+                                <i class="material-icons">sentiment_very_satisfied</i>
+                            </span>
+                            <div class="label-type gr-txt">Reactions</div>
+                            <div class="label-value">10K</div>
+                        </div>
+                    </div>
+                </ion-col>
+                <ion-col col-6>
+                    <div class="clearfix pvm">
+                        <div class="rep-content-box">
+                            <span class="icon-area">
+                                <i class="material-icons">thumb_up</i>
+                            </span>
+                            <div class="label-type gr-txt">Likes</div>
+                            <div class="label-value">10K</div>
+                        </div>
+                    </div>
+                </ion-col>
+                <ion-col col-6>
+                    <div class="clearfix pvm">
+                        <div class="rep-content-box">
+                            <span class="icon-area">
+                                <i class="material-icons">comment</i>
+                            </span>
+                            <div class="label-type gr-txt">Comments</div>
+                            <div class="label-value">10K</div>
+                        </div>
+                    </div>
+                </ion-col>
+                <ion-col col-6>
+                    <div class="clearfix pvm">
+                        <div class="rep-content-box">
+                            <span class="icon-area">
+                                <i class="material-icons">share</i>
+                            </span>
+                            <div class="label-type gr-txt">Share</div>
+                            <div class="label-value">10K</div>
+                        </div>
+                    </div>
+                </ion-col>
+                <ion-col col-6>
+                    <div class="clearfix pvm">
+                        <div class="rep-content-box">
+                            <span class="icon-area">
+                                <i class="material-icons">video_library</i>
+                            </span>
+                            <div class="label-type gr-txt">Video views</div>
+                            <div class="label-value">10K</div>
+                        </div>
+                    </div>
+                </ion-col> -->
+            </ion-row>
+            <hr>
+            <!-- <ion-row class="pbm" *ngIf="model.socialMediaChannel?.codeName !== 'facebook'">
+                <ion-col col-12>
+                        <span class="simple-txt">Unfortunately the system is unable to pull off your data, please fill in the information manually.</span> 
+                        <button md-raised-button class="gry-btn" (click)='showManual = !showManual'>{{ showManual ? 'Hide' : 'Enter manually'}} </button>
+                </ion-col>
+                <ion-col col-12 *ngIf="showManual">
+                        <ion-col col-6 *ngFor="let attr of model.attributes, let i = index">
+                                <ion-item>
+                                    <ion-label color="primary" floating>{{attr.displayName}}</ion-label>
+                                    <ion-input readonly [(ngModel)]="attr.value"></ion-input>
+                                </ion-item>
+                            </ion-col>
+                </ion-col>
+            </ion-row> -->
+            <ion-row *ngIf="model.socialMediaChannel?.codeName === 'facebook' ">
+                <ion-col col-12>
+                    <span class="simple-txt">If the system is unable to pull off your data, please fill in the information manually.</span>
+                    <button md-raised-button class="gry-btn" (click)='showManual = !showManual'>{{ showManual ? 'Hide' : 'Enter manually'}} </button>
+                </ion-col>
+                <ion-col col-12 *ngIf="showManual">
+                    <ion-col col-6 *ngFor="let attr of model.attributes, let i = index">
+                        <ion-item>
+                            <ion-label color="primary" floating>{{attr.displayName}}</ion-label>
+                            <ion-input [(ngModel)]="attr.value"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-col>
+                <ion-col col-12 *ngIf="showManual">
+                    <ion-label color="primary" floating>Total Reach</ion-label>
+                    <ion-input [(ngModel)]="model.totalReach" (focusout)="calculateEngRate()"></ion-input>
+                </ion-col>
+                <ion-col col-12 *ngIf="totalReachError">
+                    Incorrect input
+                </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="model.socialMediaChannel?.codeName !== 'facebook'">
+                <!-- <ion-col col-12>
+                    <span class="simple-txt">Unfortunately the system is unable to pull off your data, please fill in the information manually.</span>
+                    <button md-raised-button class="gry-btn" (click)='showManual = !showManual'>{{ showManual ? 'Hide' : 'Enter manually'}} </button>
+                </ion-col> -->
+                <ion-col col-12 *ngIf="model.reportStatus !== 'report_on_review'">
+                    <ion-col col-6 *ngFor="let attr of model.attributes, let i = index">
+                        <ion-item>
+                            <ion-label color="primary" floating>{{attr.displayName}}</ion-label>
+                            <ion-input type="number" myTabindex="2" [(ngModel)]="attr.value"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-col>
+                <ion-col col-12 *ngIf="model.reportStatus !== 'report_on_review'">
+                    <ion-item>
+                        <ion-label color="primary" floating>Total Reach</ion-label>
+                        <ion-input type="number" [(ngModel)]="model.totalReach" (focusout)="calculateEngRate()"></ion-input>
+                    </ion-item>
+                    <ion-col col-12 *ngIf="totalReachError">
+                        Incorrect input
+                    </ion-col>
+                </ion-col>
+
+            </ion-row>
+        </div>
+
+
+
+        <div class="text-right">
+            <button ion-button color="primary" *ngIf="model.socialMediaChannel.codeName === 'facebook'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'facebook'"
+                (click)="presentConfirm()">Submit facebook report</button>
+            <button ion-button color="primary" *ngIf="model.socialMediaChannel.codeName === 'twitter'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'twitter'"
+                (click)="presentConfirm()">Submit twitter report</button>
+
+            <button ion-button color="primary" *ngIf="model.socialMediaChannel.codeName === 'instagram'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'instagram'"
+                (click)="presentConfirm()">Submit instagram report</button>
+            <button ion-button color="primary" *ngIf="model.socialMediaChannel.codeName === 'youtube'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'youtube'"
+                (click)="presentConfirm()">Submit youtube report</button>
+            <button ion-button color="primary" *ngIf="model.socialMediaChannel.codeName === 'linkedin'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'linkedin'"
+                (click)="presentConfirm()">Submit linkedin report</button>
+
+            <button ion-button color="primary" *ngIf="model.socialMediaChannel.codeName === 'tumblr'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'tumblr'"
+                (click)="presentConfirm()">Submit tumblr report</button>
+            <button ion-button color="primary" *ngIf="model.socialMediaChannel.codeName === 'pinterest'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'pinterest'"
+                (click)="presentConfirm()">Submit pinterest report</button>
+            <button ion-button color="primary" *ngIf="model.socialMediaChannel.codeName === 'snapchat'" [disabled]=" model.reportStatus === 'report_on_review' && model.socialMediaChannel.codeName === 'snapchat'"
+                (click)="presentConfirm()">Submit snapchat report</button>
+        </div>
+    </div>
+</ion-content>

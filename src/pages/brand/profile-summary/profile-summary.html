@@ -1,0 +1,72 @@
+<ion-header>
+        <ion-toolbar color="primary">
+                <ion-buttons start>
+                        <button ion-button icon-only  (click)="pop()">
+                            <ion-icon name="close"></ion-icon>
+                        </button>
+                    </ion-buttons>
+                    <img class="logo-header" src="assets/img/svg/logo.svg">
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="page-brand">
+          <!-- <ion-tabs  selectedIndex="1" tabsPlacement="top">
+              <ion-tab tabIcon="menu" [root]="tab1Root"></ion-tab>
+              <ion-tab tabIcon="home" [root]="tab2Root"></ion-tab>
+              <ion-tab tabIcon="logo-buffer" [root]="tab3Root"></ion-tab>
+              <ion-tab tabIcon="notifications" [root]="tab4Root" tabBadge="3" tabBadgeStyle="danger"></ion-tab>
+            </ion-tabs> -->
+          <!-- Profile-info -->
+          <div class="white-bg text-center">
+            <div class="cover-img-box">
+              <img src="{{coverPic?.url}}" alt="cover-image">
+            </div>
+            <div class="p-card-inner">
+              <div class="profile-img">
+                <img src="{{profilePic?.url}}" alt="walmart">
+              </div>
+              <div class="profile-name">{{brand.brandName}}</div>
+              <div class="profile-location">
+                <i class="fa fa-location-arrow"></i>{{brand.city}} {{brand.state}} <span *ngIf="brand.state || brand.city">,</span>  {{brand.country}}
+              </div>
+              <div class="profile-about">{{brand.about}}</div>
+              <!-- <div class="pro-social-channel">
+                <i class="fa fa-facebook"></i>
+                <i class="fa fa-twitter"></i>
+                <i class="fa fa-instagram"></i>
+                <i class="fa fa-youtube-play"></i>
+                <i class="fa fa-snapchat"></i>
+              </div> -->
+            </div>
+          </div>
+          <!-- Profile-info -->
+        </ion-content>
+
+
+
+
+      <!-- <ion-grid>
+          <ion-row> 
+            <ion-col col-12>
+              <ion-card>
+                <ion-card-header color="primary">
+                  Profile Summary
+                </ion-card-header>
+                <ion-card-content>
+                    <div class="cover-img-box">
+                        <img src="assets/img/social-cxn-cover.jpg" alt="cover-image">
+                    </div>
+                    <div class="p-card-inner">
+                        <div class="profile-img"><img src="assets/img/social-cxn-profile.jpg" alt="walmart"></div>
+                        <div class="brand-name">{{brand.brandName}}</div>
+                        <div class="brand-location">
+                           
+                            {{brand.city}} {{brand.state}} <span *ngIf="brand.state || brand.city">,</span> {{brand.country}}
+                        </div>
+                        <div class="brand-about">{{brand.about}}</div>
+                    </div>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid> -->

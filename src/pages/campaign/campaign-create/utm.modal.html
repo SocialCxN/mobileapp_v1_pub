@@ -1,0 +1,76 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <button ion-button icon-only  (click)="closeModal()">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <ion-title>
+     Select Country
+    </ion-title>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-header>
+        <ion-toolbar color="primary">
+          <ion-buttons start>
+            <button ion-button icon-only  (click)="closeModal()">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </ion-buttons>
+          <ion-title>Campaign UTM</ion-title>
+          <!-- <ion-buttons end>
+            <button ion-button icon-only color="royal">
+              <ion-icon name="person-add"></ion-icon>
+            </button>
+          </ion-buttons> -->
+        </ion-toolbar>
+      </ion-header>
+      
+      <ion-content>
+        <div class="pvm phl">
+            <ion-list>
+                <ion-item>
+                    <ion-label color="primary" floating>Website URL*</ion-label>
+                    <ion-input [(ngModel)]="url" maxlength="100"  type="text"  ></ion-input>
+
+                </ion-item>  
+                <span class="hint-txt">The full website URL <strong>(e.g. https://www.example.com)</strong></span>
+                <ion-item>
+                    <ion-label color="primary" floating>Campaign Source*</ion-label>
+                    <ion-input [(ngModel)]="utm.utm_source" maxlength="100"  (focusout)="setUrl()" type="text"  ></ion-input>
+
+                </ion-item>  
+                <span class="hint-txt">The referrer: <strong>(e.g. google, newsletter)</strong></span>
+                <ion-item>
+                    <ion-label color="primary" floating>Campaign Medium</ion-label>
+                    <ion-input [(ngModel)]="utm.utm_medium" maxlength="100" (focusout)="setUrl()"  type="text"  ></ion-input>
+
+                </ion-item>  
+                <span class="hint-txt">Marketing medium: <strong>(e.g. cpc, banner, email)</strong></span>
+
+                <ion-item>
+                    <ion-label color="primary" floating>Campaign Name</ion-label>
+                    <ion-input [(ngModel)]="utm.utm_campaign" maxlength="100"  (focusout)="setUrl()" type="text"  ></ion-input>
+
+                </ion-item>  
+                <span class="hint-txt">Product, promo code, or slogan <strong>(e.g. spring_sale)</strong></span>
+
+                <ion-item>
+                    <ion-label color="primary" floating>Campaign Term</ion-label>
+                    <ion-input [(ngModel)]="utm.utm_term" maxlength="100"  type="text" (focusout)="setUrl()"  ></ion-input>
+
+                </ion-item>  
+                <span class="hint-txt">Identify the paid keywords</span>
+
+                <ion-item>
+                    <ion-label color="primary" floating>Campaign Content</ion-label>
+                    <ion-input [(ngModel)]="utm.utm_content" maxlength="100"  type="text" (focusout)="setUrl()"  ></ion-input>
+
+                </ion-item>  
+                <span class="hint-txt">Use to differentiate ads</span>
+            </ion-list>
+                <div class="text-right ptl">
+                        <button ion-button color="primary" [disabled]="!utm.utm_source"  (click)="closeModal()">Generate URL</button>
+                </div>
+              </div>
+      </ion-content>
+      

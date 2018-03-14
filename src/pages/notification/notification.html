@@ -1,0 +1,58 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <img class="logo-header" src="assets/img/svg/logo.svg">
+        <ion-buttons end>
+            <button ion-button icon-only  (click)="navigateToChat()">
+                <ion-icon  name="chatboxes"></ion-icon><span  [ngClass]="{'msg-notify': overAllUnreadStatus === true}"></span>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="page-notification">
+
+    <div class="clearfix">
+        <div class="notification-left-pane">
+            <div class="pan-heading pri-txt">Notifications</div>
+        </div>
+        <div class="notification-right-pane">
+            <span class="notification-stats" *ngIf="notif.notification">
+                <span *ngIf="notif.notification.totalUnread == 0"> No new notifications</span>
+                <span *ngIf="notif.notification.totalUnread>0">{{notif?.notification?.totalUnread}} unread</span>
+            </span>
+        </div>
+    </div>
+
+    <ion-spinner name="bubbles" *ngIf="isLoading"></ion-spinner>
+    <div class="notification-ul">
+        <ul class="clearfix">
+            <li *ngFor="let noti of showAllNotif">
+                <div class="notification-list-container clearfix unread" *ngIf="noti.readStatus==0">
+                    <img class="notification-user-thumb" src="{{noti.sender.entity.profilePic.thumbnails.small.url}}" alt="">
+                    <div class="notification-status">
+                        <div (click)="readMe(noti.id, noti)">
+                            <div [innerHTML]="noti.body"></div>
+                            <span class="notidot"></span>
+                            <div class="notify-time">{{noti.date}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="notification-list-container clearfix" *ngIf="noti.readStatus==1">
+                    <img class="notification-user-thumb" src="{{noti.sender.entity.profilePic.thumbnails.small.url}}" alt="">
+                    <div class="notification-status">
+                        <div (click)="readMe(noti.id, noti)">
+                            <div [innerHTML]="noti.body"></div>
+                            <span class="notidot"></span>
+                            <div class="notify-time">{{noti.date}}</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+</ion-content>

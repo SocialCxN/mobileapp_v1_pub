@@ -1,0 +1,41 @@
+<!-- <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>SocialCxN Home</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+    <ion-toolbar color="primary">
+            <ion-buttons start>
+                    <button ion-button icon-only  (click)="pop()">
+                        <ion-icon name="close"></ion-icon>
+                    </button>
+                </ion-buttons>
+                <img class="logo-header" src="assets/img/svg/logo.svg">
+    </ion-toolbar>
+  </ion-header> 
+
+<ion-content class="page-influencer">
+  <ion-card class="full-card">
+    <ion-card-header color="primary">
+      Interest Groups
+    </ion-card-header>
+    <ion-card-content>
+      <br>
+        <ion-row>
+          Please select your interest groups
+        </ion-row>
+      <br>
+<ion-chip [color]="interest.color"  *ngFor='let interest of interestGroups'
+                     (click) = "onClick(interest)">
+  <ion-label>{{interest.name}}</ion-label>
+</ion-chip>
+      <div class="right-end-btn">
+        <button ion-button color="primary"  [disabled]="isSubmitStarted " (click)="onSubmit()" > Save</button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+
+  
+</ion-content>

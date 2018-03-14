@@ -1,0 +1,62 @@
+<!-- <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>SocialCxN Home</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons start>
+            <button ion-button icon-only (click)="pop()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+        <img class="logo-header" src="assets/img/svg/logo.svg">
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="page-influencer">
+    <div class="white-page-container">
+        <div class="title">All campaigns</div>
+        <!-- <div class="top-staus-box">Total Earnings - <span class="gr-txt">$ 350</span></div> -->
+        <ion-card class="list-card" (click)="navigateToDetail(infl.id)" *ngFor="let infl of influencerCampignsList; let $index=index;">
+            <ion-card-content>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-12>
+                            <div class="campaign-title">{{infl.name}}</div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-4><div class="sub-lebel">Brand Name</div></ion-col>
+                        <ion-col col-8><div class="sub-value">{{infl.owner.name}}</div></ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-4><div class="sub-lebel">Est. Launch Date</div></ion-col>
+                        <ion-col col-4><div class="sub-value">{{infl.startDate}}</div></ion-col>
+                        <ion-col col-4><span class="status {{infl.status}}">{{infl.status}}</span></ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-card-content>
+        </ion-card>
+
+
+        
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="influencerCampignsList.length <= length">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+     
+
+    </div>
+</ion-content>
+
+<!-- <ion-row>
+                        <ion-col col-3>Budget</ion-col>
+                        <ion-col col-3> {{infl.paymentDetails.currency.symbol}} {{infl.paymentDetails.totalBudget}}</ion-col>
+                        <ion-col col-3>Payment status</ion-col>
+                        <ion-col col-3>{{infl.paymentDetails.paymentStatus}}</ion-col>
+                    </ion-row> -->
+<!-- <ion-row>
+                        <ion-col col-6>Est. End Date</ion-col>
+                        <ion-col col-6>{{infl.endDate}}</ion-col>
+                    </ion-row> -->

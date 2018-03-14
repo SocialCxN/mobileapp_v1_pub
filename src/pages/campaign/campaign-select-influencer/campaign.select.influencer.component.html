@@ -1,0 +1,40 @@
+<ion-searchbar
+[(ngModel)]="searchObj.searchKeyword"
+[showCancelButton]="shouldShowCancel"
+(keyup.enter)="onSearch()"
+(ionInput)="onInput($event)">
+</ion-searchbar>
+<ion-spinner name="bubbles" *ngIf="isLoading"></ion-spinner>
+<ion-card class="list-card" *ngFor="let influencer of influencers">
+        <div class="first-row-box">
+            <img src="{{influencer.profile.profilePic.thumbnails.small?.url}}"/>
+            <div class="rpo-col">
+            <h2>{{influencer.profile.name}}</h2>
+            <div class="line-two">
+                <span *ngFor="let interest of influencer.interestDetails, let $i = index">
+                    <span >{{interest.name}}</span>
+                </span>
+            </div>
+            </div>
+        </div>
+        <div class="line-two">
+            <span>Social Rank</span>    <span class="rating rat-{{influencer.profile.rating.displayValue}}"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"></i></span>
+        </div>
+        <div class="social-box">
+            <span *ngFor="let stats of influencer.socialStats ">
+            <span class="social-chnl" *ngIf="stats.socialMediaChannel.codeName && stats.socialMediaChannel.totalCount">
+                <span>
+                    <i class="fa fa-{{stats.socialMediaChannel.codeName}}" aria-hidden="true"></i>
+                    <label>{{stats.socialMediaChannel.totalCount}}</label>
+                </span>
+            </span>
+            </span>
+        </div>
+        <!-- <div>
+            <span class="tag" *ngIf="influencer.socialStats.length>0">{{influencer.socialStats[0].engagementLevel.displayValue}}</span>
+            <span class="tag" *ngIf="influencer.socialStats.length<1">--</span>
+        </div> -->
+        <div class="ptcm">
+            <ion-checkbox [(ngModel)]="influencer.selected" (ionChange)='onChangeInfluencer(influencer)'></ion-checkbox> Select Influencer
+        </div>
+</ion-card>

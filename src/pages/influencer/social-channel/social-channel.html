@@ -1,0 +1,638 @@
+<!-- <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>SocialCxN Home</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="pop()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <img class="logo-header" src="assets/img/svg/logo.svg">
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="page-influencer">
+  <div class="fxbb white-bg" *ngIf="step == 0">
+    <ion-card-header>
+      Connect Social Channels
+    </ion-card-header>
+
+    <ion-list>
+      <ion-item *ngFor="let channel of channels">
+        <ion-label>{{channel.displayName}}
+          <span class="sc-icon-box fb" *ngIf="channel.codeName == 'facebook'">
+            <i class="fa fa-facebook"></i>
+          </span>
+          <span class="sc-icon-box tw" *ngIf="channel.codeName == 'twitter'">
+            <i class="fa fa-twitter"></i>
+          </span>
+          <!-- <span class="sc-icon-box tw" *ngIf="channel.codeName == 'twitter'">
+            <i class="fa fa-twitter"></i>
+          </span> -->
+          <span class="sc-icon-box ig" *ngIf="channel.codeName == 'instagram'">
+            <i class="fa fa-instagram"></i>
+          </span>
+          <span class="sc-icon-box yt" *ngIf="channel.codeName == 'youtube'">
+            <i class="fa fa-youtube"></i>
+          </span>
+
+          <span class="sc-icon-box sc" *ngIf="channel.codeName == 'snapchat'">
+            <i class="fa fa-snapchat"></i>
+          </span>
+          <span class="sc-icon-box pi" *ngIf="channel.codeName == 'pinterest'">
+            <i class="fa fa-pinterest"></i>
+          </span>
+          <span class="sc-icon-box ln" *ngIf="channel.codeName == 'linkedin'">
+            <i class="fa fa-linkedin"></i>
+          </span>
+          <span class="sc-icon-box tl" *ngIf="channel.codeName == 'tumblr'">
+            <i class="fa fa-tumblr"></i>
+          </span>
+        </ion-label>
+        <ion-checkbox [(ngModel)]="channel.selected" (ionChange)="onChangeChannel(channel)"></ion-checkbox>
+      </ion-item>
+
+    </ion-list>
+    <div class="bbtn">
+      <button ion-button color="primary" (click)="changeStep(1)">Next</button>
+    </div>
+  </div>
+
+  <div *ngIf="step == 1">
+    <ion-card class="social-card">
+      <ion-card-header>Connect with your social network</ion-card-header>
+      <ion-card-content>
+        <div *ngFor="let channel of allChannels">
+          <!-- Facebook -->
+          <div class="social-sec-block" *ngIf="channel.codeName == 'facebook'">
+            <div>
+              <span class="sc-ico fb">
+                <i class="fa fa-facebook"></i>
+              </span>
+              <button ion-button (click)="callFacebook()" color="light" class="vm-align" outline small style="background-color: #3b5998;
+              color: #fff;">Facebook Connect</button>
+            </div>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Social Handle</ion-label>
+                  <ion-input [(ngModel)]="fbSocialHandler" [value]="fbSocialHandler" [disabled]="fbSocialHandler"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Total followers count</ion-label>
+                  <ion-input [(ngModel)]="totalFBFollowers" [value]="totalFBFollowers"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label>Engagement level</ion-label>
+                  <ion-select [(ngModel)]="fbEngagementLabel" interface="popover">
+                      <ion-option *ngFor="let engmnt of engagementList" [value]="engmnt.id">{{ engmnt.displayValue }}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <button ion-button color="light" small (click)='showFb = !showFb'> {{ showFb ? 'Hide' : 'Show'}} details</button>
+
+
+            <div *ngFor="let page of facebookPageInfo">
+              <ion-row *ngIf="showFb">
+                <ion-col col-12>
+                  <ion-item>
+                    <ion-label floating>Page name</ion-label>
+                    <ion-input [(ngModel)]="page.name"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="showFb">
+                <ion-col col-12>
+                  <ion-item>
+                    <ion-label floating>follower</ion-label>
+                    <ion-input [(ngModel)]="page.fan_count"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </div>
+          </div>
+          <!-- End of Facebook -->
+          <!-- Twitter -->
+          <div class="social-sec-block" *ngIf="channel.codeName == 'twitter'">
+            <div>
+              <span class="sc-ico tw">
+                <i class="fa fa-twitter"></i>
+              </span>
+              <span class="social-label">Twitter</span>
+            </div>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Social Handle</ion-label>
+                  <ion-input  [(ngModel)]="twSocialHandler" [value]="twSocialHandler"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Total followers count</ion-label>
+                  <ion-input type="number" [(ngModel)]="twitterFollowersCount" [value]="twitterFollowersCount"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label>Engagement level</ion-label>
+                  <ion-select [(ngModel)]="twEngagementLabel" interface="popover">
+                    <ion-option *ngFor="let engmnt of engagementList" [value]="engmnt.id">{{ engmnt.displayValue }}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </div>
+          <!-- End of Twitter -->
+          <!-- Instagram -->
+          <div class="social-sec-block" *ngIf="channel.codeName == 'instagram'">
+            <div>
+              <span class="sc-ico ig">
+                <i class="fa fa-instagram"></i>
+              </span>
+              <span class="social-label">Instagram</span>
+            </div>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Social Handle</ion-label>
+                  <ion-input [(ngModel)]="igSocialHandler" [value]="igSocialHandler"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Total followers count</ion-label>
+                  <ion-input type="number" [(ngModel)]="instagramFollowersCount" [value]="instagramFollowersCount"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label>Engagement level</ion-label>
+                  <ion-select [(ngModel)]="igEngagementLabel" interface="popover">
+                      <ion-option *ngFor="let engmnt of engagementList" [value]="engmnt.id">{{ engmnt.displayValue }}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </div>
+          <!-- End of Instagram -->
+          <!-- Youtube -->
+          <div class="social-sec-block" *ngIf="channel.codeName == 'youtube'">
+            <div>
+              <span class="sc-ico yt">
+                <i class="fa fa-youtube"></i>
+              </span>
+              <span class="social-label">Youtube</span>
+            </div>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Social Handle</ion-label>
+                  <ion-input [(ngModel)]="ytSocialHandler" [value]="ytSocialHandler"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Total followers count</ion-label>
+                  <ion-input type="number" [(ngModel)]="youtubeFollowersCount" [value]="youtubeFollowersCount"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label>Engagement level</ion-label>
+                  <ion-select [(ngModel)]="ytEngagementLabel" interface="popover">
+                      <ion-option *ngFor="let engmnt of engagementList" [value]="engmnt.id">{{ engmnt.displayValue }}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </div>
+          <!-- End of Youtube -->
+          <!-- Snapchat -->
+          <div class="social-sec-block" *ngIf="channel.codeName == 'snapchat'">
+            <div>
+              <span class="sc-ico sc">
+                <i class="fa fa-snapchat"></i>
+              </span>
+              <span class="social-label">Snapchat</span>
+            </div>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Social Handle</ion-label>
+                  <ion-input [(ngModel)]="scSocialHandler" [value]="scSocialHandler"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Total followers count</ion-label>
+                  <ion-input type="number" [(ngModel)]="snapchatFollowersCount" [value]="snapchatFollowersCount"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label>Engagement level</ion-label>
+                  <ion-select [(ngModel)]="scEngagementLabel" interface="popover">
+                      <ion-option *ngFor="let engmnt of engagementList" [value]="engmnt.id">{{ engmnt.displayValue }}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </div>
+          <!-- End of Snapchat -->
+          <!-- Pinterest -->
+          <div class="social-sec-block" *ngIf="channel.codeName == 'pinterest'">
+            <div>
+              <span class="sc-ico pi">
+                <i class="fa fa-pinterest"></i>
+              </span>
+              <span class="social-label">Pinterest</span>
+            </div>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Social Handle</ion-label>
+                  <ion-input [(ngModel)]="piSocialHandler" [value]="piSocialHandler"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Total followers count</ion-label>
+                  <ion-input type="number" [(ngModel)]="pinterestFollowersCount" [value]="pinterestFollowersCount"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label>Engagement level</ion-label>
+                  <ion-select [(ngModel)]="piEngagementLabel" interface="popover">
+                      <ion-option *ngFor="let engmnt of engagementList" [value]="engmnt.id">{{ engmnt.displayValue }}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </div>
+          <!-- End of Pinterest -->
+          <!-- Linkedin -->
+          <div class="social-sec-block" *ngIf="channel.codeName == 'linkedin'">
+            <div>
+              <span class="sc-ico ln">
+                <i class="fa fa-linkedin"></i>
+              </span>
+              <span class="social-label">Linkedin</span>
+            </div>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Social Handle</ion-label>
+                  <ion-input [(ngModel)]="lnSocialHandler" [value]="lnSocialHandler"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Total followers count</ion-label>
+                  <ion-input type="number" [(ngModel)]="linkedinFollowersCount" [value]="linkedinFollowersCount"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label>Engagement level</ion-label>
+                  <ion-select [(ngModel)]="lnEngagementLabel" interface="popover">
+                      <ion-option *ngFor="let engmnt of engagementList" [value]="engmnt.id">{{ engmnt.displayValue }}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </div>
+          <!-- End of Linkedin -->
+          <!-- Tumblr -->
+          <div class="social-sec-block" *ngIf="channel.codeName == 'tumblr'">
+            <div>
+              <span class="sc-ico tl">
+                <i class="fa fa-tumblr"></i>
+              </span>
+              <span class="social-label">Tumblr</span>
+            </div>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Social Handle</ion-label>
+                  <ion-input [(ngModel)]="tlSocialHandler" [value]="tlSocialHandler"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Total followers count</ion-label>
+                  <ion-input type="number" [(ngModel)]="tumblrFollowersCount"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label>Engagement level</ion-label>
+                  <ion-select [(ngModel)]="tlEngagementLabel" interface="popover">
+                      <ion-option *ngFor="let engmnt of engagementList" [value]="engmnt.id">{{ engmnt.displayValue }}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </div>
+          <!-- End of Tumblr -->
+          <!-- Blog -->
+          <div class="social-sec-block" *ngIf="channel.codeName == 'blog'">
+            <div>
+              <span class="sc-ico ln">
+                <i class="fa fa-rss"></i>
+              </span>
+              <span class="social-label">Blog</span>
+            </div>
+
+            
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Social Handle</ion-label>
+                  <ion-input [(ngModel)]="blogSocialHandler" [value]="blogSocialHandler"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label floating>Total followers count</ion-label>
+                  <ion-input type="number" [(ngModel)]="blogFollowersCount" [value]="blogFollowersCount"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item>
+                  <ion-label>Engagement level</ion-label>
+                  <ion-select [(ngModel)]="blogEngagementLabel" interface="popover">
+                      <ion-option *ngFor="let engmnt of engagementList" [value]="engmnt.id">{{ engmnt.displayValue }}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </div>
+          <!-- End of Blog -->
+          <div *ngIf="dataUnavailble">
+            <h4>No data available</h4>
+          </div>
+
+        </div>
+        <ion-row>
+          <ion-col col-6>
+            <button ion-button color="light" type="reset" (click)='backStep(0)'>BACK</button>
+          </ion-col>
+          <ion-col col-6 class="text-right">
+            <button ion-button color="primary" (click)="saveSocialConnections()"> Save</button>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>
+
+
+
+
+
+
+
+
+<!-- <ion-list>
+    <div *ngFor="let channel of allChannels">
+      <div *ngIf="channel.codeName == 'facebook'">
+        <ion-item>
+          <ion-label>Facebook</ion-label>
+        </ion-item>
+        <button ion-button full color="primary" (click)="callFacebook()"> Connect</button>
+        <ion-item>
+          <ion-label>Total followers count</ion-label>
+          <ion-input [value]="totalFBFollowers"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Engagement Rate</ion-label>
+          <ion-input [(ngModel)]="fbAvgEngagementValue"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Engagement Level</ion-label>
+          <ion-input [(ngModel)]="fbEngagementLabel"></ion-input>
+        </ion-item>
+
+        <button ion-button full color="primary" (click)='showFb = !showFb'> {{ showFb ? 'Hide' : 'Show'}} details</button>
+        <div *ngFor="let page of facebookPageInfo">
+          <ion-row *ngIf="showFb">
+            <ion-item>
+              <ion-label color="primary" floating>Page name</ion-label>
+              <ion-input [(ngModel)]="page.name"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label color="primary" floating>follower</ion-label>
+              <ion-input [(ngModel)]="page.fan_count"></ion-input>
+            </ion-item>
+          </ion-row>
+        </div>
+
+      </div>
+
+      <div *ngIf="channel.codeName == 'twitter'">
+        <ion-item>
+          <ion-label>Twitter</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Total followers count</ion-label>
+          <ion-input [value]="twitterFollowersCount"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Engagement Rate</ion-label>
+          <ion-input [(ngModel)]="twAvgEngagementValue"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="twEngagementLabel">
+          <ion-label>Engagement Level</ion-label>
+          <ion-input [(ngModel)]="twEngagementLabel"></ion-input>
+        </ion-item>
+      </div>
+
+      <div *ngIf="channel.codeName == 'instagram'">
+        <ion-item>
+          <ion-label>Instagram</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Total followers count</ion-label>
+          <ion-input [value]="instagramFollowersCount"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Engagement Rate</ion-label>
+          <ion-input [(ngModel)]="igAvgEngagementValue"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="igEngagementLabel">
+          <ion-label>Engagement Level</ion-label>
+          <ion-input [(ngModel)]="igEngagementLabel"></ion-input>
+        </ion-item>
+      </div>
+
+
+      <div *ngIf="channel.codeName == 'snapchat'">
+        <ion-item>
+          <ion-label>Snapchat</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Total followers count</ion-label>
+          <ion-input [value]="snapchatFollowersCount"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Engagement Rate</ion-label>
+          <ion-input [(ngModel)]="scAvgEngagementValue"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="scEngagementLabel">
+          <ion-label>Engagement Level</ion-label>
+          <ion-input [(ngModel)]="scEngagementLabel"></ion-input>
+        </ion-item>
+      </div>
+
+      <div *ngIf="channel.codeName == 'youtube'">
+        <ion-item>
+          <ion-label>Youtube</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Total followers count</ion-label>
+          <ion-input [value]="youtubeFollowersCount"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Engagement Rate</ion-label>
+          <ion-input [(ngModel)]="ytAvgEngagementValue"></ion-input>
+        </ion-item>
+        
+      </div>
+
+      <div *ngIf="channel.codeName == 'pinterest'">
+        <ion-item>
+          <ion-label>Pinterest</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Total followers count</ion-label>
+          <ion-input [value]="pinterestFollowersCount"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Engagement Rate</ion-label>
+          <ion-input [(ngModel)]="piAvgEngagementValue"></ion-input>
+        </ion-item>
+       
+      </div>
+
+      <div *ngIf="channel.codeName == 'tumblr'">
+        <ion-item>
+          <ion-label>Tumblr</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Total followers count</ion-label>
+          <ion-input [value]="tumblrFollowersCount"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Engagement Rate</ion-label>
+          <ion-input [(ngModel)]="avgEngagement"></ion-input>
+        </ion-item>
+    
+      </div>
+
+      <div *ngIf="channel.codeName == 'linkedin'">
+        <ion-item>
+          <ion-label>Linkedin</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Total followers count</ion-label>
+          <ion-input [value]="linkedinFollowersCount"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Engagement Rate</ion-label>
+          <ion-input [(ngModel)]="lnAvgEngagementValue"></ion-input>
+        </ion-item>
+    
+      </div>
+
+      <div *ngIf="channel.codeName == 'blog'">
+        <ion-item>
+          <ion-label>Blog</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Total followers count</ion-label>
+          <ion-input [value]="blogFollowersCount"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Engagement Rate</ion-label>
+          <ion-input [(ngModel)]="blogAvgEngagementValue"></ion-input>
+        </ion-item>
+      </div>
+    </div>
+
+    <div *ngIf="dataUnavailble">
+      <h4>No data available</h4>
+    </div>
+
+    <div class="text-left btn-box-left">
+      <button color="primary" md-button type="reset" (click)='backStep(0)'>BACK</button>
+    </div>
+  </ion-list>
+  <br>
+  <br>
+  <button ion-button full color="primary" (click)="saveSocialConnections()"> Save</button>
+</div> -->

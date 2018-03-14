@@ -1,0 +1,32 @@
+  <ion-header>
+     <ion-navbar>
+       <!-- <ion-title>Main page</ion-title> -->
+     </ion-navbar>
+   </ion-header>
+
+   <ion-content class="page-main">
+     <div style="width: 170px; height: 25px; margin: auto;">
+        <img src="assets/img/logo.png" style="width: 100%; height: 100%; margin-top: -50px;" />
+     </div>
+    <div class="auth-title" style="margin-top: 40px;">Continue as</div>
+    <br>
+     <ion-list radio-group [(ngModel)]="type">
+        <ion-item>
+          <ion-label>{{uiService.captions['brand']}}</ion-label>
+          <ion-radio value="brand"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{uiService.captions['influencer']}}</ion-label>
+          <ion-radio value="influencer"></ion-radio>
+        </ion-item>
+        <!-- <ion-item>
+          <ion-label>{{uiService.captions['digital_agency']}}</ion-label>
+          <ion-radio value="digital_agency"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{uiService.captions['influencer_agent']}}</ion-label>
+          <ion-radio value="influencer_agent"></ion-radio>
+        </ion-item> -->
+      </ion-list>
+      <button ion-button full color="primary" [disabled]="!type" (click)="pushPage(uiService.captions[type], type)"> Next</button>
+   </ion-content>

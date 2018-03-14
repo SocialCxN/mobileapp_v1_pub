@@ -1,0 +1,187 @@
+<ion-header>
+    <ion-toolbar color="primary">
+    <ion-buttons start>
+        <button ion-button icon-only  (click)="pop()">
+            <ion-icon name="close"></ion-icon>
+        </button>
+    </ion-buttons>
+    <img class="logo-header" src="assets/img/svg/logo.svg">
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="page-brand">
+    <!-- <ion-tabs  selectedIndex="1" tabsPlacement="top">
+      <ion-tab tabIcon="menu" [root]="tab1Root"></ion-tab>
+      <ion-tab tabIcon="home" [root]="tab2Root"></ion-tab>
+      <ion-tab tabIcon="logo-buffer" [root]="tab3Root"></ion-tab>
+      <ion-tab tabIcon="notifications" [root]="tab4Root" tabBadge="3" tabBadgeStyle="danger"></ion-tab>
+    </ion-tabs> -->
+    <!-- Profile-info -->
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12>
+          <ion-card>
+            <ion-card-header color="primary">
+                Personal Information
+            </ion-card-header>
+            <ion-card-content>
+                <form [formGroup]="userInfoForm" #b="ngForm">
+
+                        <ion-list>
+                            <!-- <ion-label>I am a </ion-label>
+                            <ion-item *ngFor='let obj of allObjectives'>
+                               
+                                <ion-checkbox  [checked]="obj.selected" (ionChange)='onChangeObjective(obj)' > </ion-checkbox><span>{{obj.displayName}}</span>
+                              </ion-item>-->
+                        <ion-item>
+                                    
+                        <ion-label color="primary">I am</ion-label>
+                            <ion-select formControlName="userType"   [(ngModel)]="selected_Values" multiple="true">
+                                <ion-option *ngFor='let obj of allObjectives' [value]="obj.id">{{obj.displayName}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                            
+                        <ion-item>
+                        <ion-label floating>First name</ion-label>
+                        <ion-input (focus)="onFirstNameFocusIn()" (focusout)="onFirstNameFocusOut()" type="text" formControlName="firstName" [(ngModel)]="user.firstName" [class.invalid]="!userInfoForm.controls.firstName.valid && (userInfoForm.controls.firstName.dirty || submitAttempt)"></ion-input>                        
+                        </ion-item>
+                        <div class="input-error" *ngIf="isFirstNameError && userInfoForm.controls.firstName.hasError('required')">
+                                <p>First name is <strong>required</strong></p>
+                            </div>
+                            <div class="input-error" *ngIf="isFirstNameError && userInfoForm.controls.firstName.hasError('pattern')">
+                                <p>Please enter a valid first name</p>
+                            </div>
+                            <div class="input-error" *ngIf="isFirstNameError && userInfoForm.controls.firstName.hasError('maxlength')">
+                                <p>Invalid First Name (maximum 100 characters are allowed)</p> 
+                            </div>
+
+                            <ion-item>
+                                <ion-label floating>Last name</ion-label>
+                                <ion-input (focus)="onLastNameFocusIn()" (focusout)="onLastNameFocusOut()" type="text" formControlName="lastName" [(ngModel)]="user.lastName" [class.invalid]="!userInfoForm.controls.lastName.valid && (userInfoForm.controls.lastName.dirty || submitAttempt)"></ion-input>                        
+                                </ion-item>
+                                <div class="input-error" *ngIf="isLastNameError && userInfoForm.controls.lastName.hasError('required')">
+                                        <p>Last name is <strong>required</strong></p>
+                                    </div>
+                                    <div class="input-error" *ngIf="isLastNameError && userInfoForm.controls.lastName.hasError('pattern')">
+                                        <p>Please enter a valid last name</p>
+                                    </div>
+                                    <div class="input-error" *ngIf="isLastNameError && userInfoForm.controls.lastName.hasError('maxlength')">
+                                        <p>Invalid last Name (maximum 100 characters are allowed)</p> 
+                                    </div>
+
+                                    <ion-item>
+                                    <ion-label floating>Social Media Name</ion-label>
+                                    <ion-input (focus)="onSocialNameFocusIn()" (focusout)="onSocialNameFocusOut()" type="text" formControlName="socialName" [(ngModel)]="user.entityName" [class.invalid]="!userInfoForm.controls.socialName.valid && (userInfoForm.controls.socialName.dirty || submitAttempt)"></ion-input>                        
+                                    </ion-item>
+                                    <div class="input-error" *ngIf="isSocialNameError && userInfoForm.controls.socialName.hasError('required')">
+                                            <p>Social Media Name is <strong>required</strong></p>
+                                        </div>
+                                        <div class="input-error" *ngIf="isSocialNameError && userInfoForm.controls.socialName.hasError('pattern')">
+                                            <p>Please enter a valid Social Media Name</p>
+                                        </div>
+                                        <div class="input-error" *ngIf="isSocialNameError && userInfoForm.controls.socialName.hasError('maxlength')">
+                                            <p>Invalid Social Media Name (maximum 100 characters are allowed)</p> 
+                                        </div>                                    
+                            
+                            
+                            <ion-item>
+
+                            <ion-label>Select Gender</ion-label>
+                                <ion-select formControlName="gender" [(ngModel)]="influencer.profile.gender" interface="popover">
+                                    <ion-option *ngFor="let gender of genders" [value]="gender">{{gender}}</ion-option>
+                                    <!-- <ion-option value="Auto">Auto</ion-option>
+                                    <ion-option value="Sports">Sports</ion-option>
+                                    <ion-option value="Health">Health</ion-option> -->
+                                </ion-select>
+                            </ion-item>
+
+                            <ion-item>
+                                <ion-label floating>About me</ion-label>
+                                <ion-input (focus)="onAboutFocusIn()" (focusout)="onAboutFocusOut()" type="text" formControlName="about" [(ngModel)]="influencer.profile.entityDescription" [class.invalid]="!userInfoForm.controls.about.valid && (userInfoForm.controls.about.dirty || submitAttempt)"></ion-input>
+                            </ion-item>
+                            <div class="input-error" *ngIf="isAboutError && userInfoForm.controls.about.hasError('maxlength')">
+                                    <p>Characters exceed the limit (maximum 1000 numbers are allowed)</p> 
+                            </div>
+
+                            <ion-item>
+                                    <ion-label color="primary" floating>Email</ion-label>
+                                    <ion-input type="email"  formControlName="email" [(ngModel)]="user.loginEmail" readonly="true"></ion-input>
+                        
+                                  </ion-item>
+
+                        <ion-item>
+                            <ion-label floating>Contact number *</ion-label>
+                            <ion-input (focus)="onContactFocusIn()" (focusout)="onContactFocusOut()" type="tel" formControlName="contactNumber" [(ngModel)]="influencer.profile.contactNumber" [class.invalid]="!userInfoForm.controls.contactNumber.valid && (userInfoForm.controls.contactNumber.dirty || submitAttempt)"></ion-input>
+                        </ion-item> 
+
+                        <div class="input-error" *ngIf="isContactError && userInfoForm.controls.contactNumber.hasError('pattern')">
+                            <p>Invalid number </p>
+                        </div>
+                        <div class="input-error" *ngIf="isContactError && userInfoForm.controls.contactNumber.hasError('maxlength')">
+                            <p> Contact Number should not be greater than 20 digits</p> 
+                        </div>
+                        <div class="input-error" *ngIf="isContactError && userInfoForm.controls.contactNumber.hasError('minlength')">
+                            <p>Invalid number </p> 
+                        </div>  
+                        <div class="input-error" *ngIf="isContactError && userInfoForm.controls.contactNumber.hasError('required')">
+                            <p>Contact number is <strong>required</strong></p>
+                        </div>
+
+            <ion-item>
+              <ion-label color="primary" floating>Country</ion-label>
+              <ion-input type="text" formControlName="country" (focus)="onCountryFocus()" (focusout)="onCountryFocusOut()" name="country" [(ngModel)]="influencer.profile.country.name"
+                [class.invalid]="!userInfoForm.controls.country.valid && (userInfoForm.controls.country.dirty || submitAttempt)"></ion-input>
+
+            </ion-item>
+            <ion-item *ngIf="influencer.profile.country.name === 'Canada'">
+                <ion-label color="primary" floating>Zip Code</ion-label>
+                <ion-input type="text" formControlName="zipCode" (focus)="onZipCodeFocus()" (focusout)="onZipCodeFocusOut()" name="zipCode" [(ngModel)]="influencer.profile.zipCode"
+                  [class.invalid]="!userInfoForm.controls.zipCode.valid && (userInfoForm.controls.zipCode.dirty || submitAttempt)"></ion-input>
+  
+            </ion-item>
+
+            
+            <ion-item *ngIf="influencer.profile.country.name === 'United States'">
+                <ion-label color="primary" floating>Zip Code</ion-label>
+                <ion-input type="text" formControlName="zipCode" (focus)="onZipCodeFocus()" (focusout)="onZipCodeFocusOut()" name="zipCode" [(ngModel)]="influencer.profile.zipCode"
+                  [class.invalid]="!userInfoForm.controls.zipCode.valid && (userInfoForm.controls.zipCode.dirty || submitAttempt)"></ion-input>
+  
+            </ion-item>
+
+            <ion-item *ngIf="influencer.profile.country.name !== 'United States' && influencer.profile.country.name !== 'Canada'">
+                <ion-label color="primary" floating>Zip/Postal Code</ion-label>
+                <ion-input type="text" formControlName="postalCode" name="postalCode" [(ngModel)]="influencer.profile.zipCode"
+                  [class.invalid]="!userInfoForm.controls.postalCode.valid && (userInfoForm.controls.postalCode.dirty || submitAttempt)"></ion-input>
+            </ion-item>
+            
+            <ion-item>
+                <ion-label color="primary" floating>States</ion-label>
+                <ion-input type="text" formControlName="state" (focus)="onStateFocus()" (focusout)="onStateFocusOut()" name="state" [(ngModel)]="influencer.profile.state.name"
+                  [class.invalid]="!userInfoForm.controls.state.valid && (userInfoForm.controls.state.dirty || submitAttempt)"></ion-input>
+  
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="primary" floating>City</ion-label>
+                <ion-input type="text" formControlName="city" (focus)="onCityFocus()" name="city" [(ngModel)]="influencer.profile.city.name"
+                  [class.invalid]="!userInfoForm.controls.city.valid && (userInfoForm.controls.city.dirty || submitAttempt)"></ion-input>
+  
+            </ion-item>
+
+
+
+ 
+            
+                <div class="text-right">
+                        <button ion-button color="primary" [disabled]="!b.valid || !isCountryValid || isSubmitStarted" (click)='onSubmit()'>SAVE</button>
+                        </div>
+                    </ion-list>
+                </form>
+
+
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- Profile-info -->
+  </ion-content>    

@@ -1,0 +1,206 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons start *ngIf="isIos">
+            <button ion-button icon-only (click)="pop()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+        <img class="logo-header" src="assets/img/svg/logo.svg">
+    </ion-toolbar>
+</ion-header>
+<!-- <ion-content>
+          <ion-card>
+              <ion-list>
+                  <ion-item>
+                      <ion-label color="primary" floating>Campaign Name</ion-label>
+                      <ion-input  readonly  [(ngModel)]="model.name"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                        <ion-label color="primary" floating>Report status</ion-label>
+                        <ion-input  readonly  [(ngModel)]="consolidateReportStatus"></ion-input>
+                    </ion-item> 
+                    <ion-item>
+                        <ion-label color="primary" floating>Est. launch date</ion-label>
+                        <ion-input  readonly  [(ngModel)]="model.startDate"></ion-input>
+                    </ion-item> 
+                    <ion-item>
+                        <ion-label color="primary" floating>Est. end date</ion-label>
+                        <ion-input  readonly  [(ngModel)]="model.endDate"></ion-input>
+                    </ion-item> 
+    
+                    <ion-item>
+                        <ion-label color="primary" floating>Upload media</ion-label>
+                        
+                    </ion-item>
+                    <button ion-button full color="primary" >upload</button>
+              </ion-list>
+    
+    
+          </ion-card>
+            <ion-card>
+                <ion-row *ngFor="let channel of reports.allReports, let $index = index"> 
+                    <ion-col col-12>
+                        <ion-col col-3>
+                            {{channel.socialMediaChannel?.displayName}}
+                        </ion-col>
+                        <ion-col col-3>
+                            <span>Reach</span><span>{{channel?.totalReach}}</span>
+                        </ion-col>
+                        <ion-col col-3>
+                            <span>Engagement rate</span><span>{{channel?.totalEngagementRate}}</span><span *ngIf="channel.totalEngagementRate">%</span>
+                        </ion-col>
+                    </ion-col>
+                    <button ion-button full color="primary" (click)='showDetails($index)' >
+                        <span *ngIf="$index === expandedIndex">HIDE DETAILS</span>
+                        <span *ngIf="$index !== expandedIndex">SHOW DETAILS</span>
+                    </button>
+                    <ion-col col-12 *ngIf="$index === expandedIndex">
+                        <span *ngFor="let att of channel.attributes">
+                            <div class="rep-content-box">
+                                <span class="icon-area"><i class="material-icon">{{att.icon}}</i></span>
+                                <div class="label-type pri-txt">{{att.displayName}}</div>
+                                <div class="label-value">{{att.value}}</div>
+                            </div>
+                        </span>
+                    </ion-col>
+                </ion-row>
+                
+                
+                
+            </ion-card>
+           
+            <ion-card>
+                <ion-row>
+                    <ion-col col-12>
+                        <span class="text-block">Overall sentiments</span><span class="selected-sentiment">{{display}}</span>
+                        <div>
+                            <span class="sentiment" *ngFor="let se of sentiments , let $index = index">
+                                            <button  *ngIf="se.codeName == 'positive'"  (click)="checkSentiment(se)" [class.selected]="se === selectedSentiments" [disabled]="reports.allowSentiment==='no'" > <i>sentiment_satisfied</i></button>
+                                            <button  *ngIf="se.codeName == 'negative'"  (click)="checkSentiment(se)" [class.selected]="se === selectedSentiments" [disabled]="reports.allowSentiment==='no'" ><i>sentiment_dissatisfied</i></button>
+                                            <button  *ngIf="se.codeName == 'neutral'"  (click)="checkSentiment(se)" [class.selected]="se === selectedSentiments" [disabled]="reports.allowSentiment==='no'"> <i >sentiment_neutral</i></button>
+                            </span>
+                        </div>
+                </ion-col>
+                </ion-row>
+                <button ion-button full color="primary" [disabled]="(checkSentiments == 'yes') ? 'false' : 'true'" (click)="presentConfirm()" >Submit</button>
+            </ion-card>
+    
+      </ion-content> -->
+
+
+
+
+
+
+
+
+
+
+
+
+<ion-content class="page-report">
+    <div class="white-page-container">
+        <div class="title">Campaign Report</div>
+        <!-- <div class="pvm">
+            <span class="sc-ico fb">
+                <i class="fa fa-facebook"></i>
+            </span>
+            <button ion-button (click)="callFacebook()" color="light" class="vm-align" outline small>Facebook Connect</button>
+        </div> -->
+        <div>
+            <div class="label-txt">Campaign name</div>
+            <div class="value-txt">
+                <b>{{campaign?.name}}</b>
+            </div>
+        </div>
+        <div>
+            <div class="label-txt">Report status</div>
+            <div class="value-txt">{{consolidateReportStatus}}</div>
+        </div>
+        <div>
+            <div class="label-txt">Est. launch date</div>
+            <div class="value-txt">{{campaign?.startDate}}</div>
+        </div>
+        <div>
+            <div class="label-txt">Est. end date</div>
+            <div class="value-txt">{{campaign?.endDate}}</div>
+        </div>
+
+
+        <hr>
+        <div>
+            <div>
+                <ion-row *ngFor="let channel of reports.allReports, let $index = index">
+
+                    <ion-col col-12>
+                        <ion-row class="bg-pri mtm">
+                            <ion-col col-7>
+                                <div class="hsc pls pts">
+                                    <span class="highlight-sc {{channel.socialMediaChannel?.codeName}}"><i class="fa fa-{{channel.socialMediaChannel?.codeName}}"></i>
+                                    </span>
+                                    {{channel.socialMediaChannel?.displayName}}
+                                </div>
+                            </ion-col>
+                            <ion-col col-5 class="text-right">
+                                <button ion-button small color="light" class="mts mrs" (click)='showDetails($index)'>
+                                    <span *ngIf="$index === expandedIndex">HIDE</span>
+                                    <span *ngIf="$index !== expandedIndex">SHOW</span>
+                                </button>
+                            </ion-col>
+                            <ion-col col-6>
+                                <div class="lb-pri">Reach</div>
+                                <div class="vl-pri">{{channel?.totalReach}}</div>
+                            </ion-col>
+                            <ion-col col-6>
+                                <div class="lb-pri">Engagement rate</div>
+                                <div class="vl-pri">{{channel?.totalEngagementRate}}
+                                    <span *ngIf="model.totalEngagementRate">%</span>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+
+                    <ion-row *ngIf="$index === expandedIndex">
+                        <ion-col col-6 *ngFor="let attr of channel.attributes, let i = index">
+                            <div class="clearfix pvm">
+                                <div class="rep-content-box">
+                                    <span class="icon-area">
+                                        <i class="material-icons">{{attr.icon}}</i>
+                                    </span>
+                                    <div class="label-type gr-txt">{{attr.displayName}}</div>
+                                    <div class="label-value">{{attr.value}}</div>
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </ion-row>
+            </div>
+
+            <hr>
+        </div>
+
+        <div>
+            <span class="text-block">Overall sentiments</span>
+            <span class="selected-sentiment">{{display}}</span>
+            <div>
+                <span class="sentiment" *ngFor="let se of sentiments , let $index = index">
+                    <button ion-button clear icon-only *ngIf="se.codeName == 'positive'" (click)="checkSentiment(se)" [class.selected]="se === selectedSentiments"
+                        [disabled]="reports.allowSentiment==='no'">
+                        <i class="material-icons">sentiment_satisfied</i>
+                    </button>
+                    <button ion-button clear icon-only *ngIf="se.codeName == 'negative'" (click)="checkSentiment(se)" [class.selected]="se === selectedSentiments"
+                        [disabled]="reports.allowSentiment==='no'">
+                        <i class="material-icons">sentiment_dissatisfied</i>
+                    </button>
+                    <button ion-button clear icon-only *ngIf="se.codeName == 'neutral'" (click)="checkSentiment(se)" [class.selected]="se === selectedSentiments"
+                        [disabled]="reports.allowSentiment==='no'">
+                        <i class="material-icons">sentiment_neutral</i>
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div class="text-right">
+            <button ion-button color="primary" [disabled]="checkSentiments == 'yes' ? false : true" (click)="presentConfirm()">Submit</button>
+        </div>
+    </div>
+</ion-content>

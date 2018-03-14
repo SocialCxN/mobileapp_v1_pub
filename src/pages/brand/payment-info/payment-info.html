@@ -1,0 +1,338 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons start>
+            <button ion-button icon-only (click)="pop()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+        <img class="logo-header" src="assets/img/svg/logo.svg">
+    </ion-toolbar>
+</ion-header>
+<ion-content class="page-brand" scroll>
+    <!-- <ion-tabs  selectedIndex="1" tabsPlacement="top">
+        <ion-tab tabIcon="menu" [root]="tab1Root"></ion-tab>
+        <ion-tab tabIcon="home" [root]="tab2Root"></ion-tab>
+        <ion-tab tabIcon="logo-buffer" [root]="tab3Root"></ion-tab>
+        <ion-tab tabIcon="notifications" [root]="tab4Root" tabBadge="3" tabBadgeStyle="danger"></ion-tab>
+    </ion-tabs> -->
+    <!-- Profile-info -->
+    <ion-grid>
+        <ion-row>
+            <ion-col col-12>
+                <ion-card>
+                    <ion-card-header color="primary">
+                        Bank
+                    </ion-card-header>
+                    <ion-card-content>
+                    <ion-list>
+                            <ion-item>
+                                <ion-label>Service Provider</ion-label>
+                                <ion-select [(ngModel)]="selectedPayment" interface="popover">
+                                    <!-- <ion-option  [value]="provider.displayName">
+                                                    {{ provider.displayName }}</ion-option> -->
+                                    <ion-option value="Bank" selected>Bank</ion-option>
+                                    <ion-option value="Payment_Gateway">Payment Gateway</ion-option>
+                                    <ion-option value="Credit">Credit/Debit Card</ion-option>
+                                </ion-select>
+                            </ion-item>
+                        </ion-list>
+                        <form [formGroup]="bankForm" #b="ngForm" *ngIf="selectedPayment == 'Bank'">
+
+                            <ion-list>
+                                <ion-item *ngIf="!countryPk">
+                                    <ion-label floating>Routing Number</ion-label>
+                                    <ion-input (focus)="onRoutingNumberFocusIn()" (focusout)="onRoutingNumberFocusOut()" type="text" formControlName="routingNumber"
+                                        name="routingNumber" [(ngModel)]="bank.routingNumber" [class.invalid]="!bankForm.controls.routingNumber.valid && (bankForm.controls.routingNumber.dirty || submitAttempt)"></ion-input>
+                                </ion-item>
+                                <div class="input-error" *ngIf="isRoutingNumberError && bankForm.controls.routingNumber.hasError('required')">
+                                    <p> Routing Number is
+                                        <strong>required</strong>
+                                    </p>
+                                </div>
+                                <div class="input-error" *ngIf="isRoutingNumberError && bankForm.controls.routingNumber.hasError('pattern')">
+                                    <p>Please enter a valid Routing Number of 9 digits only</p>
+                                </div>
+
+                                <ion-item>
+                                    <ion-label color="primary" floating>Bank Name</ion-label>
+                                    <ion-input (focus)="onBankNameFocusIn()" (focusout)="onBankNameFocusOut()" type="text" formControlName="bankName" [(ngModel)]="bank.bankName"
+                                        [class.invalid]="!bankForm.controls.bankName.valid && (bankForm.controls.bankName.dirty || submitAttempt)"></ion-input>
+                                </ion-item>
+                                <div class="input-error" *ngIf="isBankNameError && bankForm.controls.bankName.hasError('required')">
+                                    <p>Bank Name is
+                                        <strong>required</strong>
+                                    </p>
+                                </div>
+                                <div class="input-error" *ngIf="isBankNameError && bankForm.controls.bankName.hasError('pattern')">
+                                    <p>Please enter a valid Bank Name</p>
+                                </div>
+
+                                <ion-item>
+                                    <ion-label color="primary" floating>Account Title</ion-label>
+                                    <ion-input (focus)="onAccountTitleFocusIn()" (focusout)="onAccountTitleFocusOut()" type="text" formControlName="accountTitle"
+                                        [(ngModel)]="bank.accountTitle" [class.invalid]="!bankForm.controls.accountTitle.valid && (bankForm.controls.accountTitle.dirty || submitAttempt)"></ion-input>
+                                </ion-item>
+                                <div class="input-error" *ngIf="isAccountTitleError && bankForm.controls.accountTitle.hasError('required')">
+                                    <p>Account Title is
+                                        <strong>required</strong>
+                                    </p>
+                                </div>
+                                <div class="input-error" *ngIf="isAccountTitleError && bankForm.controls.accountTitle.hasError('maxlength')">
+                                    <p>Invalid Account Title (maximum 100 characters are allowed)</p>
+                                </div>
+
+                                <ion-item>
+                                    <ion-label color="primary" floating>Account Number</ion-label>
+                                    <ion-input (focus)="onAccountNumberFocusIn()" (focusout)="onAccountNumberFocusOut()" type="text" formControlName="accountNumber"
+                                        [(ngModel)]="bank.accountNumber" [class.invalid]="!bankForm.controls.accountNumber.valid && (bankForm.controls.accountNumber.dirty || submitAttempt)"></ion-input>
+                                </ion-item>
+                                <div class="input-error" *ngIf="isAccountNumberError && bankForm.controls.accountNumber.hasError('required')">
+                                    <p> Account Number is
+                                        <strong>required</strong>
+                                    </p>
+                                </div>
+                                <div class="input-error" *ngIf="isAccountNumberError && bankForm.controls.accountNumber.hasError('maxlength')">
+                                    <p> Invalid Account Number (maximum 25 numbers are allowed)</p>
+                                </div>
+                                <div class="input-error" *ngIf="isAccountNumberError && bankForm.controls.accountNumber.hasError('pattern')">
+                                    <p> Please enter a valid Account Number</p>
+                                </div>
+                                <div *ngIf="country && country.id!= 38 && country.id!= 231">
+                                    <ion-item>
+                                        <ion-label color="primary" floating>IBAN </ion-label>
+                                        <ion-input (focus)="onIBANFocusIn()" (focusout)="onIBANFocusOut()" type="text" formControlName="IBAN" [(ngModel)]="bank.ibanNumber"
+                                            [class.invalid]="!bankForm.controls.IBAN.valid && (bankForm.controls.IBAN.dirty || submitAttempt)"></ion-input>
+                                    </ion-item>
+                                    <div class="input-error" *ngIf="isIBANError && bankForm.controls.IBAN.hasError('required')">
+                                        <p> IBAN is
+                                            <strong>required</strong>
+                                        </p>
+                                    </div>
+                                    <!-- <div class="input-error" *ngIf="isAccountNumberError && bankForm.controls.accountNumber.hasError('maxlength')">
+                                    <p>    Invalid Account Number (maximum 25 numbers are allowed)</p>
+                                </div> -->
+                                    <div class="input-error" *ngIf="isIBANError && bankForm.controls.IBAN.hasError('pattern')">
+                                        <p> Please enter a valid IBAN of 2 initial characters in uppercase and 20-32 numbers</p>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="countryPk">
+                                    <ion-item>
+                                        <ion-label color="primary" floating>NTN </ion-label>
+                                        <ion-input (focus)="onNTNFocusIn()" (focusout)="onNTNFocusOut()" type="text" formControlName="NTN" [(ngModel)]="bank.ntnNumber"
+                                            [class.invalid]="!bankForm.controls.NTN.valid && (bankForm.controls.NTN.dirty || submitAttempt)"></ion-input>
+                                    </ion-item>
+                                    <div class="input-error" *ngIf="isNTNError && bankForm.controls.NTN.hasError('required')">
+                                        <p> NTN is
+                                            <strong>required</strong>
+                                        </p>
+                                    </div>
+                                    <!-- <div class="input-error" *ngIf="isAccountNumberError && bankForm.controls.accountNumber.hasError('maxlength')">
+                                    <p>    Invalid Account Number (maximum 25 numbers are allowed)</p>
+                                </div> -->
+                                    <div class="input-error" *ngIf="isNTNError && bankForm.controls.NTN.hasError('pattern')">
+                                        <p> Please enter a valid NTN of 8 digits e.g (0132569-7)</p>
+                                    </div>
+                                </div>
+
+                                <div class="text-right">
+                                    <button ion-button color="primary" (click)='onBankSubmit()'>SAVE</button>
+                                </div>
+                            </ion-list>
+                        </form>
+                        <form [formGroup]="bankForm2" #c="ngForm" *ngIf="selectedPayment == 'Credit'"> 
+                                
+                                <ion-list>
+    
+                                    <ion-item>
+                                        <ion-label>Service Provider</ion-label>
+                                        <ion-select formControlName="provider" (ionChange)="onServiceProviderSelected($event)" [(ngModel)]="selectedProvider" interface="popover">
+                                            <ion-option *ngFor="let provider of availableServiceProviders" [value]="provider.displayName">
+                                                {{ provider.displayName }}</ion-option>
+                                            <!-- <ion-option value="Auto">Auto</ion-option>
+                                        <ion-option value="Sports">Sports</ion-option>
+                                        <ion-option value="Health">Health</ion-option> -->
+                                        </ion-select>
+                                    </ion-item>
+    
+    
+                                    <div *ngIf="enableCard">
+                                        <ion-item>
+                                            <ion-label color="primary" floating>Credit/Debit Card Number</ion-label>
+                                            <ion-input (focus)="onCreditCardFocus()" (focusout)="onCreditCardFocusOut()" type="text" formControlName="creditCardNumber"
+                                                [class.invalid]="!bankForm2.controls.creditCardNumber.valid && 
+                                            (bankForm2.controls.creditCardNumber.dirty || submitAttempt)" [(ngModel)]="cardInfo.creditcardNumber"></ion-input>
+    
+                                        </ion-item>
+                                        <div class="input-error" *ngIf="isCreditCardError && bankForm2.controls.creditCardNumber.hasError('required')">
+                                            <p>
+                                                <strong>Required!</strong>
+                                            </p>
+                                        </div>
+                                        <div class="input-error" *ngIf="isCreditCardError && bankForm2.controls.creditCardNumber.hasError('pattern')">
+                                            <p> Invalid Card Number </p>
+                                        </div>
+                                    </div>
+    
+                                    <div *ngIf="enableCard">
+                                        <ion-item>
+                                            <ion-label color="primary" floating>CVC</ion-label>
+                                            <ion-input (focus)="onCvcFocus()" (focusout)="onCvcFocusOut()" type="text" formControlName="cvcValue" [class.invalid]="!bankForm2.controls.cvcValue.valid && 
+                                        (bankForm2.controls.cvcValue.dirty || submitAttempt)" [(ngModel)]="cardInfo.cvcValue"></ion-input>
+    
+                                        </ion-item>
+                                        <div class="input-error" *ngIf="isCvcError && bankForm2.controls.cvcValue.hasError('required')">
+                                            <p> CVC is
+                                                <strong>required</strong>
+                                            </p>
+                                        </div>
+                                        <div class="input-error" *ngIf="isCvcError && bankForm2.controls.cvcValue.hasError('pattern')">
+                                            <p> Please enter a valid CVC </p>
+                                        </div>
+                                    </div>
+    
+                                    <div *ngIf="enableCard">
+                                        <ion-item>
+                                            <ion-label color="primary" floating>Expiry month</ion-label>
+                                            <ion-input (focus)="onExpiryMonthFocus()" (focusout)="onExpiryMonthFocusOut()" type="text" formControlName="month" [class.invalid]="!bankForm2.controls.month.valid && 
+                                        (bankForm2.controls.month.dirty || submitAttempt)" [(ngModel)]="cardInfo.month"></ion-input>
+    
+                                        </ion-item>
+                                        <div class="input-error" *ngIf="isExpiryMonthError && bankForm2.controls.month.hasError('required')">
+                                            <p> Month is
+                                                <strong>required</strong>
+                                            </p>
+                                        </div>
+                                        <div class="input-error" *ngIf="isExpiryMonthError && bankForm2.controls.month.hasError('pattern')">
+                                            <p> Invalid month </p>
+                                        </div>
+                                    </div>
+    
+                                    <div *ngIf="enableCard">
+                                        <ion-item>
+                                            <ion-label color="primary" floating>Expiry year</ion-label>
+                                            <ion-input (focus)="onExpiryYearFocus()" (focusout)="onExpiryYearFocusOut()" type="text" formControlName="year" [class.invalid]="!bankForm2.controls.year.valid && 
+                                        (bankForm2.controls.year.dirty || submitAttempt)" [(ngModel)]="cardInfo.year"></ion-input>
+    
+                                        </ion-item>
+                                        <div class="input-error" *ngIf="isExpiryYearError && bankForm2.controls.year.hasError('required')">
+                                            <p> Year is
+                                                <strong>required</strong>
+                                            </p>
+                                        </div>
+                                        <div class="input-error" *ngIf="isExpiryYearError && bankForm2.controls.year.hasError('pattern')">
+                                            <p> Invalid year </p>
+                                        </div>
+                                    </div>
+    
+    
+    
+    
+                                    <div class="text-right">
+                                        <button ion-button color="primary" [disabled]="isSubmitStarted" (click)='onCardSubmit()'>SAVE</button>
+                                    </div>
+                                </ion-list>
+                            </form>
+
+                                                        <form [formGroup]="bankForm3" #d="ngForm"  *ngIf="selectedPayment == 'Payment_Gateway'">
+                                                                
+                                                                                            <ion-list>
+                                                                
+                                                                                                <ion-item>
+                                                                                                    <ion-label>Payment Gateway</ion-label>
+                                                                                                    <ion-select formControlName="gateway" (ionChange)="onPaymentGatewaySelected($event)" (focus)="onPaymentGatewayFocus()" (focusout)="onPaymentGatewayFocusOut()"
+                                                                                                        [(ngModel)]="bank.paymentName" interface="popover">
+                                                                                                        <ion-option *ngFor="let payGate of payGates" [value]="payGate.displayName">
+                                                                                                            {{ payGate.displayName }}</ion-option>
+                                                                                                        <!-- <ion-option value="Auto">Auto</ion-option>
+                                                                                                        <ion-option value="Sports">Sports</ion-option>
+                                                                                                        <ion-option value="Health">Health</ion-option> -->
+                                                                                                    </ion-select>
+                                                                                                </ion-item>
+                                                                                                <div *ngIf="!isEasyPay && !isPaypal &&isStripe">
+                                                                                                    <ion-item>
+                                                                                                        <ion-label color="primary" floating>Account ID (Email)</ion-label>
+                                                                                                        <ion-input (focus)="onEmailFocus()" (focusout)="onEmailFocusOut()" type="email" formControlName="stripeEmail" [class.invalid]="!bankForm3.controls.stripeEmail.valid && 
+                                                                                                            (bankForm3.controls.stripeEmail.dirty || submitAttempt)" [(ngModel)]="bank.stripeEmail"></ion-input>
+                                                                
+                                                                                                    </ion-item>
+                                                                                                    <div class="input-error" *ngIf="isEmailError && bankForm3.controls.stripeEmail.hasError('required')">
+                                                                                                        <p> Account ID (Email) is
+                                                                                                            <strong>required</strong>
+                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                    <div class="input-error" *ngIf="isEmailError && bankForm3.controls.stripeEmail.hasError('pattern')">
+                                                                                                        <p>Please enter a valid Account ID (Email)</p>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                
+                                                                                                <div *ngIf="!isEasyPay && !isStripe && isPaypal ">
+                                                                                                    <ion-item>
+                                                                                                        <ion-label color="primary" floating>Account ID (Email)</ion-label>
+                                                                                                        <ion-input (focus)="onEmailFocus()" (focusout)="onEmailFocusOut()" type="email" formControlName="paypalEmail" [class.invalid]="!bankForm3.controls.paypalEmail.valid && 
+                                                                                                            (bankForm3.controls.paypalEmail.dirty || submitAttempt)" [(ngModel)]="bank.paypalEmail"></ion-input>
+                                                                
+                                                                                                    </ion-item>
+                                                                                                    <div class="input-error" *ngIf="isEmailError && bankForm3.controls.paypalEmail.hasError('required')">
+                                                                                                        <p> Account ID (Email) is
+                                                                                                            <strong>required</strong>
+                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                    <div class="input-error" *ngIf="isEmailError && bankForm3.controls.paypalEmail.hasError('pattern')">
+                                                                                                        <p>Please enter a valid Account ID (Email)</p>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                
+                                                                                                <div *ngIf="isEasyPay && !isStripe && !isPaypal ">
+                                                                                                    <ion-item>
+                                                                                                        <ion-label color="primary" floating>Account ID (Email)</ion-label>
+                                                                                                        <ion-input (focus)="onEmailFocus()" (focusout)="onEmailFocusOut()" type="email" formControlName="easypayEmail" [class.invalid]="!bankForm3.controls.easypayEmail.valid && 
+                                                                                                            (bankForm3.controls.easypayEmail.dirty || submitAttempt)" [(ngModel)]="bank.easypayEmail"></ion-input>
+                                                                
+                                                                                                    </ion-item>
+                                                                                                    <div class="input-error" *ngIf="isEmailError && bankForm3.controls.easypayEmail.hasError('required')">
+                                                                                                        <p> Account ID (Email) is
+                                                                                                            <strong>required</strong>
+                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                    <div class="input-error" *ngIf="isEmailError && bankForm3.controls.easypayEmail.hasError('pattern')">
+                                                                                                        <p>Please enter a valid Account ID (Email)</p>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                
+                                                                
+                                                                                                <div *ngIf="isEasyPay">
+                                                                                                    <ion-item>
+                                                                                                        <ion-label color="primary" floating>Mobile Number</ion-label>
+                                                                                                        <ion-input (focus)="onNumberFocus()" (focusout)="onNumberFocusOut()" type="tel" formControlName="registeredContactNumber"
+                                                                                                            [class.invalid]="!bankForm3.controls.registeredContactNumber.valid && 
+                                                                                                            (bankForm3.controls.registeredContactNumber.dirty || submitAttempt)" [(ngModel)]="bank.registeredContactNumber"></ion-input>
+                                                                
+                                                                                                    </ion-item>
+                                                                                                    <div class="input-error" *ngIf="isNumberError && bankForm3.controls.registeredContactNumber.hasError('required')">
+                                                                                                        <p> Mobile Number is
+                                                                                                            <strong>required</strong>
+                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                    <div class="input-error" *ngIf="isNumberError && bankForm3.controls.registeredContactNumber.hasError('pattern')">
+                                                                                                        <p>Please enter a valid Mobile Number</p>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                
+                                                                
+                                                                                                <div class="text-right">
+                                                                                                    <button ion-button color="primary" [disabled]="isSubmitStarted" (click)='onGatewaySubmit()'>SAVE</button>
+                                                                                                </div>
+                                                                                            </ion-list>
+                                                                                        </form>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+
+
+
+    </ion-grid>
+    <!-- Profile-info -->
+</ion-content>

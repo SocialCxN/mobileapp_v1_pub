@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons start *ngIf="isIos">
+      <button ion-button icon-only (click)="pop()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <img class="logo-header" src="assets/img/svg/logo.svg">
+  </ion-toolbar>
+</ion-header>
+<ion-content class="page-influencer">
+  <!-- <ion-tabs  selectedIndex="1" tabsPlacement="top">
+      <ion-tab tabIcon="menu" [root]="tab1Root"></ion-tab>
+      <ion-tab tabIcon="home" [root]="tab2Root"></ion-tab>
+      <ion-tab tabIcon="logo-buffer" [root]="tab3Root"></ion-tab>
+      <ion-tab tabIcon="notifications" [root]="tab4Root" tabBadge="3" tabBadgeStyle="danger"></ion-tab>
+    </ion-tabs> -->
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6>
+        <ion-card class="selection-card" (click)="navigate('social')">
+          <ion-card-content>
+            <i class="fa fa-users clr-1"></i>
+            <div class="card-label">Social Channel</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card class="selection-card" (click)="navigate('personal-info')">
+          <ion-card-content>
+            <i class="fa fa-user clr-2"></i>
+            <div class="card-label">Personal Info</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card class="selection-card" (click)="navigate('interests')">
+          <ion-card-content>
+            <i class="fa fa-hashtag clr-3"></i>
+            <div class="card-label">Interest Groups</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card class="selection-card" (click)="navigate('demographics')">
+          <ion-card-content>
+            <i class="fa fa-bar-chart clr-4"></i>
+            <div class="card-label">Audience Demographics</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card class="selection-card" (click)="navigate('payment-info')">
+          <ion-card-content>
+            <i class="fa fa-dollar clr-5"></i>
+            <div class="card-label">Payment Info</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card class="selection-card" (click)="navigate('profile')">
+          <ion-card-content>
+            <i class="fa fa-user-circle clr-6"></i>
+            <div class="card-label">Profile Preview</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-12>
+          <button ion-button full color="primary" (click)="onDisableRequest()">
+              Disable my account</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

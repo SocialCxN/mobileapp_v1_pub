@@ -1,0 +1,107 @@
+campaign-select-influencer {
+    .list-card {
+        box-shadow: none;
+        border: 1px solid #ebebeb;
+        margin: 10px 0;
+        border-radius: 5px;
+        width: 100%;
+        color: #666;
+        padding: 15px;
+    }
+    
+    .campaign-title {
+        font-size: 15px;
+        font-weight: 500;
+        color: #333;
+    }
+    
+    .sub-lebel {
+        font-size: 13px;
+        line-height: 22px;
+    }
+    
+    .sub-value {
+        font-size: 13px;
+        line-height: 22px;
+    }
+    
+    span.status {
+        border-radius: 4px;
+        font-size: 12px;
+        padding: 3px 12px;
+        float: right;
+        text-transform: capitalize;
+        color: #fff;
+        font-weight: 500;
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+    }
+    .active {
+        background-color: #48ba84;
+    }
+    .decline {
+        background-color: #f05754;
+    }
+    .pending {
+        background-color: #795548;
+    }
+    
+    .top-staus-box {
+        background-color: rgba(0,121,107,0.05);
+        padding: 10px;
+        text-align: center;
+        margin: 10px 0;
+        border-radius: 5px;
+        font-size: 14px;
+        color: #666;
+    }
+    .top-staus-box .gr-txt {
+        color: #00796b;
+    }
+    
+    .first-row-box {
+        position: relative;
+        padding-left: 46px;
+        height: 46px;
+    }
+    
+    .first-row-box img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #ccc;
+    }
+    
+    .first-row-box h2 {
+        font-size: 16px;
+        font-weight: 500;
+        color: #676767;
+        margin-bottom: 0;
+        white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
+    
+    .line-two {
+        font-size: 12px;
+        height: 15px;
+        white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
+
+    ion-checkbox {
+        vertical-align: sub;
+        margin-right: 10px;
+    }
+    .social-chnl {
+        font-size: 18px;
+        margin: 10px 10px 0 0;
+        display: inline-block;
+    }
+    .ptcm {
+        padding-top: 10px;
+    }
+}

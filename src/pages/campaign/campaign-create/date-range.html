@@ -1,0 +1,47 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <button ion-button icon-only  (click)="closeModal()">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <ion-title>
+     Select Country
+    </ion-title>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-header>
+        <ion-toolbar color="primary">
+          <ion-buttons start>
+            <button ion-button icon-only  (click)="closeModal()">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </ion-buttons>
+          <ion-title>Select campaign date range</ion-title>
+          <!-- <ion-buttons end>
+            <button ion-button icon-only color="royal">
+              <ion-icon name="person-add"></ion-icon>
+            </button>
+          </ion-buttons> -->
+        </ion-toolbar>
+      </ion-header>
+      
+      <ion-content>
+        <div class="pvm phl">
+                <ion-item>
+                    <ion-label color="primary" floating>Start date</ion-label>
+                    <ion-input (click)="startDatePicker()"  type="text"  [(ngModel)]="startDate" readonly></ion-input>
+    
+                </ion-item>
+                <ion-item>
+                        <ion-label color="primary" floating>End date</ion-label>
+                        <ion-input (click)="endDatePicker()"  type="text"  [(ngModel)]="endDate" readonly></ion-input>
+        
+                    </ion-item>
+
+                <div class="text-right ptl">
+                        <button ion-button color="primary" (click)="closeModal()">Submit</button>
+                </div>
+              </div>
+
+      </ion-content>
+      

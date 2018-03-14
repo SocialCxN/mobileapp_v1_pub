@@ -1,0 +1,110 @@
+page-influencer-campaign-details {
+    
+    .label-dt {
+        display: inline-block;
+        font-size: 16px;
+        color: #323232;
+    }
+    span.label-dt:last-child .comma {
+        display: none;
+    }
+    .top-staus-box {
+        background-color: rgba(0,121,107,0.05);
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        font-size: 14px;
+        color: #666;
+    }
+    .top-staus-box .gr-txt {
+        color: #00796b;
+    }
+
+    .media-box img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .media-box {
+        display: inline-block;
+        text-align: center;
+        line-height: 60px;
+        vertical-align: top;
+        width: 60px;
+        height: 60px;
+        margin: 0 5px 10px 0;
+    }
+    .media-box a {
+        font-size: 15px;
+        font-weight: 700;
+        text-decoration: none;
+        color: #fff;
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+    }
+    .media-box.pdf a {
+        background-color: #A80100;
+    }
+    .media-box.doc a {
+        background-color: #13568E;
+    }
+    .media-box.xls a {
+        background-color: #006E47;
+    }
+    .media-box.ppt a {
+        background-color: #E83D06;
+    }
+
+    .audio-box,
+    .video-box {
+        float: left;
+        height: 166px;
+        vertical-align: top;
+        margin: 0 5px 10px 0;
+    }
+    
+    .video-media {
+        width: 100%;
+        min-height: 166px;
+    }
+    
+    .audio-box, .audio-media {
+        width: 100%;
+    }
+    
+    .media-label {
+        height: 134px;
+        background-color: #e48f0f;
+        color: #fff;
+        text-align: center;
+        line-height: 134px;
+        font-size: 20px;
+        font-weight: 500;
+    }
+    .csn-label {
+        padding: 5px 0;
+        color: #555;
+    }
+    
+}
+
+.title {
+    font-size: 15px;
+    color: #666;
+}
+
+.label-txt {
+    font-size: 14px;
+    color: #9e9e9e;
+    padding: 5px 0;
+    font-weight: 700;
+}
+
+.value-txt {
+    font-size: 16px;
+    color: #000;
+    font-weight: 400;
+    padding: 4px 0 15px;
+}
+

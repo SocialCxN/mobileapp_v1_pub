@@ -1,0 +1,288 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="pop()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <img class="logo-header" src="assets/img/svg/logo.svg">
+  </ion-toolbar>
+</ion-header>
+<ion-content class="page-influencer">
+  <!-- <ion-tabs  selectedIndex="1" tabsPlacement="top">
+      <ion-tab tabIcon="menu" [root]="tab1Root"></ion-tab>
+      <ion-tab tabIcon="home" [root]="tab2Root"></ion-tab>
+      <ion-tab tabIcon="logo-buffer" [root]="tab3Root"></ion-tab>
+      <ion-tab tabIcon="notifications" [root]="tab4Root" tabBadge="3" tabBadgeStyle="danger"></ion-tab>
+    </ion-tabs> -->
+  <!-- Profile-info -->
+  <div class="white-bg text-center">
+    <div class="cover-img-box">
+      <img src="{{coverPic.url}}" alt="cover-image">
+    </div>
+    <div class="p-card-inner">
+      <div class="profile-img">
+        <img src="{{profilePic.url}}" alt="walmart">
+      </div>
+      <div class="profile-name">{{influencer.profile.name}}</div>
+      <div class="profile-location">
+        <i class="fa fa-location-arrow"></i> {{influencer.profile.country.name}}
+      </div>
+      <div class="profile-about">{{influencer.profile.entityDescription}}</div>
+      <!-- <div class="pro-social-channel">
+        <i class="fa fa-facebook"></i>
+        <i class="fa fa-twitter"></i>
+        <i class="fa fa-instagram"></i>
+        <i class="fa fa-youtube-play"></i>
+        <i class="fa fa-snapchat"></i>
+      </div> -->
+    </div>
+  </div>
+  <ion-grid style="display: none;">
+    <ion-row>
+      <ion-col col-12>
+        <ion-card>
+          <ion-card-header color="primary">
+            Social Network
+          </ion-card-header>
+          <ion-card-content>
+            <div *ngFor='let socialStats of influencer.socialStats'>
+                <div class="channel-info"><span class="sc-ico {{socialStats.socialMediaChannel.codeName}}"><i class="fa fa-{{socialStats.socialMediaChannel.codeName}}"></i></span><span>{{socialStats.socialMediaChannel.displayName}}</span></div>
+                <div class="social-block">
+                  <div class="sc-block-half">
+                    <div class="sc-block-title">Total followers count</div>
+                    <div class="sc-block-value">500</div>
+                  </div>
+                  <div class="sc-block-half">
+                      <div class="sc-block-title">Engagement level</div>
+                      <div class="sc-block-value">Medium</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+              <button ion-button small clear color="primary">Show more</button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-card>
+          <ion-card-header color="primary">
+            Interest Group
+          </ion-card-header>
+          <ion-card-content>
+            <ion-chip color="primary">
+              <ion-label>#beauty</ion-label>
+            </ion-chip>
+            <ion-chip color="primary">
+              <ion-label>#entertainment</ion-label>
+            </ion-chip>
+            <ion-chip color="primary">
+              <ion-label>#fashionistas</ion-label>
+            </ion-chip>
+            <ion-chip color="primary">
+              <ion-label>#food & recipe</ion-label>
+            </ion-chip>
+            <ion-chip color="primary">
+              <ion-label>#health & fitness</ion-label>
+            </ion-chip>
+            <ion-chip color="primary">
+              <ion-label>#home decor</ion-label>
+            </ion-chip>
+            <ion-chip color="primary">
+              <ion-label>#lifestyle goals</ion-label>
+            </ion-chip>
+            <div>
+              <button ion-button small clear color="primary">Show more</button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-card>
+          <ion-card-header color="primary">
+            Audience Demographics
+          </ion-card-header>
+          <ion-card-content>
+            <!-- Segment in content -->
+            <ion-segment [(ngModel)]="segment" color="primary" (ionChange)="segmentChanged($event)">
+                <ion-segment-button value="gender">
+                  Gender
+                </ion-segment-button>
+                <ion-segment-button value="age">
+                  Age
+                </ion-segment-button>
+                <ion-segment-button value="location">
+                  Location
+                </ion-segment-button>
+              </ion-segment>
+              <div [ngSwitch]="segment">
+                <div *ngSwitchCase="'age'">
+                  <br>
+                  <div class="graph-box">
+                    <ion-row>
+                      <ion-col col-4>
+                        <span class="label-type">13 - 17</span>
+                      </ion-col>
+                      <ion-col col-6>
+                        <div class="canvas-bar">
+                          <div class="progress pr-1" style="width:10%;"></div>
+                        </div>
+                      </ion-col>
+                      <ion-col col-2>
+                        <span class="label-percentage">10%</span>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col col-4>
+                        <span class="label-type">18 - 24</span>
+                      </ion-col>
+                      <ion-col col-6>
+                        <div class="canvas-bar">
+                          <div class="progress pr-2" style="width:40%;"></div>
+                        </div>
+                      </ion-col>
+                      <ion-col col-2>
+                        <span class="label-percentage">40%</span>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col col-4>
+                        <span class="label-type">25 - 34</span>
+                      </ion-col>
+                      <ion-col col-6>
+                        <div class="canvas-bar">
+                          <div class="progress pr-3" style="width:20%;"></div>
+                        </div>
+                      </ion-col>
+                      <ion-col col-2>
+                        <span class="label-percentage">20%</span>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col col-4>
+                        <span class="label-type">35 - 44</span>
+                      </ion-col>
+                      <ion-col col-6>
+                        <div class="canvas-bar">
+                          <div class="progress pr-4" style="width:18%;"></div>
+                        </div>
+                      </ion-col>
+                      <ion-col col-2>
+                        <span class="label-percentage">18%</span>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col col-4>
+                        <span class="label-type">45 - 54</span>
+                      </ion-col>
+                      <ion-col col-6>
+                        <div class="canvas-bar">
+                          <div class="progress pr-5" style="width:12%;"></div>
+                        </div>
+                      </ion-col>
+                      <ion-col col-2>
+                        <span class="label-percentage">12%</span>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col col-4>
+                        <span class="label-type">55 +</span>
+                      </ion-col>
+                      <ion-col col-6>
+                        <div class="canvas-bar">
+                          <div class="progress pr-6" style="width:50%;"></div>
+                        </div>
+                      </ion-col>
+                      <ion-col col-2>
+                        <span class="label-percentage">50%</span>
+                      </ion-col>
+                    </ion-row>
+                  </div>
+                </div>
+                <div *ngSwitchCase="'gender'">
+                  <br>
+                  <div class="graph-box">
+                      <ion-row>
+                        <ion-col col-4>
+                          <span class="label-type">Male</span>
+                        </ion-col>
+                        <ion-col col-6>
+                          <div class="canvas-bar">
+                            <div class="progress male" style="width:40%;"></div>
+                          </div>
+                        </ion-col>
+                        <ion-col col-2>
+                          <span class="label-percentage">40%</span>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col col-4>
+                          <span class="label-type">Female</span>
+                        </ion-col>
+                        <ion-col col-6>
+                          <div class="canvas-bar">
+                            <div class="progress female" style="width:60%;"></div>
+                          </div>
+                        </ion-col>
+                        <ion-col col-2>
+                          <span class="label-percentage">60%</span>
+                        </ion-col>
+                      </ion-row>
+                    </div>                  
+                </div>
+  
+                <div *ngSwitchCase="'location'">
+                  <br>
+                  <div class="graph-box">
+                    <ion-row>
+                      <ion-col col-4>
+                        <span class="label-type">Country name</span>
+                      </ion-col>
+                      <ion-col col-6>
+                        <div class="canvas-bar">
+                          <div class="progress pr-1" style="width:50%;"></div>
+                        </div>
+                      </ion-col>
+                      <ion-col col-2>
+                        <span class="label-percentage">50%</span>
+                      </ion-col>
+                    </ion-row>
+                  </div>
+  
+  
+                  <div class="right-end-btn">
+                    <button ion-button full color="primary" [disabled]='!isCountryValid || !isSecondCountryValid || !isThirdCountryValid' (click)="onSubmitLocation()">
+                      Save</button>
+                  </div>
+                </div>
+              </div>
+              <!-- -->
+
+            <div>
+              <button ion-button small clear color="primary">Show more</button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- Profile-info -->
+</ion-content>
+
+
+
+<!-- <div class="p-card-inner">
+      <div class="profile-img"><img src="assets/img/social-cxn-profile.jpg" alt="walmart"></div>
+      <div class="brand-name">{{user.entityName}}</div>
+      <div class="brand-location">
+         
+          {{influencer.profile.state.name}}
+      </div>
+      <div class="brand-about">{{influencer.profile.entityDescription}}</div>
+  </div> -->

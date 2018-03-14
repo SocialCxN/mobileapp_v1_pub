@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1075450122777",
+    "firebase_url": "https://socialcxn-555c6.firebaseio.com",
+    "project_id": "socialcxn-555c6",
+    "storage_bucket": "socialcxn-555c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075450122777:android:6fdaea996bd9be15",
+        "android_client_info": {
+          "package_name": "com.socialcxn.socialcxnapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075450122777-tvg3uiu7hp96qlcfacfdsado73oi0im6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbSI48XskDKO7hQKuADzYqx6mN5aiacHw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

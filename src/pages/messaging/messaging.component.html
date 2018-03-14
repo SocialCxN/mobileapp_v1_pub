@@ -1,0 +1,95 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons start>
+            <button ion-button icon-only (click)="pop()">
+            <ion-icon name="close"></ion-icon>
+        </button>
+        </ion-buttons>
+        <img class="logo-header" src="assets/img/svg/logo.svg">
+    </ion-toolbar>
+</ion-header>
+<ion-content class="messaging">
+<div *ngIf = "num ==1 ">
+        <div class="msg-list-wrapper" *ngIf="showChat == true">
+
+
+                <div class="influencers-list " >
+                    <h3>Campaigns</h3>
+                    <div *ngFor="let cname of campaignList ; let $index = index;">
+                        <div class="user-list-item" (click)="selectUser(cname,$index)" [ngClass]="{'new-msg': cname.thisChatUnreadStatus === true}">
+                            <span class="status active"></span> {{cname.campaignName}}
+                        </div>
+                    </div>
+                    <button *ngIf = "num ==3 " class="more-chat" (click)="loadCampaigns()"> more</button>
+                </div>
+
+                <div class="influencers-list">
+                    <h3>{{entityHeading}}</h3>
+                    <div *ngIf="influencersList && influencersList.length>0">
+                        <div *ngFor="let inf of influencersList ; let $index = index; ">
+                            <div class="user-list-item" (click)="selectUser(inf,$index)" [ngClass]="{'new-msg': inf.thisChatUnreadStatus === true}">
+                                <span class="status active"></span> {{inf.entityName}}
+                            </div>
+                        </div>
+                        <button *ngIf = "num ==3 " class="more-chat" (click)="loadUsers()" >more</button>
+                    </div>
+                    <div class="empty-data" *ngIf="influencersList && influencersList.length<1">
+                        <i class="fa fa-comments"></i>
+                        <div class="empty-data-txt">No new messages</div>
+                    </div>
+
+                </div>
+
+
+            </div>
+</div>
+
+<div *ngIf = "num ==2 " #chatScroll>
+        <div class="msg-app-header">
+                <div class="cell">
+                    <div class="msgr-heading">{{messageTitle}}</div>
+                    <div class="msgr-sub-txt"><span *ngFor="let infName of campaignUserName">{{infName?.entityName}} - </span></div>
+                </div>
+            </div>
+            <div class="all-msg-list-large-col">
+                <div *ngFor="let mg of messages">
+                    <div class="message-wrapper" *ngIf="mg?.type =='receiver' ">
+
+                        <div class="chat-bubble left">
+                            <div class="chat-name">{{mg?.entityName}}</div>
+
+                            <div class="message">
+                                <p class="man">{{mg?.message}}</p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="lg-time left">
+                            <span class="time">{{mg?.date}}</span>
+                        </div>
+                    </div>
+
+                    <div class="message-wrapper" *ngIf="mg?.type =='sender' ">
+                        <div class="chat-bubble right">
+                            <div class="message">
+                                <p class="man">{{mg?.message}}</p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="lg-time right">
+                            <span class="time">{{mg?.date}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="msg-type-area">
+                <div class="text-area">
+                    <textarea placeholder="Type a message..." rows="2" [(ngModel)]="message" (keyup.enter)="sendMessage()"></textarea>
+                </div>
+                <div class="text-right msg-cs-type">
+                    <!-- <md-checkbox [(ngModel)]='isEnter' (change)="isEnterCheck()">Press enter to send</md-checkbox> -->
+                    <button class="msg-send" *ngIf="!sendCheckMessage" (click)="saveMessage()">Send</button>
+                </div>
+            </div>
+</div>
+</ion-content>

@@ -1,0 +1,373 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <img class="logo-header" src="assets/img/svg/logo.svg">
+    </ion-toolbar>
+</ion-header>
+<ion-content class="page-campaign-create">
+    <div class="pam">
+        <ion-card *ngIf="currentStep ==0">
+            <ion-card-content>
+                <div class="start-heading text-center">Create a campaign</div>
+                <div class="artwork">
+                    <img class="svg-block" src="assets/img/svg/campaign.svg">
+                </div>
+                <div class="txt-scxn">
+                    Bring your product/service to life and give it the boost it needs though our vast syndicated network of bloggers and influencers. Create your campaign on our platform in the simplest possible manner and get your digital marketing campaigns live on various social media platforms. Get your brand the amplification it needs and make your product visible to millions of people!
+                </div>
+                <button ion-button full color="primary" (click)="create()">Create</button>
+            </ion-card-content>
+        </ion-card>
+        <ion-card >
+            <ion-card-header color="primary" *ngIf="currentStep > 0" >
+                <div class="indication-header clearfix">
+                    <span class="indicator">
+                        <span class="ind-count"  [ngClass]="{'active':currentStep >=1}"></span>
+                        <span class="ind-count" [ngClass]="{'active':currentStep >=2}"></span>
+                        <span class="ind-count" [ngClass]="{'active':currentStep >=3}"></span>
+                        <span class="ind-count" [ngClass]="{'active':currentStep >=4}"></span>
+                        <span class="ind-count" [ngClass]="{'active':currentStep >=5}"></span>
+                        <span class="ind-count" [ngClass]="{'active':currentStep >=6}"></span>
+
+                    </span>
+                    <span class="steps-count">Step {{currentStep}} of 6</span>
+                </div>
+            </ion-card-header>
+            <ion-card-content>
+                <form [formGroup]="firstForm" #b="ngForm">
+                    <div *ngIf="currentStep ==1">
+                            <ion-list>
+                                    <ion-item>
+                                        <ion-label color="primary" floating>Campaign Name</ion-label>
+                                        <ion-input (focus)="onCampaignNameFocusIn()" (focusout)="onCampaignNameFocusOut()" type="text" formControlName="campaignName"
+                                            [(ngModel)]="campaign.campaignName" [class.invalid]="!firstForm.controls.campaignName.valid && (firstForm.controls.campaignName.dirty || submitAttempt)"></ion-input>
+                                    </ion-item>
+                                    <div class="input-error" *ngIf="isCampaignNameError && firstForm.controls.campaignName.hasError('required')">
+                                        <p>Campaign Name is
+                                            <strong>required</strong>
+                                        </p>
+                                    </div>
+            
+                                    <ion-item>
+            
+                                        <ion-label>Campaign objective</ion-label>
+                                        <ion-select formControlName="selectedObjective" [(ngModel)]="selectedObjective" multiple="true" (ionChange)="onChangeObjective(selectedObjective)">
+                                            <ion-option *ngFor='let obj of allObjectives' [value]="obj.id" [disabled]="showBounty && obj?.codeName === 'bounty_program'  ? null : showBounty === false ? null : obj?.codeName === 'bounty_program' ? null : 'disabled' ">{{obj.displayName}}</ion-option>
+                                        </ion-select>
+                                    </ion-item>
+            
+                                    <div *ngIf="isOther">
+                                        <ion-item>
+                                            <ion-label color="primary" floating>Please Specify Others*</ion-label>
+                                            <ion-input (focus)="onCampaignObjectiveDescriptionErrorFocusIn()" (focusout)="onCampaignObjectiveDescriptionErrorFocusOut()"
+                                                type="text" formControlName="campaignObjectiveDescription" [(ngModel)]="campaign.campaignObjectiveDescription"
+                                                [class.invalid]="!firstForm.controls.campaignObjectiveDescription.valid && (firstForm.controls.campaignObjectiveDescription.dirty || submitAttempt)"></ion-input>
+            
+                                        </ion-item>
+                                        <div class="input-error" *ngIf="isCampaignObjectiveDescriptionError && firstForm.controls.campaignObjectiveDescription.hasError('required')">
+                                            <p>Description is
+                                                <strong>required</strong>
+                                            </p>
+                                        </div>
+                                    </div>
+            
+            
+                                    <ion-item>
+            
+                                        <ion-label>Influencer type</ion-label>
+                                        <ion-select formControlName="influencerType" [(ngModel)]="influencerType" multiple="true" (ionChange)="onChangeType(influencerType)">
+                                            <ion-option *ngFor='let type of influencerTypes' [value]="type">{{type.displayName}}</ion-option>
+                                        </ion-select>
+                                    </ion-item>
+                                </ion-list>
+                    </div>
+                </form>
+                    <div  *ngIf="currentStep ==2">
+                            <div class="title">Select campaign channel</div>
+                            <ion-list>
+                                <ion-item *ngFor="let channel of channels">
+                                    <ion-label>{{channel.displayName}}
+                                        <span class="sc-icon-box fb" *ngIf="channel.codeName == 'facebook'">
+                                            <i class="fa fa-facebook"></i>
+                                        </span>
+                                        <span class="sc-icon-box tw" *ngIf="channel.codeName == 'twitter'">
+                                            <i class="fa fa-twitter"></i>
+                                        </span>
+                                        <span class="sc-icon-box ig" *ngIf="channel.codeName == 'instagram'">
+                                            <i class="fa fa-instagram"></i>
+                                        </span>
+                                        <span class="sc-icon-box yt" *ngIf="channel.codeName == 'youtube'">
+                                            <i class="fa fa-youtube"></i>
+                                        </span>
+        
+                                        <span class="sc-icon-box sc" *ngIf="channel.codeName == 'snapchat'">
+                                            <i class="fa fa-snapchat"></i>
+                                        </span>
+                                        <span class="sc-icon-box pi" *ngIf="channel.codeName == 'pinterest'">
+                                            <i class="fa fa-pinterest"></i>
+                                        </span>
+                                        <span class="sc-icon-box ln" *ngIf="channel.codeName == 'linkedin'">
+                                            <i class="fa fa-linkedin"></i>
+                                        </span>
+                                        <span class="sc-icon-box tl" *ngIf="channel.codeName == 'tumblr'">
+                                            <i class="fa fa-tumblr"></i>
+                                        </span>
+                                    </ion-label>
+                                    <ion-checkbox [(ngModel)]="channel.selected" (ionChange)="onChangeChannel(channel)"></ion-checkbox>
+                                </ion-item>
+        
+                            </ion-list>
+                        </div>
+
+
+                        <form [formGroup]="thirdForm" #c="ngForm">
+                                <div *ngIf="currentStep ==3">
+                        
+                                        <div class="title">Campaign details</div>
+                                        <ion-list>
+                                            <ion-item>
+                                                <ion-label color="primary" floating>Campaign Name</ion-label>
+                                                <ion-input readonly type="text" formControlName="campaignName" [(ngModel)]="campaign.campaignName"></ion-input>
+                
+                                            </ion-item>
+                
+                                            <ion-item>
+                
+                                                <ion-label>Category</ion-label>
+                                                <ion-select formControlName="category" [(ngModel)]="selectedCategory" multiple="true" (ionChange)="onCategorySelected(selectedObjective)">
+                                                    <ion-option *ngFor='let category of campaignCategories' [value]="category.id">{{category.displayName}}</ion-option>
+                                                </ion-select>
+                                            </ion-item>
+                
+                                            <ion-item>
+                                                <ion-label color="primary" floating>Select campaign date range</ion-label>
+                                                <ion-input (focus)="onCampaignDateRangeFocusIn()" type="text" formControlName="campaignDateRange" [(ngModel)]="dateRange"></ion-input>
+                
+                                            </ion-item>
+                
+                                            <ion-item>
+                                                <ion-label color="primary" floating>Campaign description*</ion-label>
+                                                <ion-input (focusout)="onCampaignDescriptionFocusOut()" (focus)="onCampaignDescriptionFocusIn()" type="text" [class.invalid]="!thirdForm.controls.campaignDescription.valid && (thirdForm.controls.campaignDescription.dirty || submitAttempt)"
+                                                    formControlName="campaignDescription" maxlength="1000" [(ngModel)]="campaign.campaignDescription"></ion-input>
+                
+                                            </ion-item>
+                                            <div>
+                                                <p class="hint-txt">Max. 1000 characters</p>
+                                            </div>
+                                            <div class="input-error" *ngIf="isCampaignDescriptionError && thirdForm.controls.campaignDescription.hasError('required')">
+                                                <p>Campaign Description is
+                                                    <strong>required</strong>
+                                                </p>
+                                            </div>
+                
+                                            <ion-item class="utm-field">
+                                                <ion-label color="primary" floating>Reference URL 1</ion-label>
+                                                <ion-input (focusout)="onUrlFocusOut(url1 , 'url1')" type="text" formControlName="url1" [(ngModel)]="url1"></ion-input>
+                                            </ion-item>
+                                            <div class="utm-field">
+                                                <span class="utm-btn" (click)="utmModal(url1 ,'url1')">UTM</span>
+                                            </div>
+                
+                
+                                            <div *ngIf="showMore">
+                                                <ion-item>
+                                                    <ion-label color="primary" floating>Reference URL 2</ion-label>
+                                                    <ion-input (focusout)="onUrlFocusOut(url2 , 'url2')" type="text" formControlName="url2" [(ngModel)]="url2"></ion-input>
+                
+                                                </ion-item>
+                                                <div class="utm-field">
+                                                        <span class="utm-btn" (click)="utmModal(url2 ,'url2')">UTM</span>
+                                                    </div>
+                
+                                                <ion-item>
+                                                    <ion-label color="primary" floating>Reference URL 3</ion-label>
+                                                    <ion-input (focusout)="onUrlFocusOut(url3 , 'url3')" type="text" formControlName="url3" [(ngModel)]="url3"></ion-input>
+                
+                                                </ion-item>
+                                                <div class="utm-field">
+                                                        <span class="utm-btn" (click)="utmModal(url3 ,'url3')">UTM</span>
+                                                    </div>
+                
+                                                <ion-item>
+                                                    <ion-label color="primary" floating>Reference URL 4</ion-label>
+                                                    <ion-input (focusout)="onUrlFocusOut(url4 , 'url4')" type="text" formControlName="url4" [(ngModel)]="url4"></ion-input>
+                
+                                                </ion-item>
+                                                <div class="utm-field">
+                                                        <span class="utm-btn" (click)="utmModal(url4 ,'url4')">UTM</span>
+                                                    </div>
+                                                <ion-item>
+                                                    <ion-label color="primary" floating>Reference URL 5</ion-label>
+                                                    <ion-input (focusout)="onUrlFocusOut(url5 , 'url5')" type="text" formControlName="url5" [(ngModel)]="url5"></ion-input>
+                
+                                                </ion-item>
+                                                <div class="utm-field">
+                                                        <span class="utm-btn" (click)="utmModal(url5 ,'url5')">UTM</span>
+                                                    </div>
+                                            </div>
+                                            <div class="pvm">
+                                            <button ion-button color="primary" small clear (click)="showMore = true" [hidden]="showMore"> Show more</button>
+                                            </div>
+                
+                                        </ion-list>    
+                                    </div>
+                            </form>
+
+                    
+                    <div *ngIf="currentStep == 4">
+                        <div class="hint-box"> *Maximum file size is 10MB. JPG, PNG, GIF, PDF, DOC, PPT, XLS, MP4, MP3, WMA file formats are allowed.</div>
+
+                        <button ion-button full color="primary" (click)="openActionSheet();">Attach file</button>
+        
+        
+                        <!--File Preview  After submit report -->
+                        <div>
+                            <div class="label-txt">Media </div>
+                            <div class="media-item" *ngFor="let attach of _attachments; let i=index">
+                                <span class="media-box" *ngIf="attach.meta.type == 'image'">
+                                    <img src="{{attach.thumbnails.small.url}}" class="media-object" />
+                                </span>
+                                <span class="media-box pdf" *ngIf="attach.meta.type == 'document' && attach.original.extension =='pdf'">
+                                    <a href="{{attach.original.url}}" target="_blank">PDF</a>
+                                </span>
+                                <span class="media-box pdf" *ngIf="attach.meta.type == 'document' && attach.original.extension =='xls'">
+                                    <a href="{{attach.original.url}}" target="_blank">XLS</a>
+                                </span>
+                                <span class="media-box pdf" *ngIf="attach.meta.type == 'document' && (attach.original.extension =='docx' || attach.original.extension =='doc')">
+                                    <a href="{{attach.original.url}}" target="_blank">DOC</a>
+                                </span>
+        
+                                <video width="320" height="240" controls *ngIf="attach.meta.type == 'video' || attach.meta.type == 'mp4' ">
+                                    <source src="{{attach.encodings.hd.url}}" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+        
+        
+                        <!--File Preview -->
+                        <div>
+                            <div class="media-item" *ngFor="let item of displayFiles">
+                                <span class="media-box" *ngIf="item.type == 'image'">
+                                    <img src="{{item.data}}" class="media-object" />
+                                </span>
+                                <span class="media-box pdf" *ngIf="item.type == 'pdf'">PDF</span>
+                                <span class="media-box pdf" *ngIf="item.type == 'xls'">XLS</span>
+                                <span class="media-box pdf" *ngIf="item.type == 'doc'">DOC</span>
+        
+                                <video width="320" height="240" controls *ngIf="item.type == 'video'">
+                                    <source src="{{item.data}}" type="video/mp4">
+                                </video>
+                                <!-- <span class="media-box pdf" *ngIf="item?._file.type == 'application/pdf'">PDF</span>
+                                    <span class="media-box xls" *ngIf="item?._file.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'">XLS</span>
+                                    <span class="media-box doc" *ngIf="item?._file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'">DOC</span>
+                                    <md-icon (click)="item.remove()" mdTooltip="Delete">delete</md-icon> -->
+                            </div>
+                        </div>
+                        <!--File Preview -->
+                        <div>
+                            <div class="media-item" *ngFor="let item of files">
+                                <span class="media-box" *ngIf="item.type == 'image'">
+                                    <img src="{{item.data}}" class="media-object" />
+                                </span>
+                                <span class="media-box pdf" *ngIf="item.type == 'pdf'">PDF</span>
+                                <span class="media-box pdf" *ngIf="item.type == 'xls'">XLS</span>
+                                <span class="media-box pdf" *ngIf="item.type == 'doc'">DOC</span>
+        
+                                <video width="320" height="240" controls *ngIf="item.type == 'video'">
+                                    <source src="{{item.data}}" type="video/mp4">
+                                </video>
+                                <!-- <span class="media-box pdf" *ngIf="item?._file.type == 'application/pdf'">PDF</span>
+                                    <span class="media-box xls" *ngIf="item?._file.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'">XLS</span>
+                                    <span class="media-box doc" *ngIf="item?._file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'">DOC</span>
+                                    <md-icon (click)="item.remove()" mdTooltip="Delete">delete</md-icon> -->
+                            </div>
+        
+                        </div>
+        
+                        <button ion-button color="primary" [disabled]="files.length == 0" (click)="uploadFiles()">
+                            Upload
+                        </button>
+        
+        
+                        <ion-item>
+                            <ion-label floating>Add your media link</ion-label>
+                            <ion-input (keyup.enter)="addItem()" [(ngModel)]="medialink" (focusout)="addItem()"></ion-input>
+                        </ion-item>
+                        <div class="anchore-tag-line" *ngFor="let link of medialinksUrl ; let $index=index;">
+                            <a href="{{link}}">{{link}}</a>
+                            <span class="anchore-tag-line-icn">
+                                <i class="material-icons" (click)="removeLink($index)">cancel</i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="currentStep == 5">
+                        <campaign-select-influencer [channels]="campaign.campaignSocialMediaChannelIds" [influencertype]="campaign.campaignInfluencerTypeIds"
+                    [campaigncategory]="campaign.campaignCategoryIds" (offeredInfluencers)="finalOfferedInfluencers($event)"></campaign-select-influencer>
+                
+                    </div>
+
+                    <div *ngIf="currentStep == 6">
+                        <div class="title">Make offer to the influencer(s)</div>
+                        <div class="top-staus-box" *ngIf="showBounty === false ">Total budget -
+                            <span class="gr-txt">{{currencySymbol}} {{totalBudget}}</span>
+                        </div>
+                        <div class="top-staus-box" *ngIf="showBounty === false ">Min.offer -
+                            <span class="gr-txt">{{currencySymbol}} {{minCampaignPaymentOffer}}</span>
+                        </div>
+                        <div class="top-staus-box" *ngIf="showBounty === true ">Total Budgeted Tokens-
+                            <span class="gr-txt"> {{totalBudget}}</span>
+                        </div>
+                        <div class="top-staus-box" *ngIf="showBounty === true ">Min offered Tokens -
+                            <span class="gr-txt">1</span>
+                        </div>
+                        <ion-card class="list-card" *ngFor="let fi of influencers ;  let $index=index;">
+                            <div class="first-row-box">
+                                <img src="{{fi.profile.profilePic.thumbnails.small?.url}}"/>
+                                <div class="rpo-col">
+                                <h2>{{fi.profile.name}}</h2>
+                                <div class="line-two">
+                                    <span>Social Rank</span>
+                                    <span class="rating rat-{{fi.profile.rating.displayValue}}">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star"></i>
+                                    </span>
+                                </div>
+                                </div>
+                            </div>
+                            <ion-item>
+        
+                                <ion-label>Payment plan</ion-label>
+                                <ion-select [(ngModel)]="fi.paymentPlan" (ionChange)="onPaymentSelected(selectedObjective)">
+                                    <ion-option *ngFor="let p of paymentPlans" [value]="p.id">{{p.displayName}}</ion-option>
+                                </ion-select>
+                            </ion-item>
+        
+                            <ion-item>
+                                <ion-label> {{(showBounty == true) ? 'Offer Token' : 'Offer amount' }}</ion-label>
+                                <ion-input type="number" min="0" [disabled]="!fi.selected && !fi.initialOfferAmount" [(ngModel)]="fi.initialOfferAmount"
+                                    (focusout)="onTotalAmount(fi.initialOfferAmount ,minCampaignPaymentOffer )"></ion-input>
+                            </ion-item>
+        
+                        </ion-card>
+                    </div>
+                    <div class="text-right ptl" *ngIf="currentStep > 0">
+
+
+
+                        <button ion-button color="light" small (click)="discard()">Discard</button>
+
+                        <button ion-button color="primary" small (click)="saveDraft()">Save</button>
+
+                        <button ion-button color="primary" *ngIf="currentStep < 6" small (click)="next()">Next</button>
+                        <button ion-button color="primary" *ngIf="currentStep == 6" small (click)="createCampaign()">Submit</button>
+                    </div>
+
+            </ion-card-content>
+
+        </ion-card>
+ 
+    </div>
+</ion-content>

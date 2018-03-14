@@ -1,0 +1,14 @@
+page-menu {
+    .list-md {
+        margin: -1px 0px 0px;
+    }
+    .item-md, .item-ios {
+        font-size: 1.5rem;
+        color: #555;
+    }
+    .item-md ion-icon, .item-ios ion-icon {
+        min-height: 1.8rem;
+        font-size: 1.8rem;
+        line-height: 1;
+    }
+}

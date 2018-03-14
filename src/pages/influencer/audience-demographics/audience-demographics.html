@@ -1,0 +1,366 @@
+<!-- <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>SocialCxN Home</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="pop()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <img class="logo-header" src="assets/img/svg/logo.svg">
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="page-influencer">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <ion-card class="full-card">
+          <ion-card-header color="primary">
+            Audience demographics
+          </ion-card-header>
+          <ion-card-content>
+            <!-- Segment in content -->
+            <ion-segment [(ngModel)]="segment" color="primary" (ionChange)="segmentChanged($event)">
+              <ion-segment-button value="gender">
+                Gender
+              </ion-segment-button>
+              <ion-segment-button value="age">
+                Age
+              </ion-segment-button>
+              <ion-segment-button value="location">
+                Location
+              </ion-segment-button>
+            </ion-segment>
+            <div [ngSwitch]="segment">
+              <div *ngSwitchCase="'age'">
+                  <br>
+                <ion-row>
+                  Please add the percentages against each category. Make sure that overall sum is exactly 100
+                  </ion-row>
+                <br>
+                <ion-row>
+                  <ion-col col-6 *ngFor="let ageGroup of ageGroups, let i = index">
+                    <ion-item>
+                      <ion-label color="primary" floating>{{ageGroup.displayName}}</ion-label>
+                      <ion-input [(ngModel)]="ageGroup.percentageCount"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <div class="graph-box mtm" *ngIf="influencer.audienceAgeGroup.length >0">
+
+                  <ion-row>
+                    <ion-col col-4>
+                      <span class="label-type">13 - 17</span>
+                    </ion-col>
+                    <ion-col col-6>
+                      <div class="canvas-bar">
+                        <div class="progress pr-1" [ngStyle]="{'width': influencer.audienceAgeGroup[0].percentageCount+'%' }"></div>
+                      </div>
+                    </ion-col>
+                    <ion-col col-2>
+                      <span class="label-percentage">{{ influencer.audienceAgeGroup[0].percentageCount}}%</span>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col col-4>
+                      <span class="label-type">18 - 24</span>
+                    </ion-col>
+                    <ion-col col-6>
+                      <div class="canvas-bar">
+                        <div class="progress pr-2"  [ngStyle]="{'width': influencer.audienceAgeGroup[1].percentageCount+'%' }"></div>
+                      </div>
+                    </ion-col>
+                    <ion-col col-2>
+                      <span class="label-percentage">{{influencer.audienceAgeGroup[1].percentageCount}}%</span>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col col-4>
+                      <span class="label-type">25 - 34</span>
+                    </ion-col>
+                    <ion-col col-6>
+                      <div class="canvas-bar">
+                        <div class="progress pr-3"  [ngStyle]="{'width': influencer.audienceAgeGroup[2].percentageCount+'%' }"></div>
+                      </div>
+                    </ion-col>
+                    <ion-col col-2>
+                      <span class="label-percentage">{{influencer.audienceAgeGroup[2].percentageCount}}%</span>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col col-4>
+                      <span class="label-type">35 - 44</span>
+                    </ion-col>
+                    <ion-col col-6>
+                      <div class="canvas-bar">
+                        <div class="progress pr-4"  [ngStyle]="{'width': influencer.audienceAgeGroup[3].percentageCount+'%' }"></div>
+                      </div>
+                    </ion-col>
+                    <ion-col col-2>
+                      <span class="label-percentage">{{influencer.audienceAgeGroup[3].percentageCount}}%</span>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col col-4>
+                      <span class="label-type">45 - 54</span>
+                    </ion-col>
+                    <ion-col col-6>
+                      <div class="canvas-bar">
+                        <div class="progress pr-5"  [ngStyle]="{'width': influencer.audienceAgeGroup[4].percentageCount+'%' }"></div>
+                      </div>
+                    </ion-col>
+                    <ion-col col-2>
+                      <span class="label-percentage">{{influencer.audienceAgeGroup[4].percentageCount}}%</span>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col col-4>
+                      <span class="label-type">55 +</span>
+                    </ion-col>
+                    <ion-col col-6>
+                      <div class="canvas-bar">
+                        <div class="progress pr-6"  [ngStyle]="{'width': influencer.audienceAgeGroup[5].percentageCount+'%' }"></div>
+                      </div>
+                    </ion-col>
+                    <ion-col col-2>
+                      <span class="label-percentage">{{influencer.audienceAgeGroup[5].percentageCount}}%</span>
+                    </ion-col>
+                  </ion-row>
+                </div>
+                <!-- <canvas #barCanvas></canvas> -->
+                <div class="right-end-btn">
+                  <button ion-button full color="primary" (click)="onSubmitAge()"> Save</button>
+                </div>
+              </div>
+              <div *ngSwitchCase="'gender'">
+                <br>
+                <ion-row>
+                  <ion-col col-6>
+                    <ion-item>
+                      <ion-label floating>Male percentage</ion-label>
+                      <ion-input type="text" (focusout)="onMalePercentageOut()" [(ngModel)]="gender.malePercentage"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col col-6>
+                    <ion-item>
+                      <ion-label floating>Female percentage</ion-label>
+                      <ion-input type="text" (focusout)="onFemalePercentageOut()" [(ngModel)]="gender.femalePercentage"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+
+
+                 <div class="graph-box mtm">
+                    <ion-row>
+                      <ion-col col-4>
+                        <span class="label-type">Male</span>
+                      </ion-col>
+                      <ion-col col-6>
+                        <div class="canvas-bar">
+                          <div class="progress male" [ngStyle]="{'width':gender.malePercentage+'%' }"></div>
+                        </div>
+                      </ion-col>
+                      <ion-col col-2>
+                        <span class="label-percentage">{{gender.malePercentage}}%</span>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col col-4>
+                        <span class="label-type">Female</span>
+                      </ion-col>
+                      <ion-col col-6>
+                        <div class="canvas-bar">
+                          <div class="progress female"  [ngStyle]="{'width': gender.femalePercentage+'%' }"></div>
+                        </div>
+                      </ion-col>
+                      <ion-col col-2>
+                        <span class="label-percentage">{{gender.femalePercentage}}%</span>
+                      </ion-col>
+                    </ion-row>
+                  </div> 
+
+                <!-- <canvas #doughnutCanvas></canvas> -->
+
+                <div class="right-end-btn">
+                  <button ion-button color="primary" [disabled]="isSubmitStarted " (click)="onSumbitGenderPercentage()"> Save</button>
+                </div>
+              </div>
+
+              <div *ngSwitchCase="'location'">
+                <br>
+                <ion-row>
+                  Select first location
+                </ion-row>
+                <br>
+                <ion-item>
+                  <ion-label color="primary" floating>Country</ion-label>
+                  <ion-input type="text" (change)="onCountryChange()" (focus)="onCountryFocus()" (focusout)="onCountryFocusOut()" [(ngModel)]="firstCountryName"
+                    [formControl]="firstCountryCtrl"></ion-input>
+
+                </ion-item>
+
+                <ion-item>
+                  <ion-label color="primary" floating>States</ion-label>
+                  <ion-input type="text" (focus)="onStateFocus()" (focusout)="onStateFocusOut()" name="state" [(ngModel)]="firstStateName"
+                    [formControl]="firstStateCtrl"></ion-input>
+
+                </ion-item>
+
+                <ion-item *ngIf="firstCountryName !=='Pakistan'">
+                  <ion-label color="primary" floating>City</ion-label>
+                  <ion-input type="text" (focus)="onCityFocus()" name="city" [(ngModel)]="firstCityName"></ion-input>
+
+                </ion-item>
+
+                <ion-item>
+                  <ion-label color="primary" floating>Contribution percentage</ion-label>
+                  <ion-input [(ngModel)]="firstLocationValue"></ion-input>
+                </ion-item>
+
+                <div *ngIf="showFirstAddMoreButton">
+                    <button ion-button color="primary" *ngIf="!secondCountryName" clear (click)="addMore()">Add more</button>
+                </div>
+                
+
+                <div *ngIf="isAddMore || secondCountryName">
+                    <br>
+                    <ion-row>
+                      Select second location
+                    </ion-row>
+                    <br>
+                  <ion-item>
+                    <ion-label color="primary" floating>Country</ion-label>
+                    <ion-input type="text" (change)="onCountryChange()" (focus)="onSecondCountryFocus()" (focusout)="onCountryFocusOut()" [(ngModel)]="secondCountryName"
+                      [formControl]="secondCountryCtrl"></ion-input>
+  
+                  </ion-item>
+  
+                  <ion-item>
+                    <ion-label color="primary" floating>States</ion-label>
+                    <ion-input type="text" (focus)="onSecondStateFocus()" (focusout)="onStateFocusOut()" name="state" [(ngModel)]="secondStateName"
+                      [formControl]="secondStateCtrl"></ion-input>
+  
+                  </ion-item>
+  
+                  <ion-item *ngIf="secondCountryName !=='Pakistan'">
+                    <ion-label color="primary" floating>City</ion-label>
+                    <ion-input type="text" (focus)="onSecondCityFocus()" name="city" [(ngModel)]="secondCityName"></ion-input>
+  
+                  </ion-item>
+  
+                  <ion-item>
+                    <ion-label color="primary" floating>Contribution percentage</ion-label>
+                    <ion-input [(ngModel)]="secondLocationValue"></ion-input>
+                  </ion-item>
+  
+                  <button ion-button color="primary" *ngIf="!thirdCountryName" clear (click)="addThirdMore()">Add more</button>
+                  
+                  <div *ngIf="isAddThird || thirdCountryName">
+                      <br>
+                      <ion-row>
+                        Select third location
+                      </ion-row>
+                      <br>
+                    <ion-item>
+                      <ion-label color="primary" floating>Country</ion-label>
+                      <ion-input type="text" (focus)="onThirdCountryFocus()" (focusout)="onCountryFocusOut()" name="country" [(ngModel)]="thirdCountryName"
+                        [formControl]="thirdCountryCtrl"></ion-input>
+    
+                    </ion-item>
+    
+                    <ion-item>
+                      <ion-label color="primary" floating>States</ion-label>
+                      <ion-input type="text" (focus)="onThirdStateFocus()" (focusout)="onStateFocusOut()" name="state" [(ngModel)]="thirdStateName"
+                        [formControl]="thirdStateCtrl"></ion-input>
+    
+                    </ion-item>
+    
+                    <ion-item *ngIf="thirdCountryName !=='Pakistan'">
+                      <ion-label color="primary" floating>City</ion-label>
+                      <ion-input type="text" (focus)="onThirdCityFocus()" name="city" [(ngModel)]="thirdCityName"></ion-input>
+    
+                    </ion-item>
+    
+    
+    
+                    <ion-item>
+                      <ion-label color="primary" floating>Contribution percentage</ion-label>
+                      <ion-input [(ngModel)]="thirdLocationValue"></ion-input>
+                    </ion-item>
+                  </div>
+
+                </div>
+
+                <div class="graph-box mtm" *ngIf="influencer.audienceLocation[0]">
+                  <ion-row>
+                    <ion-col col-4>
+                      <span class="label-type">{{firstCountryName}}</span>
+                    </ion-col>
+                    <ion-col col-6>
+                      <div class="canvas-bar">
+                        <div class="progress pr-1" [ngStyle]="{'width': influencer.audienceLocation[0].percentageCount+'%' }" ></div>
+                      </div>
+                    </ion-col>
+                    <ion-col col-2>
+                      <span class="label-percentage">{{influencer.audienceLocation[0].percentageCount}}%</span>
+                    </ion-col>
+                  </ion-row>
+                </div>
+
+                <div class="graph-box mtm" *ngIf="influencer.audienceLocation[1]">
+                  <ion-row>
+                    <ion-col col-4>
+                      <span class="label-type">{{secondCountryName}}</span>
+                    </ion-col>
+                    <ion-col col-6>
+                      <div class="canvas-bar">
+                        <div class="progress pr-1" [ngStyle]="{'width': influencer.audienceLocation[1].percentageCount +'%' }" ></div>
+                      </div>
+                    </ion-col>
+                    <ion-col col-2>
+                      <span class="label-percentage">{{influencer.audienceLocation[1].percentageCount}}%</span>
+                    </ion-col>
+                  </ion-row>
+                </div>
+
+                <div class="graph-box mtm" *ngIf="influencer.audienceLocation[2]">
+                  <ion-row>
+                    <ion-col col-4>
+                      <span class="label-type">{{thirdCountryName}}</span>
+                    </ion-col>
+                    <ion-col col-6>
+                      <div class="canvas-bar">
+                        <div class="progress pr-1" [ngStyle]="{'width': influencer.audienceLocation[2].percentageCount +'%' }" ></div>
+                      </div>
+                    </ion-col>
+                    <ion-col col-2>
+                      <span class="label-percentage">{{influencer.audienceLocation[2].percentageCount}}%</span>
+                    </ion-col>
+                  </ion-row>
+                </div>
+
+
+                <div class="right-end-btn">
+                  <button ion-button full color="primary" [disabled]='!isCountryValid || !isSecondCountryValid || !isThirdCountryValid' (click)="onSubmitLocation()">
+                    Save</button>
+                </div>
+              </div>
+            </div>
+
+
+
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>
