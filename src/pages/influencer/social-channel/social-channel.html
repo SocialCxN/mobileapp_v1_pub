@@ -88,7 +88,7 @@
               <ion-col col-12>
                 <ion-item>
                   <ion-label floating>Total followers count</ion-label>
-                  <ion-input [(ngModel)]="totalFBFollowers" [value]="totalFBFollowers"></ion-input>
+                  <ion-input type="tel" maxlength="9" [(ngModel)]="totalFBFollowers" [value]="totalFBFollowers" readonly></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -96,7 +96,7 @@
               <ion-col col-12>
                 <ion-item>
                   <ion-label>Engagement level</ion-label>
-                  <ion-select [(ngModel)]="fbEngagementLabel" interface="popover">
+                  <ion-select [(ngModel)]="fbEngagementLabel" interface="popover" disabled>
                       <ion-option *ngFor="let engmnt of engagementList" [value]="engmnt.id">{{ engmnt.displayValue }}</ion-option>
                   </ion-select>
                 </ion-item>
@@ -144,8 +144,8 @@
             <ion-row>
               <ion-col col-12>
                 <ion-item>
-                  <ion-label floating>Total followers count</ion-label>
-                  <ion-input type="number" [(ngModel)]="twitterFollowersCount" [value]="twitterFollowersCount"></ion-input>
+                  <ion-label floating>Total followers count</ion-label>{{twitterFollowersCount}}
+                  <ion-input type="tel" maxlength="9" [(ngModel)]="twitterFollowersCount"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -181,7 +181,7 @@
               <ion-col col-12>
                 <ion-item>
                   <ion-label floating>Total followers count</ion-label>
-                  <ion-input type="number" [(ngModel)]="instagramFollowersCount" [value]="instagramFollowersCount"></ion-input>
+                  <ion-input type="tel" maxlength="9" [(ngModel)]="instagramFollowersCount"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -218,7 +218,7 @@
               <ion-col col-12>
                 <ion-item>
                   <ion-label floating>Total followers count</ion-label>
-                  <ion-input type="number" [(ngModel)]="youtubeFollowersCount" [value]="youtubeFollowersCount"></ion-input>
+                  <ion-input type="tel" maxlength="9" [(ngModel)]="youtubeFollowersCount" [value]="youtubeFollowersCount"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -255,7 +255,7 @@
               <ion-col col-12>
                 <ion-item>
                   <ion-label floating>Total followers count</ion-label>
-                  <ion-input type="number" [(ngModel)]="snapchatFollowersCount" [value]="snapchatFollowersCount"></ion-input>
+                  <ion-input type="tel" maxlength="9" [(ngModel)]="snapchatFollowersCount" [value]="snapchatFollowersCount"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -293,7 +293,7 @@
               <ion-col col-12>
                 <ion-item>
                   <ion-label floating>Total followers count</ion-label>
-                  <ion-input type="number" [(ngModel)]="pinterestFollowersCount" [value]="pinterestFollowersCount"></ion-input>
+                  <ion-input type="tel" maxlength="9" [(ngModel)]="pinterestFollowersCount" [value]="pinterestFollowersCount"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -331,7 +331,7 @@
               <ion-col col-12>
                 <ion-item>
                   <ion-label floating>Total followers count</ion-label>
-                  <ion-input type="number" [(ngModel)]="linkedinFollowersCount" [value]="linkedinFollowersCount"></ion-input>
+                  <ion-input type="tel" maxlength="9" [(ngModel)]="linkedinFollowersCount"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -369,7 +369,7 @@
               <ion-col col-12>
                 <ion-item>
                   <ion-label floating>Total followers count</ion-label>
-                  <ion-input type="number" [(ngModel)]="tumblrFollowersCount"></ion-input>
+                  <ion-input type="tel" maxlength="9" [(ngModel)]="tumblrFollowersCount"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -408,7 +408,7 @@
               <ion-col col-12>
                 <ion-item>
                   <ion-label floating>Total followers count</ion-label>
-                  <ion-input type="number" [(ngModel)]="blogFollowersCount" [value]="blogFollowersCount"></ion-input>
+                  <ion-input type="tel" maxlength="9" [(ngModel)]="blogFollowersCount" [value]="blogFollowersCount"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>

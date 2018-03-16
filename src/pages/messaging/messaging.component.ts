@@ -166,7 +166,7 @@ export class MessagingComponent implements OnInit, OnChanges {
 
             this._messagingService.saveConversation(this.finalMessage).subscribe(
                 (res) => {
-                    this.messages.push({ type: 'sender', message: this.message, date: new Date().toDateString() })
+                    this.messages.push({ type: 'sender', message: this.message, date: new Date().toLocaleString() })
                     console.log('data----------', this.messages);
                     this.message = "";
 
